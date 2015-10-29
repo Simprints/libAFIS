@@ -4,6 +4,30 @@
 
 #include "Array.h"
 
+Int32Array1D Int32Array1D_Construct(int32_t x)
+{
+    Int32Array1D array;
+
+    array.size = x;
+
+    array.data = calloc(x, sizeof(int32_t));
+    assert(array.data);
+
+    return array;
+}
+
+void Int32Array1D_Destruct(Int32Array1D *me)
+{
+    free(me->data);
+    me->data = NULL;
+    me->size = 0;
+}
+
+int32_t* Int32Array1D_GetStorage(Int32Array1D *me)
+{
+    return &me->data[0];
+}
+
 UInt32Array1D UInt32Array1D_Construct(int32_t x)
 {
     UInt32Array1D array;

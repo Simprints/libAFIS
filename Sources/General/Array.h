@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+typedef struct Int32Array1D Int32Array1D;
 typedef struct UInt32Array1D UInt32Array1D;
 typedef struct FloatArray1D FloatArray1D;
 typedef struct BoolArray1D BoolArray1D;
@@ -14,6 +15,12 @@ typedef struct FloatArray2D FloatArray2D;
 
 typedef struct Int16Array3D Int16Array3D;
 typedef struct FloatArray3D FloatArray3D;
+
+struct Int32Array1D
+{
+    int32_t *data;
+    int32_t size;
+};
 
 struct UInt32Array1D
 {
@@ -69,6 +76,10 @@ struct FloatArray3D
     int32_t sizeY;
     int32_t sizeZ;
 };
+
+Int32Array1D Int32Array1D_Construct(int32_t x);
+void Int32Array1D_Destruct(Int32Array1D *me);
+int32_t* Int32Array1D_GetStorage(Int32Array1D *me);
 
 UInt32Array1D UInt32Array1D_Construct(int32_t x);
 void UInt32Array1D_Destruct(UInt32Array1D *me);

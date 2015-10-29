@@ -7,27 +7,26 @@ PointGrid PointGrid_Construct(const Size *s)
 {
     PointGrid pg;
 
-    pg.allX = calloc(s->width, sizeof(int));
-    pg.allY = calloc(s->height, sizeof(int));
-
-    assert(pg.allX && pg.allY);
+    pg.allX = Int32Array1D_Construct(s->width);
+    pg.allY = Int32Array1D_Construct(s->height);
 
     return pg;
 }
 
 void PointGrid_Destruct(PointGrid *me)
 {
-    /* TODO */
+    Int32Array1D_Destruct(&me->allX);
+    Int32Array1D_Destruct(&me->allY);
 }
 
 Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int y, int x)
 {
-    return Point_Construct(me->allX[x], me->allY[y]);
+    return Point_Construct(me->allX.data[x], me->allY.data[y]);
 }
 
 Point PointGrid_GetPointFromPoint(const PointGrid *me, const Point *at)
 {
-    return Point_Construct(me->allX[at->x], me->allY[at->y]);
+    return Point_Construct(me->allX.data[at->x], me->allY.data[at->y]);
 }
 
 RectangleGrid RectangleGrid_Construct(const PointGrid *c)
@@ -60,9 +59,9 @@ static PointGrid InitCorners(const BlockMap *me)
 {
     PointGrid grid = PointGrid_Construct(&me->cornerCount);
     for (int y = 0; y < me->cornerCount.height; ++y)
-        grid.allY[y] = y * me->pixelCount.height / me->blockCount.height;
+        grid.allY.data[y] = y * me->pixelCount.height / me->blockCount.height;
     for (int x = 0; x < me->cornerCount.width; ++x)
-        grid.allX[x] = x * me->pixelCount.width / me->blockCount.width;
+        grid.allX.data[x] = x * me->pixelCount.width / me->blockCount.width;
     return grid;
 }
 
@@ -74,14 +73,14 @@ static PointGrid InitBlockCenters(const BlockMap *me)
     {
         RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, y, 0);
         Point p = RectangleC_GetCenter(&r);
-        grid.allY[y] = p.y;
+        grid.allY.data[y] = p.y;
     }
 
     for (int x = 0; x < me->blockCount.width; ++x)
     {
         RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, 0, x);
         Point p = RectangleC_GetCenter(&r);
-        grid.allX[x] = p.x;
+        grid.allX.data[x] = p.x;
     }
     return grid;
 }
@@ -91,21 +90,21 @@ static RectangleGrid InitCornerAreas(const BlockMap *me)
     Size s = Size_Construct(me->cornerCount.width + 1, me->cornerCount.height + 1);
     PointGrid grid = PointGrid_Construct(&s);
 
-    grid.allY[0] = 0;
+    grid.allY.data[0] = 0;
     for (int y = 0; y < me->blockCount.height; ++y)
     {
         Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, y, 0);
-        grid.allY[y + 1] = p.y;
+        grid.allY.data[y + 1] = p.y;
     }
-    grid.allY[me->blockCount.height] = me->pixelCount.height;
+    grid.allY.data[me->blockCount.height] = me->pixelCount.height;
 
-    grid.allX[0] = 0;
+    grid.allX.data[0] = 0;
     for (int x = 0; x < me->blockCount.width; ++x)
     {
         Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, 0, x);
-        grid.allX[x + 1] = p.x;
+        grid.allX.data[x + 1] = p.x;
     }
-    grid.allX[me->blockCount.width] = me->pixelCount.width;
+    grid.allX.data[me->blockCount.width] = me->pixelCount.width;
 
     return RectangleGrid_Construct(&grid);
 }
@@ -125,4 +124,12 @@ BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize)
     bm.blockCenters = InitBlockCenters(&bm);
     bm.cornerAreas = InitCornerAreas(&bm);
     return bm;
+}
+
+void BlockMap_Destruct(BlockMap *me)
+{
+    PointGrid_Destruct(&me->corners);
+    //PointGrid_Destruct(&me->blockAreas.corners);
+    PointGrid_Destruct(&me->blockCenters);
+    PointGrid_Destruct(&me->cornerAreas.corners);
 }

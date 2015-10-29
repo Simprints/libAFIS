@@ -6,6 +6,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(Array);
 
     RUN_TEST_GROUP(VotingFilter);
+    RUN_TEST_GROUP(LocalHistogram);
 }
 
 int main(int argc, const char * argv[])

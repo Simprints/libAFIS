@@ -4,6 +4,7 @@
 #include "General/Calc.h"
 #include "General/Point.h"
 #include "General/Size.h"
+#include "General/Array.h"
 #include "General/RectangleC.h"
 
 typedef struct PointGrid PointGrid;
@@ -12,8 +13,8 @@ typedef struct BlockMap BlockMap;
 
 struct PointGrid
 {
-    int *allX;
-    int *allY;
+    Int32Array1D allX;
+    Int32Array1D allY;
 };
 
 struct RectangleGrid
@@ -35,6 +36,7 @@ struct BlockMap
 };
 
 BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize);
+void BlockMap_Destruct(BlockMap *me);
 
 PointGrid PointGrid_Construct(const Size *s);
 void PointGrid_Destruct(PointGrid *me);

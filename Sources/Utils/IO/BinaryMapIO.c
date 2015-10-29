@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "General/BinaryMap.h"
+#include "BinaryMapIO.h"
 
 BinaryMap BinaryMapIO_ConstructFromFile(const char *filename)
 {
