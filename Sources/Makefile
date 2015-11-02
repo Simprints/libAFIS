@@ -2,7 +2,7 @@
 ## Build tools
 ##
 CC = /usr/bin/gcc
-AR = /usr/bin/ar
+ZIP = /usr/bin/zip
 MKDIR=mkdir -p
 
 ##
@@ -102,9 +102,9 @@ $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
 
 archive:
-	find . ! -path "*/Utils/*" -type f -name *.h | xargs zip $(BUILD_DIR)/libAFIS.zip; \
+	find . ! -path "*/Utils/*" -type f -name *.h | xargs $(ZIP) $(BUILD_DIR)/libAFIS.zip; \
 	cd $(BUILD_DIR); \
-	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o | xargs zip -g libAFIS.zip
+	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o | xargs $(ZIP) -g libAFIS.zip
 	
 clean:
 	rm -rf $(BUILD_DIR)
