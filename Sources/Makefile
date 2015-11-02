@@ -81,7 +81,7 @@ UNITY_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(UNITY_SRCS)))
 ##
 all: cafis
 cafis: $(CAFIS_OBJS)
-utest: $(UTEST_EXE)
+utest: runUnitTest
 
 
 ##
@@ -106,6 +106,9 @@ $(UNITY_OBJS):  $(BUILD_DIR)/%.o: %.c
 $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
 
+runUnitTest: $(UTEST_EXE)
+	$(BUILD_DIR)/all_tests ../TestData/
+	
 archive:
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.h -exec $(ZIP) -cvf $(BUILD_DIR)/libAFIS-$(BUILD_NUMBER).tar {} \+ ; \
 	cd $(BUILD_DIR); \
@@ -114,4 +117,4 @@ archive:
 clean:
 	rm -rf $(BUILD_DIR)
 
-.PHONY: all cafis utest clean archive
+.PHONY: all cafis utest clean archive runUnitTest
