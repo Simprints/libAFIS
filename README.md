@@ -1,15 +1,15 @@
 ## CAFIS -- Rewriting SourceAFIS in C
 
+[![Build Status](https://drone.io/github.com/SimPrints/DefinitelyThisWillwork/status.png)](https://drone.io/github.com/SimPrints/DefinitelyThisWillwork/latest)
+
 ### Directory structure
 
-`Sources/` -- C source files
-`Sources/Utils/`  -- Utilities that are specific for the C implementation
-`Sources/Tests/`  -- Unit tests
-`Sources/Build/`  -- Object files generated after compilation
-`Sources/Extraction/`, `General/`, `Matching/`, `Templates/`, ...  -- C implementation of the library. The directory structure and naming are analogous to the original C# code.
-
-`TestData/` input data and expected output for unit tests
-
+- `Sources/` -- C source files
+- `Sources/Utils/`  -- Utilities that are specific for the C implementation
+- `Sources/Tests/`  -- Unit tests
+- `Sources/Build/`  -- Object files generated after compilation
+- `Sources/Extraction/`, `General/`, `Matching/`, `Templates/`, ...  -- C implementation of the library. The directory structure and naming are analogous to the original C# code.
+- `TestData/` input data and expected output for unit tests
 
 ### Compilation
 
