@@ -20,11 +20,3 @@ TEST(Point, Point_Construct)
     TEST_ASSERT_EQUAL(2, p.x);
     TEST_ASSERT_EQUAL(4, p.y);
 }
-
-TEST(Point, FailureTestCase)
-{
-    
-
-    TEST_ASSERT_EQUAL(2, 3);    
-}
-
