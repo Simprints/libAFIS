@@ -6,6 +6,11 @@ ZIP = /bin/tar
 MKDIR=mkdir -p
 
 ##
+## Environment variables from CI System
+##
+BUILD_NUMBER = 1.0.0.$(DRONE_BUILD_NUMBER)
+
+##
 ## Compiler flags
 ##
 COMMON_CFLAGS = -std=c99 -g
@@ -102,9 +107,9 @@ $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
 
 archive:
-	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.h -exec $(ZIP) -cvf $(BUILD_DIR)/libAFIS.tar {} \+ ; \
+	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.h -exec $(ZIP) -cvf $(BUILD_DIR)/libAFIS-$(BUILD_NUMBER).tar {} \+ ; \
 	cd $(BUILD_DIR); \
-	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o -exec $(ZIP) -rvf libAFIS.tar {} \+
+	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o -exec $(ZIP) -rvf libAFIS-$(BUILD_NUMBER).tar {} \+
 	
 clean:
 	rm -rf $(BUILD_DIR)
