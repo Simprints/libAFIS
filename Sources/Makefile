@@ -2,6 +2,7 @@
 ## Build tools
 ##
 CC = /usr/bin/gcc
+AR = /usr/bin/ar
 MKDIR=mkdir -p
 
 ##
@@ -77,6 +78,7 @@ all: cafis
 cafis: $(CAFIS_OBJS)
 utest: $(UTEST_EXE)
 
+
 ##
 ## Rules
 ##
@@ -99,7 +101,12 @@ $(UNITY_OBJS):  $(BUILD_DIR)/%.o: %.c
 $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
 
+archive:
+	find . ! -path "*/Utils/*" -type f -name *.h | xargs zip $(BUILD_DIR)/libAFIS.zip; \
+	cd $(BUILD_DIR); \
+	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o | xargs zip -g libAFIS.zip
+	
 clean:
-	rm -r $(BUILD_DIR)/*
+	rm -rf $(BUILD_DIR)
 
-.PHONY: all cafis utest clean
+.PHONY: all cafis utest clean archive
