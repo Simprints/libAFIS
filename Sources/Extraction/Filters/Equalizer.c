@@ -43,5 +43,7 @@ FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Arra
 
     FloatArray2D equalizedImage = PerformEqualization(me, blocks, image, &equalization, blockMask);
 
+    return equalizedImage;
+
     //TODO: Initialise and free equalization array. 
 }
