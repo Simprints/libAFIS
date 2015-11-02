@@ -21,6 +21,10 @@ struct Equalizer
 
 Equalizer Equalizer_Construct(void);
 void Equalizer_Destruct(Equalizer *me);
-FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask);
+
+//TODO: The interface for this should be: 
+// histogram_equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask, FloatArray2D *output);
+// Output should be malloc'd enough memory to fit the the width and height of the image 
+void Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask);
 
 #endif
