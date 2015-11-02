@@ -21,6 +21,6 @@ struct Equalizer
 
 Equalizer Equalizer_Construct(void);
 void Equalizer_Destruct(Equalizer *me);
-void /*FloatArray2D*/ Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask);
+FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask);
 
 #endif

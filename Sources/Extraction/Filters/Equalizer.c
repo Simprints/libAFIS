@@ -26,7 +26,20 @@ void Equalizer_Destruct(Equalizer *me)
     FloatArray1D_Destruct(&me->toFloatTable);
 }
 
-void /*FloatArray2D*/ Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask)
+
+static FloatArray3D ComputeEqualization(BlockMap *blocks, Int16Array3D *histogram, BinaryMap *blockMask) {
+    FloatArray3D res;
+    return res;
+}
+
+static FloatArray2D PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, FloatArray3D *equalization, BinaryMap *blockMask) {
+    FloatArray2D res;
+    return res;
+}
+
+FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask)
 {
-    /* TODO: Implement Equalizer_Equalize() */
+    FloatArray3D equalization = ComputeEqualization(blocks, histogram, blockMask);
+
+    return PerformEqualization(me, blocks, image, &equalization, blockMask);
 }
