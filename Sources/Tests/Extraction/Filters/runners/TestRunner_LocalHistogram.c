@@ -14,4 +14,6 @@ TEST_GROUP_RUNNER(LocalHistogram)
         Test_LocalHistogram_testNumber = tests[i];
         RUN_TEST_CASE(LocalHistogram, LocalHistogram_Analyze);
     }
+
+    RUN_TEST_CASE(LocalHistogram, LocalHistogram_Analyze2);
 }

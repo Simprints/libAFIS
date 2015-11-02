@@ -46,3 +46,19 @@ TEST(LocalHistogram, LocalHistogram_Analyze)
     Int16Array3D_Destruct(&actual);
     Int16Array3D_Destruct(&expected);
 }
+
+TEST(LocalHistogram, LocalHistogram_Analyze2)
+{
+    UInt8Array2D image = UInt8Array2D_Construct(1, 2);
+
+    Size size = Size_Construct(image.sizeX, image.sizeY);
+
+    BlockMap blocks = BlockMap_Construct(&size, 2);
+
+    image.data[0][0] = 3;
+    image.data[0][1] = 3;
+
+    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+
+    TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
+}
