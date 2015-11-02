@@ -26,9 +26,9 @@ Object files are created in the `Build/` directory. The library sources are comp
 
 #### Windows
 
-Not tested but should work out of the box using Cygwin.
-You will have to add additional include directories to \Sources & \Sources\Utils\Unity
-You may have to comment out the file \Sources\Utils\Misc\binarise.c
+- Not tested but should work out of the box using Cygwin.
+- You will have to add additional include directories to \Sources & \Sources\Utils\Unity
+- You may have to comment out the file \Sources\Utils\Misc\binarise.c
 
 ### Unit tests
 
