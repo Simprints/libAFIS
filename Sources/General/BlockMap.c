@@ -36,7 +36,7 @@ RectangleGrid RectangleGrid_Construct(const PointGrid *c)
     return rg;
 }
 
-RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int y, int x)
+RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int x, int y)
 {
     Point p1 = PointGrid_GetPointFromCoordinates(&me->corners, y, x);
     Point p2 = PointGrid_GetPointFromCoordinates(&me->corners, y+1, x+1);
@@ -71,14 +71,14 @@ static PointGrid InitBlockCenters(const BlockMap *me)
 
     for (int y = 0; y < me->blockCount.height; ++y)
     {
-        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, y, 0);
+        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, 0, y);
         Point p = RectangleC_GetCenter(&r);
         grid.allY.data[y] = p.y;
     }
 
     for (int x = 0; x < me->blockCount.width; ++x)
     {
-        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, 0, x);
+        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, x, 0);
         Point p = RectangleC_GetCenter(&r);
         grid.allX.data[x] = p.x;
     }
