@@ -42,8 +42,6 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
     float limitedMin[256];
     float limitedMax[256];
 
-
-
     for (int i = 0; i < 256; ++i)
     {
         limitedMin[i] = MAX(i * widthMin + (me->rangeMin),
@@ -51,7 +49,6 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
         limitedMax[i] = MIN(i * widthMax + (me->rangeMin),
                             (me->rangeMax) - (255 - i) * widthMin);
     }
-
 
     FloatArray3D equalization = FloatArray3D_Construct(blocks->cornerCount.height, blocks->cornerCount.width, 256);
 
@@ -73,7 +70,7 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
 
                 for (int i = 0; i < 256; ++i)
                 {
-                    area += histogram->data[y][x][i];
+                    area += histogram->data[x][y][i];
                 }
 
                 float widthWeight = me->rangeSize / area;
@@ -81,7 +78,7 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
 
                 for (int i = 0; i < 256; ++i)
                 {
-                    float width = histogram->data[corner.y][corner.x][i] * widthWeight;
+                    float width = histogram->data[corner.x][corner.y][i] * widthWeight;
                     float equalized = top + me->toFloatTable.data[i] * width;
                     top += width;
 
@@ -91,7 +88,7 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
                     if (limited > limitedMax[i])
                         limited = limitedMax[i];
 
-                    equalization.data[corner.y][corner.x][i] = limited;
+                    equalization.data[corner.x][corner.y][i] = limited;
                 }
             }
         }
@@ -102,8 +99,44 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
 
 static FloatArray2D PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, FloatArray3D *equalization, BinaryMap *blockMask) 
 {
-    FloatArray2D res;
-    return res;
+    FloatArray2D result = FloatArray2D_Construct(blocks->pixelCount.width, blocks->pixelCount.height);
+
+    for (int y = RectangleC_GetBottom(&blocks->allBlocks); y < RectangleC_GetTop(&blocks->allBlocks); y++) 
+    {
+        for (int x = RectangleC_GetLeft(&blocks->allBlocks); x < RectangleC_GetRight(&blocks->allBlocks); x++) 
+        {
+            Point block = {
+                .x = x, 
+                .y = y
+            };
+
+            if(BinaryMap_GetBit(blockMask, block.x, block.y))
+            {
+                Point firstPoint = PointGrid_GetPointFromCoordinates(&blocks->blockAreas.corners, block.x, block.y);
+                Point secondPoint = PointGrid_GetPointFromCoordinates(&blocks->blockAreas.corners, block.x + 1, block.y + 1);
+
+                RectangleC area = RectangleC_ConstructFrom2Points(&firstPoint, &secondPoint);
+
+                for(int x = RectangleC_GetLeft(&area); x < RectangleC_GetRight(&area); ++x){
+                    for(int y = RectangleC_GetBottom(&area); y < RectangleC_GetTop(&area); ++y){
+
+                        uint8_t pixel = image->data[x][y];
+
+                        float bottomLeft = equalization->data[block.x][block.y][pixel];
+                        float bottomRight = equalization->data[block.x][block.y + 1][pixel];
+                        float topLeft = equalization->data[block.x + 1][block.y][pixel];
+                        float topRight = equalization->data[block.x + 1][block.y + 1][pixel];
+
+                        Point p = { .x = x, .y = y };
+                        PointF fraction = RectangleC_GetFraction(&area, &p);
+                        result.data[x][y] = Calc_InterpolateRect(topLeft, topRight, bottomLeft, bottomRight, &fraction);
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
 }
 
 FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask)
@@ -112,7 +145,7 @@ FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Arra
 
     FloatArray2D equalizedImage = PerformEqualization(me, blocks, image, &equalization, blockMask);
 
-    return equalizedImage;
+    FloatArray3D_Destruct(&equalization);
 
-    //TODO: Initialise and free equalization array. 
+    return equalizedImage;
 }

@@ -19,7 +19,7 @@ void PointGrid_Destruct(PointGrid *me)
     Int32Array1D_Destruct(&me->allY);
 }
 
-Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int y, int x)
+Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int x, int y)
 {
     return Point_Construct(me->allX.data[x], me->allY.data[y]);
 }
@@ -36,17 +36,17 @@ RectangleGrid RectangleGrid_Construct(const PointGrid *c)
     return rg;
 }
 
-RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int y, int x)
+RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int x, int y)
 {
-    Point p1 = PointGrid_GetPointFromCoordinates(&me->corners, y, x);
-    Point p2 = PointGrid_GetPointFromCoordinates(&me->corners, y+1, x+1);
+    Point p1 = PointGrid_GetPointFromCoordinates(&me->corners, x, y);
+    Point p2 = PointGrid_GetPointFromCoordinates(&me->corners, x+1, y+1);
     return RectangleC_ConstructFrom2Points(&p1, &p2);
 }
 
 RectangleC RectangleGrid_GetRectangleCFromPoint(const RectangleGrid *me, const Point *at)
 {
     Point p1 = PointGrid_GetPointFromPoint(&me->corners, at);
-    Point p2 = PointGrid_GetPointFromCoordinates(&me->corners, at->y+1, at->x+1);
+    Point p2 = PointGrid_GetPointFromCoordinates(&me->corners, at->x+1, at->y+1);
     return RectangleC_ConstructFrom2Points(&p1, &p2);
 }
 
@@ -71,14 +71,14 @@ static PointGrid InitBlockCenters(const BlockMap *me)
 
     for (int y = 0; y < me->blockCount.height; ++y)
     {
-        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, y, 0);
+        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, 0, y);
         Point p = RectangleC_GetCenter(&r);
         grid.allY.data[y] = p.y;
     }
 
     for (int x = 0; x < me->blockCount.width; ++x)
     {
-        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, 0, x);
+        RectangleC r = RectangleGrid_GetRectangleCFromCoordinates(&me->blockAreas, x, 0);
         Point p = RectangleC_GetCenter(&r);
         grid.allX.data[x] = p.x;
     }
@@ -93,7 +93,7 @@ static RectangleGrid InitCornerAreas(const BlockMap *me)
     grid.allY.data[0] = 0;
     for (int y = 0; y < me->blockCount.height; ++y)
     {
-        Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, y, 0);
+        Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, 0, y);
         grid.allY.data[y + 1] = p.y;
     }
     grid.allY.data[me->blockCount.height] = me->pixelCount.height;
@@ -101,7 +101,7 @@ static RectangleGrid InitCornerAreas(const BlockMap *me)
     grid.allX.data[0] = 0;
     for (int x = 0; x < me->blockCount.width; ++x)
     {
-        Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, 0, x);
+        Point p = PointGrid_GetPointFromCoordinates(&me->blockCenters, x, 0);
         grid.allX.data[x + 1] = p.x;
     }
     grid.allX.data[me->blockCount.width] = me->pixelCount.width;
