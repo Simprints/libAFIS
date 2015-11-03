@@ -4,9 +4,11 @@
 #include "Utils/IO/BlockMapIO.h"
 #include "Utils/IO/ImageIO.h"
 #include "Utils/IO/HistogramIO.h"
+#include "Utils/IO/SimpleDataTypesIO.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 bool IsUnderCI = false ;
 
@@ -66,4 +68,11 @@ TEST(DataStructures, Two2ByteArray_SanityCheck)
     {
         ArrayIO_UInt8Array2D_Printf(&array);
     }
+}
+
+
+TEST(DataStructures, Int_SanityCheck) 
+{
+    int32_t  value = Int32_ConstructFromFile("DataStructures/101_1.tif.5.AbsoluteContrast.Limit.dat");
+    assert(value == 17);
 }
