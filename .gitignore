@@ -1,5 +1,7 @@
 Sources/Debug/
 Sources/Build/
+.vs/LibAFIS/v14/.suo
 *.opensdf
 *.[oa]
 *~
+*.sdf
