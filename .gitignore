@@ -1,3 +1,4 @@
 Sources/Build/
 *.[oa]
 *~
+*.kdev4
