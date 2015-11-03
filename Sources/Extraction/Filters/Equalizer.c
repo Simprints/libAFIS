@@ -38,7 +38,6 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
     float widthMax = (me->rangeSize) / 256.0 * (me->maxScaling);
     float widthMin = (me->rangeSize) / 256.0 * (me->minScaling);
 
-    //TODO: This will only have int values, should this be float?
     float limitedMin[256];
     float limitedMax[256];
 
