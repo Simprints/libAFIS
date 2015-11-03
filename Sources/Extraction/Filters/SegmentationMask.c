@@ -57,4 +57,7 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
 
     VotingFilter_Filter(&me->innerMaskFilter, output, &tmpBm); 
     BinaryMap_Or(output, &tmpBm); 
+
+    UInt8Array2D_Destruct(&blocksContrast);
+    BinaryMap_Destruct(&tmpBm); 
 }
