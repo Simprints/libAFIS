@@ -67,3 +67,26 @@ TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][0][1]);
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][1][1]);
 }
+
+TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
+{
+    Int16Array3D histogram = Int16Array3D_Construct(2, 2, 1);
+
+    histogram.data[0][0][0] = 1;
+    histogram.data[0][1][0] = 1;
+    histogram.data[1][0][0] = 1;
+    histogram.data[1][1][0] = 1;
+
+    Int16Array3D smoothHistogram = LocalHistogram_SmoothAroundCorners(&histogram);
+
+    for (int x = 0; x < 3; x++)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            // Corners = 1, edges = 2, centre = 4
+            int expected = ((x == 1) ? 2 : 1) * ((y == 1) ? 2 : 1);
+            int actual = smoothHistogram.data[x][y][0];
+            TEST_ASSERT_EQUAL_INT(expected, actual);
+        }
+    }
+}

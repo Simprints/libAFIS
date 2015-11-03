@@ -18,11 +18,23 @@ Int16Array3D LocalHistogram_Analyze(const BlockMap *blocks, const UInt8Array2D *
     return histogram;
 }
 
-Int16Array3D LocalHistogram_SmoothAroundCorners(const BlockMap *blocks, const Int16Array3D *input)
+Int16Array3D LocalHistogram_SmoothAroundCorners(const Int16Array3D *input)
 {
-    Int16Array3D output;
+    Int16Array3D output = Int16Array3D_Construct(input->sizeX + 1, input->sizeY + 1, input->sizeZ);
 
-    /* TODO: Implement LocalHistogram_SmoothAroundCorners() */
+    for (int x = 0; x < input->sizeX; x++)
+    {
+        for (int y = 0; y < input->sizeY; y++)
+        {
+            for (int z = 0; z < input->sizeZ; z++)
+            {
+                output.data[x][y][z] += input->data[x][y][z];
+                output.data[x][y+1][z] += input->data[x][y][z];
+                output.data[x+1][y][z] += input->data[x][y][z];
+                output.data[x+1][y+1][z] += input->data[x][y][z];
+            }
+        }
+    }
 
     return output;
 }
