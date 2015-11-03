@@ -1,4 +1,4 @@
-## CAFIS -- Rewriting SourceAFIS in C
+## libAFIS -- Rewriting SourceAFIS in C
 
 [![Build Status](https://drone.io/github.com/SimPrints/libAFIS/status.png)](https://drone.io/github.com/SimPrints/libAFIS/latest)
 
