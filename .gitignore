@@ -1,3 +1,5 @@
+Sources/Debug/
 Sources/Build/
+*.opensdf
 *.[oa]
 *~
