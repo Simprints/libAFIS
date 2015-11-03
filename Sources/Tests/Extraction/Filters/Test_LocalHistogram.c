@@ -28,7 +28,8 @@ TEST(LocalHistogram, LocalHistogram_Analyze_same_values_go_into_same_bucket)
     image.data[0][0] = 3;
     image.data[0][1] = 3;
 
-    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
 
     TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
 }
@@ -44,7 +45,8 @@ TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_b
     image.data[0][0] = 3;
     image.data[0][1] = 4;
 
-    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
 
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][3]);
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
@@ -60,7 +62,8 @@ TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
 
     image.data[0][0] = 1;
 
-    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
 
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][1]);
     TEST_ASSERT_EQUAL_INT(0, histogram.data[0][1][1]);
@@ -77,7 +80,8 @@ TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
     histogram.data[1][0][0] = 1;
     histogram.data[1][1][0] = 1;
 
-    Int16Array3D smoothHistogram = LocalHistogram_SmoothAroundCorners(&histogram);
+    Int16Array3D smoothHistogram = Int16Array3D_Construct(histogram.sizeX + 1, histogram.sizeY + 1, histogram.sizeZ);
+    LocalHistogram_SmoothAroundCorners(&histogram, &smoothHistogram);
 
     for (int x = 0; x < 3; x++)
     {
