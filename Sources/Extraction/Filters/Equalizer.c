@@ -97,10 +97,8 @@ static FloatArray3D ComputeEqualization(const Equalizer *me, BlockMap *blocks, I
     return equalization;
 }
 
-static FloatArray2D PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, FloatArray3D *equalization, BinaryMap *blockMask) 
+static void PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, FloatArray3D *equalization, BinaryMap *blockMask, FloatArray2D *output) 
 {
-    FloatArray2D result = FloatArray2D_Construct(blocks->pixelCount.width, blocks->pixelCount.height);
-
     for (int y = RectangleC_GetBottom(&blocks->allBlocks); y < RectangleC_GetTop(&blocks->allBlocks); y++) 
     {
         for (int x = RectangleC_GetLeft(&blocks->allBlocks); x < RectangleC_GetRight(&blocks->allBlocks); x++) 
@@ -129,23 +127,19 @@ static FloatArray2D PerformEqualization(const Equalizer *me, BlockMap *blocks, U
 
                         Point p = { .x = x, .y = y };
                         PointF fraction = RectangleC_GetFraction(&area, &p);
-                        result.data[x][y] = Calc_InterpolateRect(topLeft, topRight, bottomLeft, bottomRight, &fraction);
+                        output->data[x][y] = Calc_InterpolateRect(topLeft, topRight, bottomLeft, bottomRight, &fraction);
                     }
                 }
             }
         }
     }
-
-    return result;
 }
 
-FloatArray2D Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask)
+void Equalizer_Equalize(const Equalizer *me, BlockMap *blocks, UInt8Array2D *image, Int16Array3D *histogram, BinaryMap *blockMask, FloatArray2D *output)
 {
     FloatArray3D equalization = ComputeEqualization(me, blocks, histogram, blockMask);
 
-    FloatArray2D equalizedImage = PerformEqualization(me, blocks, image, &equalization, blockMask);
+    PerformEqualization(me, blocks, image, &equalization, blockMask, output);
 
     FloatArray3D_Destruct(&equalization);
-
-    return equalizedImage;
 }
