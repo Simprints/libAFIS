@@ -44,7 +44,7 @@ Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int y, int x);
 Point PointGrid_GetPointFromPoint(const PointGrid *me, const Point *at);
 
 RectangleGrid RectangleGrid_Construct(const PointGrid *c);
-RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int y, int x);
+RectangleC RectangleGrid_GetRectangleCFromCoordinates(const RectangleGrid *me, int x, int y);
 RectangleC RectangleGrid_GetRectangleCFromPoint(const RectangleGrid *me, const Point *at);
 
 #endif
