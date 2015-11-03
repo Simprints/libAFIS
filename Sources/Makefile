@@ -15,7 +15,7 @@ BUILD_NUMBER = 1.0.0.$(DRONE_BUILD_NUMBER)
 ##
 COMMON_CFLAGS = -std=c99 -g
 CAFIS_CFLAGS = -Wall
-UNITY_CFLAGS = -Wall -Wextra -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-default -Wunreachable-code -Winit-self -Wmissing-field-initializers -Wno-unknown-pragmas -Wstrict-prototypes -Wundef -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -DUNITY_FIXTURES
+UNITY_CFLAGS = -Wall -Wextra -Werror -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-default -Wunreachable-code -Winit-self -Wmissing-field-initializers -Wno-unknown-pragmas -Wstrict-prototypes -Wundef -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -DUNITY_FIXTURES
 
 ##
 ## Linker flags

@@ -40,7 +40,7 @@ TEST(BinaryMap, BinaryMap_Or)
 	BinaryMap_SetBitZero(&target,2,2);
 	
 
-    BinaryMap_Or(source,target);
+    BinaryMap_Or(&source,  &target);
 
   	TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,0), "Failed at: 0,0");
 	TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,0), "Failed at: 1,0");
