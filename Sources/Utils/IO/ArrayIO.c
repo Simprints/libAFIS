@@ -92,6 +92,67 @@ void ArrayIO_UInt8Array2D_Printf(const UInt8Array2D *me)
     }
 }
 
+
+
+
+FloatArray2D ArrayIO_FloatArray2D_ConstructFromFile(const char *filename)
+{
+    int ret;
+    FloatArray2D array;
+
+    /* Open file */
+    FILE *f = fopen(filename, "rb");
+    assert(f != NULL);
+
+    array = ArrayIO_FloatArray2D_ConstructFromStream(f);
+
+    /* Check end of file */
+    uint8_t tmp;
+    ret = fread(&tmp, sizeof(uint8_t), 1, f);
+    assert(ret == 0 && feof(f));
+
+    /* Close file */
+    ret = fclose(f);
+    assert(ret != EOF);
+
+    return array;
+}
+
+FloatArray2D ArrayIO_FloatArray2D_ConstructFromStream(FILE *stream)
+{
+    int ret;
+    FloatArray2D array;
+
+    /* Read array size X, Y */
+    ret = fread(&array.sizeX, sizeof(int32_t), 2, stream);
+    assert(ret == 2);
+
+    /* Create array */
+    array = FloatArray2D_Construct(array.sizeX, array.sizeY);
+
+    /* Read array data */
+    ret = fread(FloatArray2D_GetStorage(&array), sizeof(float), array.sizeX * array.sizeY, stream);
+    assert(ret == array.sizeX * array.sizeY);
+
+    return array;
+}
+
+void ArrayIO_FloatArray2D_Printf(const FloatArray2D *me)
+{
+    printf("\nUInt8Array2D");
+    printf(" (%dx%d)", me->sizeX, me->sizeY);
+
+    for (int i=0; i < me->sizeX && i < 8; i++)
+    {
+        printf("\n");
+        for (int j=0; j < me->sizeY && j < 8; j++)
+        {
+            printf(" %f,", me->data[i][j]);
+        }
+        printf(" ...");
+    }
+}
+
 Int16Array3D ArrayIO_Int16Array3D_ConstructFromFile(const char *filename)
 {
     int ret;

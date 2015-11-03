@@ -14,7 +14,8 @@ TEST_GROUP(DataStructures);
 
 TEST_SETUP(DataStructures)
 {
-    IsUnderCI = (getenv("CI") != NULL);
+    //IsUnderCI = (getenv("CI") != NULL);
+    IsUnderCI = true;
 }
 
 TEST_TEAR_DOWN(DataStructures)
@@ -45,5 +46,15 @@ TEST(DataStructures, Histogram_SanityCheck)
     if (!IsUnderCI)
     {
         HistogramIO_Printf(&histogram);
+    }
+}
+
+
+TEST(DataStructures, Two2FloatArray_SanityCheck)
+{
+    FloatArray2D array = ArrayIO_FloatArray2D_ConstructFromFile("DataStructures/101_1.tif.12.Equalize.2DFloatArray.dat");
+    //if (!IsUnderCI)
+    {
+        ArrayIO_FloatArray2D_Printf(&array);
     }
 }
