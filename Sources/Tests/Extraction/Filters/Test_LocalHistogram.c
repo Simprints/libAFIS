@@ -1,7 +1,7 @@
 #include "Extraction/Filters/LocalHistogram.h"
-#include "Utils/IO/ArrayIO.h"
-#include "Utils/IO/BlockMapIO.h"
-#include "Utils/IO/BinaryMapIO.h"
+#include "General/Array.h"
+#include "General/Size.h"
+#include "General/BlockMap.h"
 #include "unity.h"
 #include "unity_fixture.h"
 
@@ -9,40 +9,100 @@
 
 TEST_GROUP(LocalHistogram);
 
-int Test_LocalHistogram_testNumber;
-
-static char inFile1[128], inFile2[128], expFile[128];
-
 TEST_SETUP(LocalHistogram)
 {
-    sprintf(inFile1, "Extraction/Filters/LocalHistogram/n%03d_d1_in.dat", Test_LocalHistogram_testNumber);
-    sprintf(inFile2, "Extraction/Filters/LocalHistogram/n%03d_d2_in.dat", Test_LocalHistogram_testNumber);
-    sprintf(expFile, "Extraction/Filters/LocalHistogram/n%03d_d1_exp.dat", Test_LocalHistogram_testNumber);
 }
 
 TEST_TEAR_DOWN(LocalHistogram)
 {
 }
 
-TEST(LocalHistogram, LocalHistogram_Analyze)
+TEST(LocalHistogram, LocalHistogram_Analyze_same_values_go_into_same_bucket)
 {
-    BlockMap blocks = BlockMapIO_ConstructFromFile(inFile1);
-    UInt8Array2D image = ArrayIO_UInt8Array2D_ConstructFromFile(inFile2);
+    UInt8Array2D image = UInt8Array2D_Construct(1, 2);
 
-    Int16Array3D actual = LocalHistogram_Analyze(&blocks, &image);
+    Size size = Size_Construct(image.sizeX, image.sizeY);
 
-    Int16Array3D expected = ArrayIO_Int16Array3D_ConstructFromFile(expFile);
+    BlockMap blocks = BlockMap_Construct(&size, 2);
 
-    TEST_ASSERT_EQUAL_INT(expected.sizeX, actual.sizeX);
-    TEST_ASSERT_EQUAL_INT(expected.sizeY, actual.sizeY);
-    TEST_ASSERT_EQUAL_INT(expected.sizeZ, actual.sizeZ);
+    image.data[0][0] = 3;
+    image.data[0][1] = 3;
 
-    TEST_ASSERT_EQUAL_HEX16_ARRAY(Int16Array3D_GetStorage(&expected),
-                                  Int16Array3D_GetStorage(&actual),
-                                  expected.sizeX * expected.sizeY * expected.sizeZ);
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
 
-    BlockMap_Destruct(&blocks);
+    TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
+
     UInt8Array2D_Destruct(&image);
-    Int16Array3D_Destruct(&actual);
-    Int16Array3D_Destruct(&expected);
+    Int16Array3D_Destruct(&histogram);
+}
+
+TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_buckets)
+{
+    UInt8Array2D image = UInt8Array2D_Construct(1, 2);
+
+    Size size = Size_Construct(image.sizeX, image.sizeY);
+
+    BlockMap blocks = BlockMap_Construct(&size, 2);
+
+    image.data[0][0] = 3;
+    image.data[0][1] = 4;
+
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
+
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][3]);
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
+
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&histogram);
+}
+
+TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
+{
+    UInt8Array2D image = UInt8Array2D_Construct(4, 4);
+
+    Size size = Size_Construct(image.sizeX, image.sizeY);
+
+    BlockMap blocks = BlockMap_Construct(&size, 2);
+
+    image.data[0][0] = 1;
+
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &histogram);
+
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[0][1][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[1][0][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[1][1][1]);
+
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&histogram);
+}
+
+TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
+{
+    Int16Array3D histogram = Int16Array3D_Construct(2, 2, 1);
+
+    histogram.data[0][0][0] = 1;
+    histogram.data[0][1][0] = 1;
+    histogram.data[1][0][0] = 1;
+    histogram.data[1][1][0] = 1;
+
+    Int16Array3D smoothHistogram = Int16Array3D_Construct(histogram.sizeX + 1, histogram.sizeY + 1, histogram.sizeZ);
+    LocalHistogram_SmoothAroundCorners(&histogram, &smoothHistogram);
+
+    for (int x = 0; x < 3; x++)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            // Corners = 1, edges = 2, centre = 4
+            int expected = ((x == 1) ? 2 : 1) * ((y == 1) ? 2 : 1);
+            int actual = smoothHistogram.data[x][y][0];
+            TEST_ASSERT_EQUAL_INT(expected, actual);
+        }
+    }
+
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothHistogram);
 }

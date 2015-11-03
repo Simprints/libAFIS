@@ -1,4 +1,8 @@
-#include <unistd.h>
+#ifdef _MSC_VER
+	#include <io.h>
+#else
+	#include <unistd.h>
+#endif
 #include "unity_fixture.h"
 
 static void RunAllTests(void)
