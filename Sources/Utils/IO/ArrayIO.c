@@ -150,6 +150,78 @@ void ArrayIO_FloatArray2D_Printf(const FloatArray2D *me)
     }
 }
 
+PointArray2D ArrayIO_Point2D_ConstructFromFile(const char *filename)
+{
+    int ret;
+    PointArray2D array;
+
+    /* Open file */
+    FILE *f = fopen(filename, "rb");
+    assert(f != NULL);
+
+    array = ArrayIO_PointArray2D_ConstructFromStream(f);
+
+    /* Check end of file */
+    uint8_t tmp;
+    ret = fread(&tmp, sizeof(uint8_t), 1, f);
+    assert(ret == 0 && feof(f));
+
+    /* Close file */
+    ret = fclose(f);
+    assert(ret != EOF);
+
+    return array;
+}
+
+PointArray2D ArrayIO_PointArray2D_ConstructFromStream(FILE *stream)
+{
+    int ret;
+    PointArray2D array;
+
+    /* Read array size X */
+    ret = fread(&array.size, sizeof(int32_t), 1, stream);
+    assert(ret == 1);
+
+    /* Create array */
+    array = PointArray2D_Construct(array.size);
+
+    for (int i=0; i< array.size; i++)
+    {
+       int32_t length;
+       ret = fread(&length, sizeof(int32_t), 1, stream);
+
+       assert(ret == 1);
+       PointArray1D *row = PointArray2D_ConstructRow(&array, i,length);
+       ret = fread(PointArray1D_GetStorage(row), sizeof(int32_t)*2, length, stream);
+       
+       assert(ret == length);
+
+    }
+    /* Read array data */
+//     ret = fread(PointArray2D_GetStorage(&array), sizeof(int)*2, array.sizeX * array.sizeY, stream);
+//     assert(ret == array.sizeX * array.sizeY);
+
+    return array;
+}
+
+void ArrayIO_PointArray2D_Printf(const PointArray2D *me)
+{
+    printf("\nPointArray2D");
+    printf(" (%dx)", me->size);
+
+    for (int i=0; i < me->size && i < 8; i++)
+    {
+        PointArray1D *inner = me->data[i];
+        printf("\n (%d)", inner->size);
+        
+        for (int j=0; j < inner->size && j < 8; j++)
+        {
+            printf(" (%d, %d),", inner->data[j].x, inner->data[j].y);
+        }
+        printf(" ...");
+    }
+}
+
 Int16Array3D ArrayIO_Int16Array3D_ConstructFromFile(const char *filename)
 {
     int ret;

@@ -202,6 +202,69 @@ float* FloatArray2D_GetStorage(FloatArray2D *me)
     return &me->data[0][0];
 }
 
+PointArray1D* PointArray1D_Construct(int32_t x)
+{
+    PointArray1D *array = calloc(1, sizeof(PointArray1D));
+
+    assert(x > 0 );
+    array->size = x;
+
+    array->data = calloc(x, sizeof(uint32_t*)*2);
+    assert(array->data);
+
+    return array;
+}
+
+void PointArray1D_Destruct(PointArray1D *me)
+{
+    free(me->data);
+    me->data = NULL;
+    me->size = 0;
+}
+
+Point* PointArray1D_GetStorage(PointArray1D *me)
+{
+    return &me->data[0];
+}
+
+PointArray2D PointArray2D_Construct(int32_t x)
+{
+    PointArray2D array;
+
+    assert(x > 0 );
+    array.size = x;
+
+    array.data = calloc(x, sizeof(uint32_t*));
+    assert(array.data);
+
+    return array;
+}
+
+PointArray1D* PointArray2D_ConstructRow(PointArray2D *me, int rowId, int32_t x)
+{
+    PointArray1D *array = PointArray1D_Construct(x);
+    
+    me->data[rowId] = array;
+    
+    return array;
+}
+
+void PointArray2D_Destruct(PointArray2D *me)
+{
+    for (int row = 0; row < me->size; row++)
+    {
+        free(me->data[row]);
+    }
+    free(me->data);
+    me->data = NULL;
+    me->size = 0;
+}
+
+PointArray1D* PointArray2D_GetStorage(PointArray2D *me, int rowId)
+{
+    return me->data[rowId];
+}
+
 Int16Array3D Int16Array3D_Construct(int32_t x, int32_t y, int32_t z)
 {
     Int16Array3D array;

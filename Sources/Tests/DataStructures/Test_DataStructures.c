@@ -79,5 +79,14 @@ TEST(DataStructures, Float_SanityCheck)
 {
     float value = Float_ConstructFromFile("DataStructures/101_1.tif.15.LinesByOrientation.StepFactor.dat");
     float valueToLookFor = 1.59f;
-    assert(abs(value - valueToLookFor) < 0.001f); // Accound for rounding shite...
+    assert(abs(value - valueToLookFor) < 0.001f); // Take into account the extra decimal places...
+}
+
+TEST(DataStructures, Two2PointArray_SanityCheck)
+{
+    PointArray2D array = ArrayIO_Point2D_ConstructFromFile("DataStructures/101_1.tif.17.LinesByOrientation.result.dat");
+    if (!IsUnderCI)
+    {
+        ArrayIO_PointArray2D_Printf(&array);
+    }
 }
