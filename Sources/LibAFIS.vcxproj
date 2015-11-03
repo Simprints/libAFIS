@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B21F09C2-2066-4FAF-B539-D6D70730B545}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LibAFIS</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>LibAFIS</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\GitHub\libAFIS\Sources\Utils\Unity;C:\GitHub\libAFIS\Sources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\GitHub\libAFIS\Sources\Utils\Unity;C:\GitHub\libAFIS\Sources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Extraction\Filters\AbsoluteContrast.c" />
+    <ClCompile Include="Extraction\Filters\ClippedContrast.c" />
+    <ClCompile Include="Extraction\Filters\CrossRemover.c" />
+    <ClCompile Include="Extraction\Filters\Equalizer.c" />
+    <ClCompile Include="Extraction\Filters\HillOrientation.c" />
+    <ClCompile Include="Extraction\Filters\ImageInverter.c" />
+    <ClCompile Include="Extraction\Filters\InnerMask.c" />
+    <ClCompile Include="Extraction\Filters\LinesByOrientation.c" />
+    <ClCompile Include="Extraction\Filters\LocalHistogram.c" />
+    <ClCompile Include="Extraction\Filters\OrientedSmoother.c" />
+    <ClCompile Include="Extraction\Filters\RelativeContrast.c" />
+    <ClCompile Include="Extraction\Filters\SegmentationMask.c" />
+    <ClCompile Include="Extraction\Filters\Thinner.c" />
+    <ClCompile Include="Extraction\Filters\ThresholdBinarizer.c" />
+    <ClCompile Include="Extraction\Filters\VotingFilter.c" />
+    <ClCompile Include="Extraction\Model\DotRemover.c" />
+    <ClCompile Include="Extraction\Model\SkeletonBuilder.c" />
+    <ClCompile Include="General\Array.c" />
+    <ClCompile Include="General\BinaryMap.c" />
+    <ClCompile Include="General\BlockMap.c" />
+    <ClCompile Include="General\Calc.c" />
+    <ClCompile Include="General\List.c" />
+    <ClCompile Include="General\Point.c" />
+    <ClCompile Include="General\PointF.c" />
+    <ClCompile Include="General\PolarPoint.c" />
+    <ClCompile Include="General\Range.c" />
+    <ClCompile Include="General\RectangleC.c" />
+    <ClCompile Include="General\Size.c" />
+    <ClCompile Include="General\SizeF.c" />
+    <ClCompile Include="Tests\all_tests.c" />
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_LocalHistogram.c" />
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_VotingFilter.c" />
+    <ClCompile Include="Tests\Extraction\Filters\Test_LocalHistogram.c" />
+    <ClCompile Include="Tests\Extraction\Filters\Test_VotingFilter.c" />
+    <ClCompile Include="Tests\General\runners\TestRunner_Array.c" />
+    <ClCompile Include="Tests\General\runners\TestRunner_BinaryMap.c" />
+    <ClCompile Include="Tests\General\runners\TestRunner_Point.c" />
+    <ClCompile Include="Tests\General\Test_Array.c" />
+    <ClCompile Include="Tests\General\Test_BinaryMap.c" />
+    <ClCompile Include="Tests\General\Test_Point.c" />
+    <ClCompile Include="Utils\IO\ArrayIO.c" />
+    <ClCompile Include="Utils\IO\BinaryMapIO.c" />
+    <ClCompile Include="Utils\IO\BlockMapIO.c" />
+    <ClCompile Include="Utils\Misc\binarise.c" />
+    <ClCompile Include="Utils\Unity\unity.c" />
+    <ClCompile Include="Utils\Unity\unity_fixture.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Extraction\Filters\AbsoluteContrast.h" />
+    <ClInclude Include="Extraction\Filters\ClippedContrast.h" />
+    <ClInclude Include="Extraction\Filters\CrossRemover.h" />
+    <ClInclude Include="Extraction\Filters\Equalizer.h" />
+    <ClInclude Include="Extraction\Filters\HillOrientation.h" />
+    <ClInclude Include="Extraction\Filters\ImageInverter.h" />
+    <ClInclude Include="Extraction\Filters\InnerMask.h" />
+    <ClInclude Include="Extraction\Filters\LinesByOrientation.h" />
+    <ClInclude Include="Extraction\Filters\LocalHistogram.h" />
+    <ClInclude Include="Extraction\Filters\OrientedSmoother.h" />
+    <ClInclude Include="Extraction\Filters\RelativeContrast.h" />
+    <ClInclude Include="Extraction\Filters\SegmentationMask.h" />
+    <ClInclude Include="Extraction\Filters\Thinner.h" />
+    <ClInclude Include="Extraction\Filters\ThresholdBinarizer.h" />
+    <ClInclude Include="Extraction\Filters\VotingFilter.h" />
+    <ClInclude Include="Extraction\Model\DotRemover.h" />
+    <ClInclude Include="Extraction\Model\SkeletonBuilder.h" />
+    <ClInclude Include="General\Array.h" />
+    <ClInclude Include="General\BinaryMap.h" />
+    <ClInclude Include="General\BlockMap.h" />
+    <ClInclude Include="General\Calc.h" />
+    <ClInclude Include="General\List.h" />
+    <ClInclude Include="General\Neighborhood.h" />
+    <ClInclude Include="General\Point.h" />
+    <ClInclude Include="General\PointF.h" />
+    <ClInclude Include="General\PolarPoint.h" />
+    <ClInclude Include="General\Range.h" />
+    <ClInclude Include="General\RectangleC.h" />
+    <ClInclude Include="General\Size.h" />
+    <ClInclude Include="General\SizeF.h" />
+    <ClInclude Include="Utils\IO\ArrayIO.h" />
+    <ClInclude Include="Utils\IO\BinaryMapIO.h" />
+    <ClInclude Include="Utils\IO\BlockMapIO.h" />
+    <ClInclude Include="Utils\Unity\unity.h" />
+    <ClInclude Include="Utils\Unity\unity_fixture.h" />
+    <ClInclude Include="Utils\Unity\unity_fixture_internals.h" />
+    <ClInclude Include="Utils\Unity\unity_fixture_malloc_overrides.h" />
+    <ClInclude Include="Utils\Unity\unity_internals.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

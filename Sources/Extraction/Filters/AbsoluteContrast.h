@@ -7,14 +7,8 @@
 #include "General/BinaryMap.h"
 
 typedef struct BinaryMap BinaryMap;
-typedef struct AbsoluteContrast AbsoluteContrast;
 
-struct AbsoluteContrast
-{
-    int32_t limit; /* Upper = 255 */
-};
+void AbsoluteContrast_DetectLowContrast(const int limit, const UInt8Array2D *contrast, BinaryMap *output);
 
-AbsoluteContrast AbsoluteContrast_Construct(void);
-BinaryMap AbsoluteContrast_DetectLowContrast(const AbsoluteContrast *me, UInt8Array2D *contrast);
 
 #endif

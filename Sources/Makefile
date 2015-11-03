@@ -14,7 +14,7 @@ BUILD_NUMBER = 1.0.0.$(DRONE_BUILD_NUMBER)
 ## Compiler flags
 ##
 COMMON_CFLAGS = -std=c99 -g
-CAFIS_CFLAGS = -Wall
+LIBAFIS_CFLAGS = -Wall
 UNITY_CFLAGS = -Wall -Wextra -Werror -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-default -Wunreachable-code -Winit-self -Wmissing-field-initializers -Wno-unknown-pragmas -Wstrict-prototypes -Wundef -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -DUNITY_FIXTURES
 
 ##
@@ -33,7 +33,7 @@ UNITY_DIR = $(UTILS_DIR)/Unity
 ##
 ## Include directories
 ##
-CAFIS_INCS = -I .
+LIBAFIS_INCS = -I .
 UNITY_INCS = -I $(UNITY_DIR)
 
 ##
@@ -44,10 +44,10 @@ UTEST_EXE = all_tests
 ##
 ## Source files to include and exclude
 ##
-CAFIS_SRCS = General/*.c \
-             Extraction/Filters/*.c \
-             Extraction/Model/*.c
-CAFIS_SRCS_EXCLUDE = 
+LIBAFIS_SRCS = General/*.c \
+               Extraction/Filters/*.c \
+               Extraction/Model/*.c
+LIBAFIS_SRCS_EXCLUDE = 
 
 UTILS_SRCS =  IO/*.c
 UTILS_SRCS_EXCLUDE = 
@@ -64,9 +64,9 @@ UNITY_SRCS = $(addprefix  $(UNITY_DIR)/, unity.c unity_fixture.c)
 ##
 ## Process file lists
 ##
-CAFIS_SRCS := $(wildcard $(CAFIS_SRCS))
-CAFIS_SRCS := $(filter-out $(CAFIS_SRCS_EXCLUDE), $(CAFIS_SRCS))
-CAFIS_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(CAFIS_SRCS)))
+LIBAFIS_SRCS := $(wildcard $(LIBAFIS_SRCS))
+LIBAFIS_SRCS := $(filter-out $(LIBAFIS_SRCS_EXCLUDE), $(LIBAFIS_SRCS))
+LIBAFIS_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(LIBAFIS_SRCS)))
 
 UTILS_SRCS := $(wildcard $(addprefix $(UTILS_DIR)/, $(UTILS_SRCS)))
 UTILS_SRCS := $(filter-out $(addprefix $(UTILS_DIR)/, $(UTILS_SRCS_EXCLUDE)), $(UTILS_SRCS))
@@ -82,42 +82,42 @@ UNITY_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(UNITY_SRCS)))
 ## Targets
 ##
 all: runall
-cafis: $(CAFIS_OBJS)
+libafis: $(LIBAFIS_OBJS)
 utest: runUnitTest
 
 ##
 ## Rules
 ##
-$(CAFIS_OBJS): $(BUILD_DIR)/%.o: %.c
+$(LIBAFIS_OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
-	$(CC) -c $(COMMON_CFLAGS) $(CAFIS_CFLAGS) $(CAFIS_INCS) $< -o $@
+	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
 
 $(UTILS_OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
-	$(CC) -c $(COMMON_CFLAGS) $(CAFIS_CFLAGS) $(CAFIS_INCS) $< -o $@
+	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
 
 $(UTEST_OBJS):  $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
-	$(CC) -c $(COMMON_CFLAGS) $(UNITY_CFLAGS) $(CAFIS_INCS) $(UNITY_INCS) $< -o $@
+	$(CC) -c $(COMMON_CFLAGS) $(UNITY_CFLAGS) $(LIBAFIS_INCS) $(UNITY_INCS) $< -o $@
 
 $(UNITY_OBJS):  $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
 	$(CC) -c $(COMMON_CFLAGS) $(UNITY_CFLAGS) $(UNITY_INCS) $< -o $@
 
-$(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
+$(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(LIBAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
 
 runUnitTest: $(UTEST_EXE)
 	$(BUILD_DIR)/all_tests ../TestData/
 	 
-archive: $(CAFIS_OBJS) runUnitTest
+archive: $(LIBAFIS_OBJS) runUnitTest
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.h -exec $(ZIP) -cvf $(BUILD_DIR)/libAFIS-$(BUILD_NUMBER).tar {} \+ ; \
 	cd $(BUILD_DIR); \
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o -exec $(ZIP) -rvf libAFIS-$(BUILD_NUMBER).tar {} \+
 
-runall: clean $(CAFIS_OBJS) runUnitTest archive
+runall: clean $(LIBAFIS_OBJS) runUnitTest archive
 
 clean:
 	rm -rf $(BUILD_DIR)
 
-.PHONY: all cafis utest clean archive runUnitTest
+.PHONY: all libafis utest clean archive runUnitTest
