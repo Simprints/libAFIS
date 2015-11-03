@@ -15,8 +15,6 @@ FloatArray2D ArrayIO_FloatArray2D_ConstructFromFile(const char *filename);
 FloatArray2D ArrayIO_FloatArray2D_ConstructFromStream(FILE *stream);
 void ArrayIO_FloatArray2D_Printf(const FloatArray2D *me);
 
-
-
 Int16Array3D ArrayIO_Int16Array3D_ConstructFromFile(const char *filename);
 Int16Array3D ArrayIO_Int16Array3D_ConstructFromStream(FILE *stream);
 void ArrayIO_Int16Array3D_Printf(const Int16Array3D *me);

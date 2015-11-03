@@ -53,8 +53,17 @@ TEST(DataStructures, Histogram_SanityCheck)
 TEST(DataStructures, Two2FloatArray_SanityCheck)
 {
     FloatArray2D array = ArrayIO_FloatArray2D_ConstructFromFile("DataStructures/101_1.tif.12.Equalize.2DFloatArray.dat");
-    //if (!IsUnderCI)
+    if (!IsUnderCI)
     {
         ArrayIO_FloatArray2D_Printf(&array);
+    }
+}
+
+TEST(DataStructures, Two2ByteArray_SanityCheck) 
+{
+    UInt8Array2D array = ArrayIO_UInt8Array2D_ConstructFromFile("DataStructures/101_1.tif.4.ClippedContrast.result.dat");
+    if (!IsUnderCI)
+    {
+        ArrayIO_UInt8Array2D_Printf(&array);
     }
 }

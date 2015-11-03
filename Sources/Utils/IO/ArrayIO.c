@@ -92,9 +92,6 @@ void ArrayIO_UInt8Array2D_Printf(const UInt8Array2D *me)
     }
 }
 
-
-
-
 FloatArray2D ArrayIO_FloatArray2D_ConstructFromFile(const char *filename)
 {
     int ret;
