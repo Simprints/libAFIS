@@ -19,14 +19,14 @@ Compilation can be done using GCC and GNU make.
 
 ~~~
 $ cd Sources
-$ make cafis
+$ make libafis
 ~~~
 
 Object files are created in the `Build/` directory. The library sources are compiled only but not linked.
 
 #### Windows
 
-- Not tested but should work out of the box using Cygwin.
+- Works out of the box using Cygwin.
 - You will have to add additional include directories to `\Sources` & `\Sources\Utils\Unity`
 - You may have to comment out the contents of file: `\Sources\Utils\Misc\binarise.c`
 
@@ -44,7 +44,6 @@ The result is an executable called `all_tests` in the `Build/` directory.
 #### Running
 
 ~~~
-$ cd TestData
-$ ../Sources/Build/all_tests
+$ Sources/Build/all_tests ../TestData
 ~~~
 
