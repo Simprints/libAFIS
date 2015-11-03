@@ -6,8 +6,9 @@ TEST_GROUP_RUNNER(DataStructures)
     RUN_TEST_CASE(DataStructures, BlockMap_SanityCheck);
     RUN_TEST_CASE(DataStructures, Image_SanityCheck);
     RUN_TEST_CASE(DataStructures, Histogram_SanityCheck);
-    RUN_TEST_CASE(DataStructures, Two2FloatArray_SanityCheck);
-    RUN_TEST_CASE(DataStructures, Two2ByteArray_SanityCheck);
+    RUN_TEST_CASE(DataStructures, TwoDFloatArray_SanityCheck);
+    RUN_TEST_CASE(DataStructures, TwoDByteArray_SanityCheck);
     RUN_TEST_CASE(DataStructures, Int_SanityCheck);
+    RUN_TEST_CASE(DataStructures, Float_SanityCheck);
     RUN_TEST_CASE(DataStructures, Float_SanityCheck);
 }

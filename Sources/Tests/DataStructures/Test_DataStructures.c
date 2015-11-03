@@ -16,8 +16,8 @@ TEST_GROUP(DataStructures);
 
 TEST_SETUP(DataStructures)
 {
-    //IsUnderCI = (getenv("CI") != NULL);
-    IsUnderCI = true;
+    IsUnderCI = (getenv("CI") != NULL);
+//     IsUnderCI = true;
 }
 
 TEST_TEAR_DOWN(DataStructures)
@@ -51,8 +51,7 @@ TEST(DataStructures, Histogram_SanityCheck)
     }
 }
 
-
-TEST(DataStructures, Two2FloatArray_SanityCheck)
+TEST(DataStructures, TwoDFloatArray_SanityCheck)
 {
     FloatArray2D array = ArrayIO_FloatArray2D_ConstructFromFile("DataStructures/101_1.tif.12.Equalize.2DFloatArray.dat");
     if (!IsUnderCI)
@@ -61,7 +60,7 @@ TEST(DataStructures, Two2FloatArray_SanityCheck)
     }
 }
 
-TEST(DataStructures, Two2ByteArray_SanityCheck) 
+TEST(DataStructures, TwoDByteArray_SanityCheck) 
 {
     UInt8Array2D array = ArrayIO_UInt8Array2D_ConstructFromFile("DataStructures/101_1.tif.4.ClippedContrast.result.dat");
     if (!IsUnderCI)
@@ -80,5 +79,5 @@ TEST(DataStructures, Float_SanityCheck)
 {
     float value = Float_ConstructFromFile("DataStructures/101_1.tif.15.LinesByOrientation.StepFactor.dat");
     float valueToLookFor = 1.59f;
-    assert(abs(value - valueToLookFor) < 0.001f);
+    assert(abs(value - valueToLookFor) < 0.001f); // Accound for rounding shite...
 }
