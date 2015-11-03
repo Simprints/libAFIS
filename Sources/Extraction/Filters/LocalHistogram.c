@@ -20,19 +20,27 @@ void LocalHistogram_Analyze(const BlockMap *blocks, const UInt8Array2D *image, I
 
 void LocalHistogram_SmoothAroundCorners(const Int16Array3D *input, Int16Array3D *output)
 {
-    assert(output->sizeX == input->sizeX+1);
-    assert(output->sizeY == input->sizeY+1);
-
-    for (int x = 0; x < input->sizeX; x++)
+    int sizeX = input->sizeX; 
+    int sizeY = input->sizeY;
+    for (int x = 0; x < sizeX; x++)
     {
-        for (int y = 0; y < input->sizeY; y++)
+        for (int y = 0; y < sizeY; y++)
         {
             for (int z = 0; z < input->sizeZ; z++)
             {
                 output->data[x][y][z] += input->data[x][y][z];
-                output->data[x][y+1][z] += input->data[x][y][z];
-                output->data[x+1][y][z] += input->data[x][y][z];
-                output->data[x+1][y+1][z] += input->data[x][y][z];
+
+                if (y < sizeY - 1) { 
+                    output->data[x][y+1][z] += input->data[x][y][z];
+                }
+
+                if (x < sizeX - 1) {
+                    output->data[x+1][y][z] += input->data[x][y][z];
+                }
+                
+                if (x < sizeX - 1 && y < sizeY - 1) {
+                    output->data[x+1][y+1][z] += input->data[x][y][z];
+                }
             }
         }
     }
