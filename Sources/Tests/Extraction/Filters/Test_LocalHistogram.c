@@ -17,7 +17,7 @@ TEST_TEAR_DOWN(LocalHistogram)
 {
 }
 
-TEST(LocalHistogram, LocalHistogram_Analyze)
+TEST(LocalHistogram, LocalHistogram_Analyze_same_values_go_into_same_bucket)
 {
     UInt8Array2D image = UInt8Array2D_Construct(1, 2);
 
@@ -31,4 +31,21 @@ TEST(LocalHistogram, LocalHistogram_Analyze)
     Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
 
     TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
+}
+
+TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_buckets)
+{
+    UInt8Array2D image = UInt8Array2D_Construct(1, 2);
+
+    Size size = Size_Construct(image.sizeX, image.sizeY);
+
+    BlockMap blocks = BlockMap_Construct(&size, 2);
+
+    image.data[0][0] = 3;
+    image.data[0][1] = 4;
+
+    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][3]);
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
 }
