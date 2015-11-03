@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <assert.h>
 
 #include "LocalHistogram.h"
 
@@ -19,6 +20,9 @@ void LocalHistogram_Analyze(const BlockMap *blocks, const UInt8Array2D *image, I
 
 void LocalHistogram_SmoothAroundCorners(const Int16Array3D *input, Int16Array3D *output)
 {
+    assert(output->sizeX == input->sizeX+1);
+    assert(output->sizeY == input->sizeY+1);
+
     for (int x = 0; x < input->sizeX; x++)
     {
         for (int y = 0; y < input->sizeY; y++)
