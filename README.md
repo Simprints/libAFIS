@@ -1,6 +1,6 @@
 ## CAFIS -- Rewriting SourceAFIS in C
 
-[![Build Status](https://drone.io/github.com/SimPrints/DefinitelyThisWillwork/status.png)](https://drone.io/github.com/SimPrints/DefinitelyThisWillwork/latest)
+[![Build Status](https://drone.io/github.com/SimPrints/libAFIS/status.png)](https://drone.io/github.com/SimPrints/libAFIS/latest)
 
 ### Directory structure
 
