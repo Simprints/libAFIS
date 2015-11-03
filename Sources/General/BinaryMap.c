@@ -206,6 +206,7 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     for (int y=0;y<area.height;++y) {
         Point p = Point_Construct(0,y);
 
+        //TODO: This is probably a needless copy 
         LoadLine(me, &vector, &p, area.width);
         LoadLine(source, &srcVector, &p, area.width);
 
