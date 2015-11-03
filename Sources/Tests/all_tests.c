@@ -13,9 +13,9 @@ static void RunAllTests(void)
 
 int main(int argc, const char * argv[])
 {
-	if (argc == 2)		
-    {		
-        chdir(argv[1]);		
+    if (argc == 2)      
+    {       
+        chdir(argv[1]);     
     } 
     return UnityMain(argc, argv, RunAllTests);
 }
