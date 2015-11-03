@@ -144,7 +144,7 @@ void ArrayIO_Int16Array3D_Printf(const Int16Array3D *me)
         for (int j=0; j < me->sizeY && j < 8; j++)
         {
             printf("\n  i=%d, j=%d: ", i, j);
-            for (int k=0; k < me->sizeZ && k < 8; k++)
+            for (int k=0; k < me->sizeZ; k++)
                 printf(" %5d,", me->data[i][j][k]);
             printf(" ...");
         }

@@ -5,8 +5,6 @@
 #include "ArrayIO.h"
 #include "ImageIO.h"
 
-#define PrintImage(image) array_printf(image.size, image.data)
-
 UInt8Array2D ImageIO_ConstructFromFile(const char *filename)
 {
     int ret;
