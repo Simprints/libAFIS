@@ -182,8 +182,10 @@
     <ClCompile Include="Tests\Extraction\Filters\Test_LocalHistogram.c" />
     <ClCompile Include="Tests\Extraction\Filters\Test_VotingFilter.c" />
     <ClCompile Include="Tests\General\runners\TestRunner_Array.c" />
+    <ClCompile Include="Tests\General\runners\TestRunner_BinaryMap.c" />
     <ClCompile Include="Tests\General\runners\TestRunner_Point.c" />
     <ClCompile Include="Tests\General\Test_Array.c" />
+    <ClCompile Include="Tests\General\Test_BinaryMap.c" />
     <ClCompile Include="Tests\General\Test_Point.c" />
     <ClCompile Include="Utils\IO\ArrayIO.c" />
     <ClCompile Include="Utils\IO\BinaryMapIO.c" />

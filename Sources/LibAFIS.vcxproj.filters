@@ -213,6 +213,12 @@
     <ClCompile Include="Utils\Unity\unity_fixture.c">
       <Filter>Source Files\Utils\Unity</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\General\Test_BinaryMap.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_BinaryMap.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extraction\Model\DotRemover.h">

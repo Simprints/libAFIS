@@ -8,3 +8,4 @@ Sources/Build/
 *~
 *.sdf
 *.kdev4
+*.user
