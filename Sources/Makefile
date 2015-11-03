@@ -20,7 +20,7 @@ UNITY_CFLAGS = -Wall -Wextra -Werror -Wpointer-arith -Wcast-align -Wwrite-string
 ##
 ## Linker flags
 ##
-LFLAGS = -g
+LFLAGS = -g 
 
 ##
 ## Root directories
@@ -103,7 +103,7 @@ $(UNITY_OBJS):  $(BUILD_DIR)/%.o: %.c
 	$(CC) -c $(COMMON_CFLAGS) $(UNITY_CFLAGS) $(UNITY_INCS) $< -o $@
 
 $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(CAFIS_OBJS)
-	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
+	$(CC) $^ -o $(BUILD_DIR)/$@ $(LFLAGS)
 
 runUnitTest: $(UTEST_EXE)
 	$(BUILD_DIR)/all_tests ../TestData/
