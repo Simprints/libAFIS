@@ -30,12 +30,12 @@ void ClippedContrast_Compute(const ClippedContrast *me, const BlockMap *blocks, 
             int lowerBound = 255; 
 
             for (int i = 0; i < 256; ++i) {
-            	accumulator += histogram->data[x][y][i];
+                accumulator += histogram->data[x][y][i];
 
-            	if (accumulator > clipLimit) {
-            		lowerBound = i; 
-            		break;
-            	}
+                if (accumulator > clipLimit) {
+                    lowerBound = i; 
+                    break;
+                }
             }
 
             accumulator = 0;

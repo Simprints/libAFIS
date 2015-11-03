@@ -18,7 +18,7 @@ ClippedContrast ClippedContrast_Construct(void);
 
 /**********************************************
  * output - allocated array that is 
- 			blockColumns x blockRows
+            blockColumns x blockRows
  *
  **********************************************/ 
 void ClippedContrast_Compute(const ClippedContrast *me, const BlockMap *blocks, const Int16Array3D *histogram, UInt8Array2D *output);
