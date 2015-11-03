@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Extraction">
+      <UniqueIdentifier>{0c5fc68c-31f6-4fd1-873c-e00fb1e5debc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\General">
+      <UniqueIdentifier>{326c8d60-52a8-40f0-85ae-9c765bc1d53e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{af2367f8-e3aa-4661-b9c7-53b3048e8de8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{6c3caa4f-035c-4478-8787-5c1eda8b5624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Extraction">
+      <UniqueIdentifier>{027d2899-2db6-4a5b-9be7-d83305a2ce2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General">
+      <UniqueIdentifier>{a84d795f-7373-4210-b35a-36d5c6e7f82d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{84532d89-c98b-41cf-a0fb-7d3d2a6b2562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests">
+      <UniqueIdentifier>{bca89edf-bb28-4d13-b08a-5269bfc84cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extraction\Filters">
+      <UniqueIdentifier>{04ac171f-af9d-4c6b-9ee0-f9a10900f072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extraction\Model">
+      <UniqueIdentifier>{b160775f-7d53-49ed-adb6-4eccf3befebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Extraction\Model">
+      <UniqueIdentifier>{e6cc088f-ea22-4e42-b7af-a5d074405ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Extraction\Filters">
+      <UniqueIdentifier>{4b31c200-46c8-4b55-841d-0072be6df118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Extraction">
+      <UniqueIdentifier>{e1c35958-c0ad-4388-b40c-7d5a301a53b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Extraction\Filters">
+      <UniqueIdentifier>{c2a6f42c-0cba-4b27-9aa0-2589a17102d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Extraction\Filters\runners">
+      <UniqueIdentifier>{00c4da18-9c3a-4b0e-a0ab-af3f57326b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\General">
+      <UniqueIdentifier>{9ddd9a81-8b6a-46c4-a7b7-a971fbf06c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\General\runners">
+      <UniqueIdentifier>{7aad31cb-1661-4ddd-99bf-9f0ed489c6b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\IO">
+      <UniqueIdentifier>{630f9aa4-bca9-4ef4-93ba-b8c673d8bc47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\IO">
+      <UniqueIdentifier>{dc12e718-87fd-4cda-934b-be56c796fc5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Misc">
+      <UniqueIdentifier>{2521b3cc-340f-4b04-815f-99331950f273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Unity">
+      <UniqueIdentifier>{4bd29b9b-f553-473b-8d0c-5103494f7204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\Unity">
+      <UniqueIdentifier>{a5038acc-9bb8-4bdd-a67c-4cebf52f5b53}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Extraction\Model\DotRemover.c">
+      <Filter>Source Files\Extraction\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Model\SkeletonBuilder.c">
+      <Filter>Source Files\Extraction\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\AbsoluteContrast.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\ClippedContrast.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\CrossRemover.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\Equalizer.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\HillOrientation.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\ImageInverter.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\InnerMask.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\LinesByOrientation.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\LocalHistogram.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\OrientedSmoother.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\RelativeContrast.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\SegmentationMask.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\Thinner.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\ThresholdBinarizer.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Filters\VotingFilter.c">
+      <Filter>Source Files\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Array.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\BinaryMap.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\BlockMap.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Calc.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\List.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Point.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\PointF.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\PolarPoint.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Range.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\RectangleC.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Size.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="General\SizeF.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\all_tests.c">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_LocalHistogram.c">
+      <Filter>Source Files\Tests\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_LocalHistogram.c">
+      <Filter>Source Files\Tests\Extraction\Filters\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_VotingFilter.c">
+      <Filter>Source Files\Tests\Extraction\Filters\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_VotingFilter.c">
+      <Filter>Source Files\Tests\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Array.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Point.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Array.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Point.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\ArrayIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\BinaryMapIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\BlockMapIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Misc\binarise.c">
+      <Filter>Source Files\Utils\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Unity\unity.c">
+      <Filter>Source Files\Utils\Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Unity\unity_fixture.c">
+      <Filter>Source Files\Utils\Unity</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Extraction\Model\DotRemover.h">
+      <Filter>Header Files\Extraction\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Model\SkeletonBuilder.h">
+      <Filter>Header Files\Extraction\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\AbsoluteContrast.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\ClippedContrast.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\CrossRemover.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\Equalizer.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\HillOrientation.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\ImageInverter.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\InnerMask.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\LinesByOrientation.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\LocalHistogram.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\OrientedSmoother.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\RelativeContrast.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\SegmentationMask.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\Thinner.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\ThresholdBinarizer.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Filters\VotingFilter.h">
+      <Filter>Header Files\Extraction\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Array.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\BinaryMap.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\BlockMap.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Calc.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\List.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Neighborhood.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Point.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\PointF.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\PolarPoint.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Range.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\RectangleC.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Size.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="General\SizeF.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\ArrayIO.h">
+      <Filter>Header Files\Utils\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\BinaryMapIO.h">
+      <Filter>Header Files\Utils\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\BlockMapIO.h">
+      <Filter>Header Files\Utils\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Unity\unity.h">
+      <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Unity\unity_fixture.h">
+      <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Unity\unity_fixture_internals.h">
+      <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Unity\unity_fixture_malloc_overrides.h">
+      <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Unity\unity_internals.h">
+      <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
