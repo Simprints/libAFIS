@@ -49,3 +49,21 @@ TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_b
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][3]);
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
 }
+
+TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
+{
+    UInt8Array2D image = UInt8Array2D_Construct(4, 4);
+
+    Size size = Size_Construct(image.sizeX, image.sizeY);
+
+    BlockMap blocks = BlockMap_Construct(&size, 2);
+
+    image.data[0][0] = 1;
+
+    Int16Array3D histogram = LocalHistogram_Analyze(&blocks, &image);
+
+    TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[0][1][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[1][0][1]);
+    TEST_ASSERT_EQUAL_INT(0, histogram.data[1][1][1]);
+}
