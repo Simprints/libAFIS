@@ -33,13 +33,28 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
 
     ClippedContrast_Compute(&me->contrast, blocks, histogram, &blocksContrast);
 
-    BinaryMap bm = BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY);   
+    BinaryMap bm = BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY); 
+    BinaryMap tmpBm = BinaryMap_Construct(bm.width, bm.height);   
 
     AbsoluteContrast_DetectLowContrast(me->absoluteContrastLimit, &blocksContrast, &bm); 
 
-    BinaryMap tmpBm = BinaryMap_Construct(bm.width, bm.height); 
-
     RelativeContrast_DetectLowContrast(&me->relativeContrast, &blocksContrast, blocks, &tmpBm);
+    BinaryMap_Or(&bm, &tmpBm); 
 
+    //Low constrast majority
+    VotingFilter_Filter(&me->lowContrastMajority, &bm, &tmpBm);
+    BinaryMap_Or(&bm, &tmpBm); 
+
+    VotingFilter_Filter(&me->blockErrorFilter, &bm, &tmpBm); 
+    BinaryMap_Or(&bm, &tmpBm); 
+
+    BinaryMap_Invert(&bm); 
+
+    for (int i = 0; i < 2; i++) {
+       VotingFilter_Filter(&me->blockErrorFilter, &bm, &tmpBm); 
+       BinaryMap_Or(&bm, &tmpBm);  
+    }   
+
+    VotingFilter_Filter(&me->innerMaskFilter, &bm, &tmpBm); 
     BinaryMap_Or(&bm, &tmpBm); 
 }
