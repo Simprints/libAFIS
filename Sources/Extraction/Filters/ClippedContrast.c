@@ -10,11 +10,48 @@ ClippedContrast ClippedContrast_Construct(void)
     return cc;
 }
 
-UInt8Array2D ClippedContrast_Compute(const ClippedContrast *me, BlockMap *blocks, Int16Array3D *histogram)
+void ClippedContrast_Compute(const ClippedContrast *me, const BlockMap *blocks, const Int16Array3D *histogram, UInt8Array2D *output)
 {
-    UInt8Array2D result = UInt8Array2D_Construct(blocks->blockCount.height, blocks->blockCount.width);
+    for (int y = RectangleC_GetBottom(&blocks->allCorners); y < RectangleC_GetTop(&blocks->allCorners); y++) 
+    {
+        for (int x = RectangleC_GetLeft(&blocks->allCorners); x < RectangleC_GetRight(&blocks->allCorners); x++) 
+        {
+            int area = 0;
 
-    /* TODO: Implement ClippedContrast_Compute() */
+            //TODO: Possibly just block size squared
+            for (int i = 0; i < 256; ++i)
+            {
+                area += histogram->data[x][y][i];
+            }
 
-    return result;
+            int clipLimit = (area * me->clipFraction);
+
+            int accumulator = 0; 
+            int lowerBound = 255; 
+
+            for (int i = 0; i < 256; ++i) {
+            	accumulator += histogram->data[x][y][i];
+
+            	if (accumulator > clipLimit) {
+            		lowerBound = i; 
+            		break;
+            	}
+            }
+
+            accumulator = 0;
+            int upperBound = 0;
+            for (int i = 255; i >= 0; --i)
+            {
+                accumulator += histogram->data[x][y][i];
+                if (accumulator > clipLimit)
+                {
+                    upperBound = i;
+                    break;
+                }
+            }
+
+            output->data[x][y] = upperBound - lowerBound;
+
+        }
+    }
 }

@@ -20,7 +20,7 @@ UNITY_CFLAGS = -Wall -Wextra -Wpointer-arith -Wcast-align -Wwrite-strings -Wswit
 ##
 ## Linker flags
 ##
-LFLAGS = -g -lnetpbm
+LFLAGS = -g 
 
 ##
 ## Root directories

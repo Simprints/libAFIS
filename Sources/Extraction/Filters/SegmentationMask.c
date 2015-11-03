@@ -24,11 +24,14 @@ SegmentationMask SegmentationMask_Construct(void)
     return sm;
 }
 
-BinaryMap SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram)
+
+void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram, BinaryMap *mask)
 {
-    BinaryMap mask;
+    int blockColumns = blocks->blockCount.width, blockRows = blocks->blockCount.height;
 
-    /* TODO: Implement SegmentationMask_ComputeMask() */
+    UInt8Array2D blocksContrast = UInt8Array2D_Construct(blockColumns, blockRows);
 
-    return mask;
+    ClippedContrast_Compute(&me->contrast, blocks, histogram, &blocksContrast);
+
+
 }

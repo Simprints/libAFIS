@@ -23,6 +23,6 @@ struct SegmentationMask
 };
 
 SegmentationMask SegmentationMask_Construct(void);
-BinaryMap SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram);
+void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram, BinaryMap *output);
 
 #endif

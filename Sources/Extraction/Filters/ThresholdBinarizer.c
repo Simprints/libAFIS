@@ -18,7 +18,7 @@ BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArra
 				{
 					for (int x = rectangle.x; x < rectangle.width; x++)
 					{
-						if (input->data[x,y] - baseline->data[x,y] > 0)
+						if (input->data[x][y] - baseline->data[x][y] > 0)
 						{
 							BinaryMap_SetBitOne(&binarized, x, y);
 						}

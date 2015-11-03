@@ -15,6 +15,12 @@ struct ClippedContrast
 };
 
 ClippedContrast ClippedContrast_Construct(void);
-UInt8Array2D ClippedContrast_Compute(const ClippedContrast *me, BlockMap *blocks, Int16Array3D *histogram);
+
+/**********************************************
+ * output - allocated array that is 
+ 			blockColumns x blockRows
+ *
+ **********************************************/ 
+void ClippedContrast_Compute(const ClippedContrast *me, const BlockMap *blocks, const Int16Array3D *histogram, UInt8Array2D *output);
 
 #endif
