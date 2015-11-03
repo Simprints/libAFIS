@@ -1,18 +1,12 @@
 #include "AbsoluteContrast.h"
 
-AbsoluteContrast AbsoluteContrast_Construct(void)
+void AbsoluteContrast_DetectLowContrast(const int limit, const UInt8Array2D *contrast, BinaryMap *output)
 {
-    AbsoluteContrast ac = {
-        .limit = 17 /* Upper = 255 */
-    };
-    return ac;
-}
-
-BinaryMap AbsoluteContrast_DetectLowContrast(const AbsoluteContrast *me, UInt8Array2D *contrast)
-{
-    BinaryMap result;
-
-    /* TODO: Implement AbsoluteContrast_DetectLowContrast() */
-
-    return result;
+	for (int x = 0; x < contrast->sizeX; ++x) {
+		for (int y = 0; y < contrast->sizeY; ++y) {
+			if (contrast->data[x][y] < limit) {
+				BinaryMap_SetBitOne(output, x, y); 
+			}
+		}
+	}
 }

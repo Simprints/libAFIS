@@ -7,7 +7,7 @@ SegmentationMask SegmentationMask_Construct(void)
     SegmentationMask sm;
 
     sm.contrast = ClippedContrast_Construct();
-    sm.absoluteContrast = AbsoluteContrast_Construct();
+    sm.absoluteContrastLimit = 17;
     sm.relativeContrast = RelativeContrast_Construct();
     sm.lowContrastMajority = VotingFilter_Construct();
     sm.blockErrorFilter = VotingFilter_Construct();
@@ -32,6 +32,10 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
     UInt8Array2D blocksContrast = UInt8Array2D_Construct(blockColumns, blockRows);
 
     ClippedContrast_Compute(&me->contrast, blocks, histogram, &blocksContrast);
+
+    BinaryMap bm = BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY);   
+
+    AbsoluteContrast_DetectLowContrast(me->absoluteContrastLimit, &blocksContrast, &bm); 
 
 
 }
