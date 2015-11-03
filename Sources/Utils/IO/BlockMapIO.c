@@ -56,6 +56,7 @@ static void array_printf(int n, int* array)
     for (int i=0; i < n; i++)
         printf(" %d,", array[i]);
 }
+#define PrintBlock(var) array_printf(var.size, var.data)
 
 void BlockMapIO_Printf(const BlockMap *me)
 {
@@ -72,9 +73,17 @@ void BlockMapIO_Printf(const BlockMap *me)
     printf("\n  corners.allY (%dx):", me->corners.allY.size);
     array_printf(me->corners.allY.size, me->corners.allY.data);
     printf("\n  blockAreas.corners.allX (%dx):", me->blockAreas.corners.allX.size);
+    array_printf(me->blockAreas.corners.allX.size, me->blockAreas.corners.allX.data);
     printf("\n  blockAreas.corners.allY (%dx):", me->blockAreas.corners.allY.size);
+    array_printf(me->blockAreas.corners.allY.size, me->blockAreas.corners.allY.data);
+    
+    
     printf("\n  blockCenters.allX (%dx):", me->blockCenters.allX.size);
+    array_printf(me->blockCenters.allX.size, me->blockCenters.allX.data);
     printf("\n  blockCenters.allY (%dx):", me->blockCenters.allY.size);
+    array_printf(me->blockCenters.allY.size, me->blockCenters.allY.data);
     printf("\n  cornerAreas.corners.allX (%dx):", me->cornerAreas.corners.allX.size);
+    array_printf(me->cornerAreas.corners.allX.size, me->cornerAreas.corners.allX.data);   
     printf("\n  cornerAreas.corners.allY (%dx):", me->cornerAreas.corners.allY.size);
+    PrintBlock(me->cornerAreas.corners.allY);
 }
