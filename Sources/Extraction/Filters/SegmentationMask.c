@@ -25,7 +25,7 @@ SegmentationMask SegmentationMask_Construct(void)
 }
 
 
-void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram, BinaryMap *mask)
+void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram, BinaryMap *output)
 {
     int blockColumns = blocks->blockCount.width, blockRows = blocks->blockCount.height;
 
@@ -33,28 +33,28 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
 
     ClippedContrast_Compute(&me->contrast, blocks, histogram, &blocksContrast);
 
-    BinaryMap bm = BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY); 
-    BinaryMap tmpBm = BinaryMap_Construct(bm.width, bm.height);   
+    //BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY); 
+    BinaryMap tmpBm = BinaryMap_Construct(output->width, output->height);   
 
-    AbsoluteContrast_DetectLowContrast(me->absoluteContrastLimit, &blocksContrast, &bm); 
+    AbsoluteContrast_DetectLowContrast(me->absoluteContrastLimit, &blocksContrast, output); 
 
     RelativeContrast_DetectLowContrast(&me->relativeContrast, &blocksContrast, blocks, &tmpBm);
-    BinaryMap_Or(&bm, &tmpBm); 
+    BinaryMap_Or(output, &tmpBm); 
 
     //Low constrast majority
-    VotingFilter_Filter(&me->lowContrastMajority, &bm, &tmpBm);
-    BinaryMap_Or(&bm, &tmpBm); 
+    VotingFilter_Filter(&me->lowContrastMajority, output, &tmpBm);
+    BinaryMap_Or(output, &tmpBm); 
 
-    VotingFilter_Filter(&me->blockErrorFilter, &bm, &tmpBm); 
-    BinaryMap_Or(&bm, &tmpBm); 
+    VotingFilter_Filter(&me->blockErrorFilter, output, &tmpBm); 
+    BinaryMap_Or(output, &tmpBm); 
 
-    BinaryMap_Invert(&bm); 
+    BinaryMap_Invert(output); 
 
     for (int i = 0; i < 2; i++) {
-       VotingFilter_Filter(&me->blockErrorFilter, &bm, &tmpBm); 
-       BinaryMap_Or(&bm, &tmpBm);  
+       VotingFilter_Filter(&me->blockErrorFilter, output, &tmpBm); 
+       BinaryMap_Or(output, &tmpBm);  
     }   
 
-    VotingFilter_Filter(&me->innerMaskFilter, &bm, &tmpBm); 
-    BinaryMap_Or(&bm, &tmpBm); 
+    VotingFilter_Filter(&me->innerMaskFilter, output, &tmpBm); 
+    BinaryMap_Or(output, &tmpBm); 
 }
