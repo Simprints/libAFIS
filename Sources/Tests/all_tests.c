@@ -8,6 +8,8 @@ static void RunAllTests(void)
 
     RUN_TEST_GROUP(VotingFilter);
     RUN_TEST_GROUP(LocalHistogram);
+    
+    RUN_TEST_GROUP(DataStructures);
 }
 
 int main(int argc, const char * argv[])

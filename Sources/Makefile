@@ -53,7 +53,9 @@ UTILS_SRCS =  IO/*.c
 UTILS_SRCS_EXCLUDE = 
 
 UTEST_SRCS =  General/*.c  General/runners/*.c \
-              Extraction/Filters/*.c Extraction/Filters/runners/*.c
+              Extraction/Filters/*.c Extraction/Filters/runners/*.c \
+              DataStructures/*.c
+              
 UTEST_SRCS_EXCLUDE = 
 UTEST_SRCS += $(UTEST_EXE).c
 
