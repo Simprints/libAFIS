@@ -40,24 +40,29 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
 
     RelativeContrast_DetectLowContrast(&me->relativeContrast, &blocksContrast, blocks, &tmpBm);
     BinaryMap_Or(output, &tmpBm); 
+    BinaryMap_Clear(&tmpBm);
 
     //Low constrast majority
     VotingFilter_Filter(&me->lowContrastMajority, output, &tmpBm);
     BinaryMap_Or(output, &tmpBm); 
+    BinaryMap_Clear(&tmpBm);
 
     VotingFilter_Filter(&me->blockErrorFilter, output, &tmpBm); 
-    BinaryMap_Or(output, &tmpBm); 
+    BinaryMap_Or(output, &tmpBm);
+    BinaryMap_Clear(&tmpBm); 
 
     BinaryMap_Invert(output); 
+    BinaryMap_Clear(&tmpBm);
 
     for (int i = 0; i < 2; i++) {
        VotingFilter_Filter(&me->blockErrorFilter, output, &tmpBm); 
        BinaryMap_Or(output, &tmpBm);  
+       BinaryMap_Clear(&tmpBm);
     }   
 
     VotingFilter_Filter(&me->innerMaskFilter, output, &tmpBm); 
     BinaryMap_Or(output, &tmpBm); 
-
+    
     UInt8Array2D_Destruct(&blocksContrast);
     BinaryMap_Destruct(&tmpBm); 
 }

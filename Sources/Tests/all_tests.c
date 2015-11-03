@@ -10,6 +10,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(Point);
     RUN_TEST_GROUP(Array);
     RUN_TEST_GROUP(BinaryMap);
+    RUN_TEST_GROUP(Pgm);    
 
     RUN_TEST_GROUP(VotingFilter);
     RUN_TEST_GROUP(LocalHistogram);

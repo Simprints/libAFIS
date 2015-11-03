@@ -48,8 +48,6 @@ void VotingFilter_Filter(const VotingFilter *me, const BinaryMap *input, BinaryM
     Size s = Size_Construct(input->width - 2 * me->borderDistance, input->height - 2 * me->borderDistance);
     RectangleC rect = RectangleC_ConstructFromPointSize(&p, &s);
 
-    s = BinaryMap_GetSize(input);
-
     Range r = RectangleC_GetRangeY(&rect);
 
     for (int32_t y = r.begin; y < r.end; y++) {
