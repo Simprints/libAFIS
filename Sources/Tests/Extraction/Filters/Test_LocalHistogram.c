@@ -32,6 +32,9 @@ TEST(LocalHistogram, LocalHistogram_Analyze_same_values_go_into_same_bucket)
     LocalHistogram_Analyze(&blocks, &image, &histogram);
 
     TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
+
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&histogram);
 }
 
 TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_buckets)
@@ -50,6 +53,9 @@ TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_b
 
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][3]);
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
+
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&histogram);
 }
 
 TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
@@ -69,6 +75,9 @@ TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
     TEST_ASSERT_EQUAL_INT(0, histogram.data[0][1][1]);
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][0][1]);
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][1][1]);
+
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&histogram);
 }
 
 TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
@@ -93,4 +102,7 @@ TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
             TEST_ASSERT_EQUAL_INT(expected, actual);
         }
     }
+
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothHistogram);
 }
