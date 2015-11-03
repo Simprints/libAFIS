@@ -26,12 +26,3 @@ Int16Array3D LocalHistogram_SmoothAroundCorners(const BlockMap *blocks, const In
 
     return output;
 }
-
-Int16Array3D LocalHistogram_Smooth(const BlockMap *blocks, const Int16Array3D *input)
-{
-    Int16Array3D output;
-
-    /* TODO: Implement LocalHistogram_Smooth() */
-
-    return output;
-}
