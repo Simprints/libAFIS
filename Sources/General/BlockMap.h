@@ -3,6 +3,7 @@
 
 #include "General/Calc.h"
 #include "General/Point.h"
+#include "General/PointF.h"
 #include "General/Size.h"
 #include "General/Array.h"
 #include "General/RectangleC.h"
@@ -40,7 +41,7 @@ void BlockMap_Destruct(BlockMap *me);
 
 PointGrid PointGrid_Construct(const Size *s);
 void PointGrid_Destruct(PointGrid *me);
-Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int y, int x);
+Point PointGrid_GetPointFromCoordinates(const PointGrid *me, int x, int y);
 Point PointGrid_GetPointFromPoint(const PointGrid *me, const Point *at);
 
 RectangleGrid RectangleGrid_Construct(const PointGrid *c);
