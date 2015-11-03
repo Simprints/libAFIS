@@ -70,9 +70,15 @@ TEST(DataStructures, Two2ByteArray_SanityCheck)
     }
 }
 
-
 TEST(DataStructures, Int_SanityCheck) 
 {
     int32_t  value = Int32_ConstructFromFile("DataStructures/101_1.tif.5.AbsoluteContrast.Limit.dat");
     assert(value == 17);
+}
+
+TEST(DataStructures, Float_SanityCheck) 
+{
+    float value = Float_ConstructFromFile("DataStructures/101_1.tif.15.LinesByOrientation.StepFactor.dat");
+    float valueToLookFor = 1.59f;
+    assert(abs(value - valueToLookFor) < 0.001f);
 }

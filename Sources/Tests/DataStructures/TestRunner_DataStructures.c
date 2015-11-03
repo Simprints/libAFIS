@@ -9,4 +9,5 @@ TEST_GROUP_RUNNER(DataStructures)
     RUN_TEST_CASE(DataStructures, Two2FloatArray_SanityCheck);
     RUN_TEST_CASE(DataStructures, Two2ByteArray_SanityCheck);
     RUN_TEST_CASE(DataStructures, Int_SanityCheck);
+    RUN_TEST_CASE(DataStructures, Float_SanityCheck);
 }

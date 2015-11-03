@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-int32_t Int32_ConstructFromFile(const char * filename);
-
+int32_t Int32_ConstructFromFile(const char *);
+float Float_ConstructFromFile(const char *);
 
 #endif
