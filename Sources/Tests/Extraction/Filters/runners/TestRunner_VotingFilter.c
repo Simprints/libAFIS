@@ -14,4 +14,5 @@ TEST_GROUP_RUNNER(VotingFilter)
         Test_VotingFilter_testNumber = tests[i];
         RUN_TEST_CASE(VotingFilter, VotingFilter_Filter);
     }
+	RUN_TEST_CASE(VotingFilter, VotingFilter_regression_tests_against_sourceAfis);
 }

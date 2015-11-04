@@ -177,6 +177,8 @@
     <ClCompile Include="General\Size.c" />
     <ClCompile Include="General\SizeF.c" />
     <ClCompile Include="Tests\all_tests.c" />
+    <ClCompile Include="Tests\DataStructures\TestRunner_DataStructures.c" />
+    <ClCompile Include="Tests\DataStructures\Test_DataStructures.c" />
     <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_LocalHistogram.c" />
     <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_VotingFilter.c" />
     <ClCompile Include="Tests\Extraction\Filters\Test_LocalHistogram.c" />
