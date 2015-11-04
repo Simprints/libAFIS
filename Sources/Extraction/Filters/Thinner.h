@@ -16,5 +16,6 @@ struct Thinner
 
 Thinner Thinner_Construct(void);
 BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input);
+bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding);
 
 #endif

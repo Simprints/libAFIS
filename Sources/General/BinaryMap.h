@@ -47,5 +47,6 @@ BinaryMap BinaryMap_GetInverted(const BinaryMap *me);
 bool BinaryMap_IsEmpty(const BinaryMap *me);
 void BinaryMap_Or(BinaryMap *me, const BinaryMap *them);
 void BinaryMap_And(BinaryMap *me, const BinaryMap *them);
-
+uint32_t BinaryMap_GetNeighborhoodFromPoint(BinaryMap *me, const Point *at);
+uint32_t BinaryMap_GetNeighborhood(BinaryMap *me, int32_t x, int32_t y);
 #endif

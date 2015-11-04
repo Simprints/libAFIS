@@ -287,9 +287,6 @@
     <ClInclude Include="General\List.h">
       <Filter>Header Files\General</Filter>
     </ClInclude>
-    <ClInclude Include="General\Neighborhood.h">
-      <Filter>Header Files\General</Filter>
-    </ClInclude>
     <ClInclude Include="General\Point.h">
       <Filter>Header Files\General</Filter>
     </ClInclude>

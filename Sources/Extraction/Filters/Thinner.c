@@ -2,6 +2,54 @@
 
 #include "Thinner.h"
 
+static bool thinner_IsRemovable(int i)
+{
+	static bool isRemovable[256] = { 0 };
+	static bool init = false;
+
+	if (!init) {
+		for (uint32_t mask = 0; mask < 256; ++mask)
+		{
+			bool TL = (mask & 1) != 0;
+			bool TC = (mask & 2) != 0;
+			bool TR = (mask & 4) != 0;
+			bool CL = (mask & 8) != 0;
+			bool CR = (mask & 16) != 0;
+			bool BL = (mask & 32) != 0;
+			bool BC = (mask & 64) != 0;
+			bool BR = (mask & 128) != 0;
+
+			int count = Calc_CountBits(mask);
+
+			bool diagonal = !TC && !CL && TL || !CL && !BC && BL || !BC && !CR && BR || !CR && !TC && TR;
+			bool horizontal = !TC && !BC && (TR || CR || BR) && (TL || CL || BL);
+			bool vertical = !CL && !CR && (TL || TC || TR) && (BL || BC || BR);
+			bool end = (count == 1);
+
+			isRemovable[mask] = !diagonal && !horizontal && !vertical && !end;
+		}
+	}
+
+	return isRemovable[i];
+}
+
+static bool thinner_IsEnding(int i)
+{
+	static bool isEnding[256] = { 0 };
+	static bool init = false;
+
+	if (!init) {
+		for (uint32_t mask = 0; mask < 256; ++mask)
+		{
+			int count = Calc_CountBits(mask);
+			bool end = (count == 1);
+			isEnding[mask] = end;
+		}
+	}
+	return isEnding[i];
+}
+
+
 Thinner Thinner_Construct(void)
 {
     Thinner t = {
@@ -71,8 +119,8 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 								{
 									if (x > 0 && x < input->width - 1 && BinaryMap_GetBit(&border, x, y))
 									{
-										uint32_t neighbors = BinaryMap_GetNeighborhood(x, y);
-										if (IsRemovable[neighbors] || IsEnding[neighbors] && IsFalseEnding(intermediate, Point_Construct(x, y)))
+										uint32_t neighbors = BinaryMap_GetNeighborhood(&intermediate, x, y);
+										if (thinner_IsRemovable(neighbors) || thinner_IsEnding(neighbors) && Thinner_IsFalseEnding(&intermediate, Point_Construct(x, y)))
 										{
 											removedAnything = true;
 											BinaryMap_SetBitZero(&intermediate, x, y);
@@ -95,4 +143,25 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
     return skeleton;
 }
 
-//TODO: IsRemovable[], IsEnding[], IsFalseEnding
+bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding)
+{
+	for (int x = -1; x < 2; x++)
+	{
+		for (int y = -1; y < 2; y++)
+		{
+			int inspectionX = possibleEnding.x + x;
+			int inspectionY = possibleEnding.y + y;
+
+			if (x ==0 && y == 0)
+			{
+				continue;
+			}
+
+			if (BinaryMap_GetBit(map, inspectionX, inspectionY))
+			{
+				return Calc_CountBits(BinaryMap_GetNeighborhood(map, inspectionX, inspectionY)) > 2;
+			}
+		}
+	}
+	return false;
+}

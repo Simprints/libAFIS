@@ -4,8 +4,6 @@
 
 #include "General/BinaryMap.h"
 
-//TODO: BinaryMap_CopyTo, BinaryMap_AndNotTo, BinaryMap_GetNeighborhood
-
 Size BinaryMap_GetSize(const BinaryMap *me)
 {
     return Size_Construct(me->width, me->height);
@@ -251,4 +249,43 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
+uint32_t BinaryMap_GetNeighborhoodFromPoint(BinaryMap *me, const Point *at)
+{
+	return BinaryMap_GetNeighborhood(me, at->x, at->y);
+}
 
+uint32_t BinaryMap_GetNeighborhood(BinaryMap *me, int32_t x, int32_t y)
+{
+	if ((x & me->wordMask) >= 1 && (x & me->wordMask) <= 30)
+	{
+		int xWord = x >> me->wordShift;
+		int shift = (int)((uint32_t)(x - 1) & me->wordMask);
+		return ((BinaryMap_GetWord(me, xWord, y + 1) >> shift) & 7u)
+			| (((BinaryMap_GetWord(me, xWord, y) >> shift) & 1u) << 3)
+			| (((BinaryMap_GetWord(me, xWord, y) >> shift) & 4u) << 2)
+			| (((BinaryMap_GetWord(me, xWord, y - 1) >> shift) & 7u) << 5);
+	}
+	else
+	{
+		uint32_t mask = 0;
+		if (BinaryMap_(x - 1, y + 1))
+			mask |= 1;
+		if (BinaryMap_(x, y + 1))
+			mask |= 2;
+		if (BinaryMap_(x + 1, y + 1))
+			mask |= 4;
+		if (BinaryMap_(x - 1, y))
+			mask |= 8;
+		if (BinaryMap_(x + 1, y))
+			mask |= 16;
+		if (BinaryMap_(x - 1, y - 1))
+			mask |= 32;
+		if (BinaryMap_(x, y - 1))
+			mask |= 64;
+		if (BinaryMap_(x + 1, y - 1))
+			mask |= 128;
+		return mask;
+	}
+}
+
+//TODO: BinaryMap_CopyTo, BinaryMap_AndNotTo,

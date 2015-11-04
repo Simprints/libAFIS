@@ -219,7 +219,6 @@
     <ClInclude Include="General\BlockMap.h" />
     <ClInclude Include="General\Calc.h" />
     <ClInclude Include="General\List.h" />
-    <ClInclude Include="General\Neighborhood.h" />
     <ClInclude Include="General\Point.h" />
     <ClInclude Include="General\PointF.h" />
     <ClInclude Include="General\PolarPoint.h" />
