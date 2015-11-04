@@ -255,6 +255,7 @@ Point *PointArray2D_Get(PointArray2D *me, int x, int y)
     return &row->data[y];
 }
 
+//TODO: Doesn't this need to call PointArray1D_Destruct?
 void PointArray2D_Destruct(PointArray2D *me)
 {
     for (int row = 0; row < me->size; row++)

@@ -7,11 +7,12 @@
 #include "General/BinaryMap.h"
 #include "LinesByOrientation.h"
 
-FloatArray2D OrientedSmoother_Smooth
+void OrientedSmoother_Smooth
     (const FloatArray2D *input,
      const UInt8Array2D *orientation,
      const BinaryMap *mask,
      const BlockMap *blocks,
-     const uint8_t angleOffset);
+     const uint8_t angleOffset, 
+     FloatArray2D *output);
 
 #endif

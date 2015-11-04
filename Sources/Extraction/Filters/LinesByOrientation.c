@@ -38,26 +38,31 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
     int tempSize = 100; 
     Point *temp = calloc(tempSize, sizeof(Point)); 
 
-    for (int orientationIndex = 0; orientationIndex < angularResolution; orientationIndex++) {
+    for (int orientationIndex = 0; orientationIndex < angularResolution; orientationIndex++) 
+    {
         int numPoints = 0; 
 
         temp[numPoints++] = Point_Construct(0, 0); 
 
         PointF direction = Angle_ToVector(Angle_ByBucketCenter(orientationIndex, 2 * angularResolution));
 
-        for (float r = radius; r >= 0.5f; r /= stepFactor) {
+        for (float r = radius; r >= 0.5f; r /= stepFactor) 
+        {
             PointF scaledPoint = PointF_Construct(r * direction.x, r * direction.y); 
-            Point p = Point_Construct(scaledPoint.x, scaledPoint.y);
 
-            if(!contains_point(temp, p, numPoints)) {
+            Point p = Point_Construct((long) (scaledPoint.x + 0.5), (long) (scaledPoint.y + 0.5));
+
+            if(!contains_point(temp, p, numPoints)) 
+            {
                 //Check our temp array is big enough 
-                if (numPoints + 2 >= tempSize) {
+                if (numPoints + 2 >= tempSize) 
+                {
                     tempSize *= 2; 
                     temp = (Point *) realloc(temp, tempSize * sizeof(Point)); //THIS IS REALLY BAD, BECAUSE REALLOC MIGHT RETURN NULL. FIX THIS BEFORE MERGING IN
                 }
 
                 temp[numPoints++] = p; 
-                temp[numPoints] = Point_Construct(-p.x, -p.y); 
+                temp[numPoints++] = Point_Construct(-p.x, -p.y); 
             }
         }
 
@@ -65,7 +70,8 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
 
         PointArray2D_ConstructRow(lines, orientationIndex, numPoints);
 
-        for (int i = 0; i < numPoints; i++) {
+        for (int i = 0; i < numPoints; i++) 
+        {
             lines->data[orientationIndex]->data[i] = temp[i]; 
         }
     }
