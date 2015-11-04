@@ -56,9 +56,6 @@ Thinner Thinner_Construct(void)
     Thinner t = {
         .maxIterations = 26     /* Lower = 5, Upper = 50 */
     };
-
-    /* TODO: Implement Thinner_Construct() */
-
     return t;
 }
 

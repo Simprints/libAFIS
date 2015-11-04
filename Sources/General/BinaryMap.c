@@ -148,7 +148,7 @@ bool BinaryMap_IsEmpty(const BinaryMap *me)
     return true;
 }
 
-/*static void ShiftLeft(const BinaryMap *me, UInt32Array1D *vector, int32_t shift)
+static void ShiftLeft(const BinaryMap *me, UInt32Array1D *vector, int32_t shift)
 {
     if (shift > 0)
     {
@@ -166,7 +166,7 @@ static void ShiftRight(const BinaryMap *me, UInt32Array1D *vector, int32_t shift
             vector->data[i] = (vector->data[i] << shift) | (vector->data[i - 1] >> (me->wordSize - shift));
         vector->data[0] <<= shift;
     }
-}*/
+}
 
 static void LoadLine(const BinaryMap *me, UInt32Array1D *vector, const Point *at, int32_t length)
 {
@@ -291,11 +291,30 @@ uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
 //TODO: Write Implementations
 void BinaryMap_CopyTo(const BinaryMap *source, BinaryMap *target)
 {
-
+	RectangleC defaultArea = RectangleC_ConstructFrom2Ints(source->width, source->height);
+	Point defaultPoint = Point_Construct(0, 0);
+	BinaryMap_CopyToArea(source, target, &defaultArea, &defaultPoint);
 }
 
-void BinaryMap_CopyToArea(const BinaryMap *source, BinaryMap *target, const RectangleC *area, const Point *at)
+void BinaryMap_CopyToArea(const BinaryMap *me, BinaryMap *source, const RectangleC *area, const Point *at)
 {
+	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+
+	for (int y = 0; y < area->height; y++)
+	{
+		UInt32Array1D vector = UInt32Array1D_Construct((area->width >> me->wordShift) + 2);
+		Point areaOffset = Point_Construct(area->x, area->y + y);
+		Point atOffset = Point_Construct(at->x, at->y + y);
+
+		LoadLine(source, &vector, &areaOffset, area->width);
+		if (shift >= 0)
+			ShiftLeft(me, &vector, shift);
+		else
+			ShiftRight(me, &vector, -shift);
+
+		SaveLine(me, &vector, &atOffset, area->width);
+		UInt32Array1D_Destruct(&vector);
+	};
 
 }
 
