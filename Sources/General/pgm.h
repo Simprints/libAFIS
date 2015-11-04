@@ -1,5 +1,5 @@
-#ifndef _GENERAL_PGM_
-#define _GENERAL_PGM_
+#ifndef GENERAL_PGM_H
+#define GENERAL_PGM_H
 
 #include "General/Array.h"
 
