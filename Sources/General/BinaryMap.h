@@ -45,8 +45,13 @@ void BinaryMap_Clear(const BinaryMap *me);
 void BinaryMap_Invert(const BinaryMap *me);
 BinaryMap BinaryMap_GetInverted(const BinaryMap *me);
 bool BinaryMap_IsEmpty(const BinaryMap *me);
-void BinaryMap_Or(BinaryMap *me, const BinaryMap *them);
+void BinaryMap_Or(const BinaryMap *me, const BinaryMap *them);
 void BinaryMap_And(BinaryMap *me, const BinaryMap *them);
-uint32_t BinaryMap_GetNeighborhoodFromPoint(BinaryMap *me, const Point *at);
-uint32_t BinaryMap_GetNeighborhood(BinaryMap *me, int32_t x, int32_t y);
+uint32_t BinaryMap_GetNeighborhoodFromPoint(const BinaryMap *me, const Point *at);
+uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y);
+void BinaryMap_CopyTo(const BinaryMap *source, BinaryMap *target);
+void BinaryMap_CopyToArea(const BinaryMap *source, BinaryMap *target, const RectangleC *area, const Point *at);
+void BinaryMap_AndNotTo(const BinaryMap *source, BinaryMap *target);
+void BinaryMap_AndNotToArea(const BinaryMap *source, BinaryMap *target, const RectangleC *area, const Point *at);
+
 #endif

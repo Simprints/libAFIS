@@ -68,7 +68,7 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 
 	RectangleC copyArea = RectangleC_ConstructFrom4Ints(1, 1, input->width - 2, input->height - 2);
 	Point startPoint = Point_Construct(1, 1);
-	BinaryMap_CopyTo(input, intermediate, copyArea, startPoint);
+	BinaryMap_CopyToArea(&input, &intermediate, &copyArea, &startPoint);
 
 	BinaryMap border = BinaryMap_ConstructFromSize(&size);
 	BinaryMap skeleton = BinaryMap_ConstructFromSize(&size);
@@ -81,7 +81,7 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 		{
 			RectangleC area;
 			Point point;
-			BinaryMap_CopyTo(intermediate, border);
+			BinaryMap_CopyTo(&intermediate, &border);
 
 			switch (j)
 			{
@@ -102,8 +102,8 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 					point = Point_Construct(0, 1);
 					break;
 			}
-			BinaryMap_AndNotTo(intermediate, border, area, point);
-			BinaryMap_AndNotTo(border, skeleton);
+			BinaryMap_AndNotTo(&intermediate, &border, &area, &point);
+			BinaryMap_AndNotTo(&border, &skeleton);
 
 			for (int odd = 0; odd < 2; odd++)
 			{

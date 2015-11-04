@@ -249,12 +249,12 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
-uint32_t BinaryMap_GetNeighborhoodFromPoint(BinaryMap *me, const Point *at)
+uint32_t BinaryMap_GetNeighborhoodFromPoint(const BinaryMap *me, const Point *at)
 {
 	return BinaryMap_GetNeighborhood(me, at->x, at->y);
 }
 
-uint32_t BinaryMap_GetNeighborhood(BinaryMap *me, int32_t x, int32_t y)
+uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
 {
 	if ((x & me->wordMask) >= 1 && (x & me->wordMask) <= 30)
 	{
@@ -268,24 +268,43 @@ uint32_t BinaryMap_GetNeighborhood(BinaryMap *me, int32_t x, int32_t y)
 	else
 	{
 		uint32_t mask = 0;
-		if (BinaryMap_(x - 1, y + 1))
+		if (BinaryMap_GetBit(me, x - 1, y + 1))
 			mask |= 1;
-		if (BinaryMap_(x, y + 1))
+		if (BinaryMap_GetBit(me, x, y + 1))
 			mask |= 2;
-		if (BinaryMap_(x + 1, y + 1))
+		if (BinaryMap_GetBit(me, x + 1, y + 1))
 			mask |= 4;
-		if (BinaryMap_(x - 1, y))
+		if (BinaryMap_GetBit(me, x - 1, y))
 			mask |= 8;
-		if (BinaryMap_(x + 1, y))
+		if (BinaryMap_GetBit(me, x + 1, y))
 			mask |= 16;
-		if (BinaryMap_(x - 1, y - 1))
+		if (BinaryMap_GetBit(me, x - 1, y - 1))
 			mask |= 32;
-		if (BinaryMap_(x, y - 1))
+		if (BinaryMap_GetBit(me, x, y - 1))
 			mask |= 64;
-		if (BinaryMap_(x + 1, y - 1))
+		if (BinaryMap_GetBit(me, x + 1, y - 1))
 			mask |= 128;
 		return mask;
 	}
 }
 
-//TODO: BinaryMap_CopyTo, BinaryMap_AndNotTo,
+//TODO: Write Implementations
+void BinaryMap_CopyTo(const BinaryMap *source, BinaryMap *target)
+{
+
+}
+
+void BinaryMap_CopyToArea(const BinaryMap *source, BinaryMap *target, const RectangleC *area, const Point *at)
+{
+
+}
+
+void BinaryMap_AndNotTo(const BinaryMap *source, BinaryMap *target)
+{
+
+}
+
+void BinaryMap_AndNotToArea(const BinaryMap *source, BinaryMap *target, const RectangleC *area, const Point *at)
+{
+
+}
