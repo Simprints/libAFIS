@@ -225,6 +225,21 @@
     <ClCompile Include="TestRunner_Calc.c">
       <Filter>Source Files\Tests\General\runners</Filter>
     </ClCompile>
+    <ClCompile Include="General\pgm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Equalizer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Pgm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Equalizer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Pgm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extraction\Model\DotRemover.h">
@@ -337,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="Utils\Unity\unity_internals.h">
       <Filter>Header Files\Utils\Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="General\pgm.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

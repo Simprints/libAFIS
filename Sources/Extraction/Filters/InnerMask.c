@@ -22,12 +22,13 @@ void InnerMask_ShrinkBy(const InnerMask *me, BinaryMap* temporary, const BinaryM
   Point up = Point_Construct(0, amount);
 
   BinaryMap_Clear(temporary);
-  BinaryMap_Copy(temporary, innerA, origin);
-  BinaryMap_And(temporary, inner, innerB, left);
-  BinaryMap_And(temporary, inner, innerC, origin);
-  BinaryMap_And(temporary, inner, innerD, up);
+  BinaryMap_CopyToArea(temporary, inner, &innerA, &origin);
+  //TODO: Create AndArea Implementation
+  //BinaryMap_AndArea(temporary, inner, innerB, left);
+  //BinaryMap_AndArea(temporary, inner, innerC, origin);
+  //BinaryMap_AndArea(temporary, inner, innerD, up);
 
-  BinaryMap_Copy(inner, temporary);
+  BinaryMap_CopyTo(inner, temporary);
 }
 
 void InnerMask_Compute(const InnerMask *me, const BinaryMap *outer, BinaryMap* inner)

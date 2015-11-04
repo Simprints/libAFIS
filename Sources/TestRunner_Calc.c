@@ -3,5 +3,5 @@
 
 TEST_GROUP_RUNNER(Calc)
 {
-	RUN_TEST_CASE(Calc, Calc_CountBits);
+	RUN_TEST_CASE(Calc, CountBits);
 }
