@@ -21,6 +21,9 @@ static void RunAllTests(void)
 
     printf("\nLocal histogram tests\n");
     RUN_TEST_GROUP(LocalHistogram);
+    
+    printf("\nEnsure we an load serialised binary data\n");
+    RUN_TEST_GROUP(DataStructures);
 
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 
