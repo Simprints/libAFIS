@@ -27,16 +27,20 @@ static void delegate(const VotingFilter *me, int32_t y, int32_t left, int32_t ri
         RectangleC neighborhood = RectangleC_ConstructFrom2Points(&p1, &p2);
 
         int32_t ones = 0;
-        for (int32_t ny = RectangleC_GetBottom(&neighborhood); ny < RectangleC_GetTop(&neighborhood); ++ny) {
-            for (int32_t nx = RectangleC_GetLeft(&neighborhood); nx < RectangleC_GetRight(&neighborhood); ++nx) {
-                if (BinaryMap_GetBit(input, nx, ny)) {
+        for (int32_t ny = RectangleC_GetBottom(&neighborhood); ny < RectangleC_GetTop(&neighborhood); ++ny) 
+        {
+            for (int32_t nx = RectangleC_GetLeft(&neighborhood); nx < RectangleC_GetRight(&neighborhood); ++nx) 
+            {
+                if (BinaryMap_GetBit(input, nx, ny)) 
+                {
                     ++ones;
                 }
             }
         }
 
         double voteWeight = 1.0 / RectangleC_GetTotalArea(&neighborhood);
-        if (ones * voteWeight >= me->majority){
+        if (ones * voteWeight >= me->majority)
+        {
             BinaryMap_SetBitOne(output, x, y);
         }
     }
@@ -50,7 +54,8 @@ void VotingFilter_Filter(const VotingFilter *me, const BinaryMap *input, BinaryM
 
     Range r = RectangleC_GetRangeY(&rect);
 
-    for (int32_t y = r.begin; y < r.end; y++) {
+    for (int32_t y = r.begin; y < r.end; y++) 
+    {
         delegate(me, y, RectangleC_GetLeft(&rect), RectangleC_GetRight(&rect), input, output);
     }
 }
