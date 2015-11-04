@@ -1,5 +1,7 @@
 #include "General/BlockMap.h"
+#include "Extraction/Filters/Equalizer.h"
 #include "Extraction/Filters/LocalHistogram.h"
+#include "Extraction/Filters/SegmentationMask.h"
 
 const int blockSize = 16;
 
@@ -15,5 +17,12 @@ void Extract(UInt8Array2D *image)
     LocalHistogram_SmoothAroundCorners(&histogram, &smoothHistogram);
 
     // Segmentation
-    // TODO
+    BinaryMap mask = BinaryMap_Construct(blocks.blockCount.width, blocks.blockCount.height);
+    SegmentationMask sm = SegmentationMask_Construct();
+    SegmentationMask_ComputeMask(&sm, &blocks, &histogram, &mask);
+
+    // Equalization
+    FloatArray2D equalized = FloatArray2D_Construct(size.width, size.height);
+    Equalizer eq = Equalizer_Construct();
+    Equalizer_Equalize(&eq, &blocks, image, &smoothHistogram, &mask, &equalized);
 }
