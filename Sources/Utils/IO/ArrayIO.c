@@ -192,8 +192,16 @@ PointArray2D ArrayIO_PointArray2D_ConstructFromStream(FILE *stream)
 
        assert(ret == 1);
        PointArray1D *row = PointArray2D_ConstructRow(&array, i,length);
-       ret = fread(PointArray1D_GetStorage(row), sizeof(int32_t)*2, length, stream);
-       
+       int *data = calloc(length, sizeof(int32_t) * 2);
+       assert(data != NULL);
+       ret = fread(data, sizeof(int32_t) * 2, length, stream);
+       Point * array = PointArray1D_GetStorage(row);
+       for (int i = 0; i < length; i++)
+       {
+           array[i].x = data[i * 2];
+           array[i].y = data[i * 2+1];
+       }
+       free(data);
        assert(ret == length);
     }
 
