@@ -21,7 +21,6 @@ static int reverse_compare(const uint8_t *a, const uint8_t *b) {
 
 void RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8Array2D *contrast, const BlockMap *blocks, BinaryMap *output)
 {
-    /* TODO:  Implement RelativeContrast_DetectLowContrast() */
     const int nElements = contrast->sizeX * contrast->sizeY;
     uint8_t *sortedContrast = (uint8_t *) malloc(nElements * sizeof(uint8_t));
 
@@ -44,8 +43,6 @@ void RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8A
         averageContrast += sortedContrast[i]; 
     }
 
-    free(sortedContrast); 
-
     averageContrast /= consideredBlocks;
     uint8_t limit = (uint8_t)(averageContrast * me->relativeLimit);
 
@@ -56,4 +53,6 @@ void RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8A
             }
         }
     }
+
+    free(sortedContrast); 
 }
