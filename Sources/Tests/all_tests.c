@@ -21,6 +21,9 @@ static void RunAllTests(void)
 
     printf("\nLocal histogram tests\n");
     RUN_TEST_GROUP(LocalHistogram);
+
+    printf("\nEqualizer tests");
+    RUN_TEST_GROUP(Equalizer); 
 }
 
 int main(int argc, const char * argv[])
