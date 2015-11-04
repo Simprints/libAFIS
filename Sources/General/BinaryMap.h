@@ -9,8 +9,6 @@
 #include "General/RectangleC.h"
 #include "General/Array.h"
 
-typedef struct Size Size;
-typedef struct RectangleC RectangleC;
 typedef struct BinaryMap BinaryMap;
 
 struct BinaryMap
