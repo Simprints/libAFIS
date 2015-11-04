@@ -35,7 +35,7 @@ void RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8A
 
     int pixelsPerBlock = (blocks->pixelCount.width * blocks->pixelCount.height) / (blocks->allBlocks.width * blocks->allBlocks.height); 
     int sampleCount = MIN(nElements, me->sampleSize / pixelsPerBlock);
-    int consideredBlocks = MAX(sampleCount * me->sampleFraction, 1);
+    int consideredBlocks = MAX((int) (sampleCount * me->sampleFraction), 1);
 
     int averageContrast = 0; 
 

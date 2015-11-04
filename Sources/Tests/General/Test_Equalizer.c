@@ -61,5 +61,13 @@ TEST(Equalizer, Equalizer_Equals_SourceAFIS_Output_3x3)
              TEST_ASSERT_MESSAGE(fabs(expected[i][j] - equalized.data[i][j]) < EPSILON, assertMessage);
         }
     }
+
+    //Free the memory
+    //histogram
+    //smoothedHistogram
+    //mask
+    //sm
+    //equalized
+    //eq
 }
 
