@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 bool OutputDebug = false ;
 
@@ -78,7 +79,7 @@ TEST(DataStructures, Float_SanityCheck)
 {
     float value = Float_ConstructFromFile("DataStructures/101_1.tif.15.LinesByOrientation.StepFactor.dat");
     float valueToLookFor = 1.59f;
-    assert(abs(value - valueToLookFor) < 0.001f); // Take into account the extra decimal places...
+    assert(fabsf(value - valueToLookFor) < 0.001f); // Take into account the extra decimal places...
 }
 
 TEST(DataStructures, Two2PointArray_SanityCheck)

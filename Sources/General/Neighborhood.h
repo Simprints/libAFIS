@@ -1,7 +1,8 @@
 #ifndef GENERAL_NEIGHBORHOOD_H
 #define GENERAL_NEIGHBORHOOD_H
 
-typedef struct Point Point;
+#include "General/Point.h"
+
 typedef struct Neighborhood Neighborhood;
 
 struct Neighborhood {

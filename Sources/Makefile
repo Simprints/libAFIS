@@ -2,7 +2,7 @@
 ## Build tools
 ##
 CC = /usr/bin/gcc
-ZIP = /bin/tar
+ZIP = tar
 MKDIR=mkdir -p
 
 ##

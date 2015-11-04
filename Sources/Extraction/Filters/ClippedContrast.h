@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 #include "General/Array.h"
+#include "General/BinaryMap.h"
 #include "General/BlockMap.h"
 
-typedef struct BinaryMap BinaryMap;
 typedef struct ClippedContrast ClippedContrast;
 
 struct ClippedContrast
