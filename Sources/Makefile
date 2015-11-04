@@ -91,7 +91,7 @@ $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
 	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
 
-$(BUILD_DIR)/Tests/extract: $(BUILD_DIR)/Tests/extract.o
+$(BUILD_DIR)/Tests/extract: $(BUILD_DIR)/Tests/extract.o $(LIBAFIS_OBJS)
 	$(CC) $(LFLAGS) $^ -o $@
 
 $(UTILS_OBJS): $(BUILD_DIR)/%.o: %.c
