@@ -206,7 +206,6 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
     for (int y=0;y<area.height;++y) {
         Point p = Point_Construct(0,y);
 
-        //TODO: This is probably a needless copy 
         LoadLine(me, &vector, &p, area.width);
         LoadLine(source, &srcVector, &p, area.width);
 
@@ -247,6 +246,7 @@ void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC 
 			ShiftRight(me, &srcVector, shift);
 		}
 
+		// The AND
 		for (int i = 0; i < vector.size; ++i)
 		{
 			vector.data[i] &= srcVector.data[i];
@@ -266,7 +266,6 @@ void BinaryMap_Or(const BinaryMap *me, const BinaryMap* source)
     for (int y=0;y<area.height;++y) {
         Point p = Point_Construct(0,y);
 
-        //TODO: This is probably a needless copy 
         LoadLine(me, &vector, &p, area.width);
         LoadLine(source, &srcVector, &p, area.width);
 
@@ -361,11 +360,10 @@ void BinaryMap_AndNotTo(const BinaryMap *me, BinaryMap* source)
 	for (int y = 0; y<area.height; ++y) {
 		Point p = Point_Construct(0, y);
 
-		//TODO: This is probably a needless copy 
 		LoadLine(me, &vector, &p, area.width);
 		LoadLine(source, &srcVector, &p, area.width);
 
-		// The OR
+		// The AND NOT
 		for (int i = 0; i<vectorSize; ++i) {
 			vector.data[i] &= ~srcVector.data[i];
 		}
@@ -402,10 +400,14 @@ void BinaryMap_AndNotToArea(const BinaryMap *me, BinaryMap *source, const Rectan
 			ShiftRight(me, &srcVector, shift);
 		}
 
+		// The AND NOT
 		for (int i = 0; i < vector.size; ++i)
 		{
 			vector.data[i] &= ~srcVector.data[i];
 		}
 		SaveLine(me, &vector, &atOffset, area->width);
 	}
+
+	UInt32Array1D_Destruct(&vector);
+	UInt32Array1D_Destruct(&srcVector);
 }
