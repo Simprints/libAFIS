@@ -32,5 +32,20 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata)
     Equalizer eq = Equalizer_Construct();
     Equalizer_Equalize(&eq, &blocks, image, &smoothHistogram, &mask, &equalized);
 
+    // Orientation
+    if (perfdata) gettimeofday(&perfdata->start_orientation, 0);
+
+    // Binarisation
+    if (perfdata) gettimeofday(&perfdata->start_binarisation, 0);
+
+    // Ridge thinning
+    if (perfdata) gettimeofday(&perfdata->start_thinning, 0);
+
+    // Minutiae detection
+    if (perfdata) gettimeofday(&perfdata->start_detection, 0);
+
+    // Minutiae filtering
+    if (perfdata) gettimeofday(&perfdata->start_filtering, 0);
+
     if (perfdata) gettimeofday(&perfdata->end, 0);
 }
