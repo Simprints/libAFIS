@@ -26,7 +26,7 @@ TEST(Pgm, Pgm_Read)
     Size imgSize = {.width = v.sizeX, .height = v.sizeY};
     BlockMap blocks = BlockMap_Construct(&imgSize, 15);
 
-    Int16Array3D histogram = Int16Array3D_Construct(blocks.cornerCount.width, blocks.cornerCount.height, 256);
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
     Int16Array3D smoothedHistogram = Int16Array3D_Construct(blocks.cornerCount.width, blocks.cornerCount.height, 256);
 
     LocalHistogram_Analyze(&blocks, &v, &histogram); 
