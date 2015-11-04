@@ -11,8 +11,17 @@ FloatArray2D OrientedSmoother_Smooth
 {
     FloatArray2D output;
 
-    LinesByOrientation_ConstructLines(NULL);
+/*
+    int32_t angularResolution = 32;
 
+    Point** lines; 
+
+    lines = malloc(angularResolution * sizeof(Point **)); 
+
+    malloc()
+
+    LinesByOrientation_ConstructLines(NULL);
+*/
     /* TODO: Implement OrientedSmoother_Smooth() function */
 
     return output;
