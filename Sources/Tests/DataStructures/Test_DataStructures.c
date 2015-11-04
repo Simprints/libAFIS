@@ -17,7 +17,7 @@ TEST_GROUP(DataStructures);
 TEST_SETUP(DataStructures)
 {
     IsUnderCI = (getenv("CI") != NULL);
-    IsUnderCI = true;
+//     IsUnderCI = true;
 }
 
 TEST_TEAR_DOWN(DataStructures)
