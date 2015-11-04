@@ -48,5 +48,7 @@ void BinaryMap_Invert(const BinaryMap *me);
 BinaryMap BinaryMap_GetInverted(const BinaryMap *me);
 bool BinaryMap_IsEmpty(const BinaryMap *me);
 void BinaryMap_Or(BinaryMap *me, const BinaryMap *them);
+void BinaryMap_And(BinaryMap *me, const BinaryMap *them);
+void BinaryMap_Xor(BinaryMap *me, const BinaryMap *source);
 
 #endif

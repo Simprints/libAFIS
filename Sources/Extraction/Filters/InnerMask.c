@@ -12,7 +12,7 @@ InnerMask InnerMask_Construct(void)
 
 void InnerMask_ShrinkBy(const InnerMask *me, BinaryMap* temporary, const BinaryMap* inner, int amount)
 {
-  RectangleC innerA = RectangleC_ConstructFrom4Ints(amount,0,inner->width - amount,inner->height);
+  /*  RectangleC innerA = RectangleC_ConstructFrom4Ints(amount,0,inner->width - amount,inner->height);
   RectangleC innerB = RectangleC_ConstructFrom4Ints(0,0,inner->width - amount,inner->height);
   RectangleC innerC = RectangleC_ConstructFrom4Ints(0,amount,inner->width,inner->height-amount);
   RectangleC innerD = RectangleC_ConstructFrom4Ints(0,0,inner->width,inner->height-amount);
@@ -27,7 +27,7 @@ void InnerMask_ShrinkBy(const InnerMask *me, BinaryMap* temporary, const BinaryM
   BinaryMap_And(temporary, inner, innerC, origin);
   BinaryMap_And(temporary, inner, innerD, up);
 
-  BinaryMap_Copy(inner, temporary);
+  BinaryMap_Copy(inner, temporary);*/
 }
 
 void InnerMask_Compute(const InnerMask *me, const BinaryMap *outer, BinaryMap* inner)
