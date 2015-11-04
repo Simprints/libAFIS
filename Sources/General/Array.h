@@ -121,6 +121,7 @@ PointArray2D PointArray2D_Construct(int32_t x);
 void PointArray2D_Destruct(PointArray2D *me);
 PointArray1D* PointArray2D_ConstructRow(PointArray2D *me, int rowId, int32_t x);
 PointArray1D* PointArray2D_GetStorage(PointArray2D *me, int row);
+Point *PointArray2D_Get(PointArray2D *me, int x, int y);
 
 PointArray1D* PointArray1D_Construct(int32_t x);
 void PointArray1D_Destruct(PointArray1D *me);
@@ -134,4 +135,4 @@ FloatArray3D FloatArray3D_Construct(int32_t x, int32_t y, int32_t z);
 void FloatArray3D_Destruct(FloatArray3D *me);
 float* FloatArray3D_GetStorage(FloatArray3D *me);
 
-#endif
+#endifff
