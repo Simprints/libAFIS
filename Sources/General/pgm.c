@@ -17,8 +17,8 @@ void skip_comments(FILE *fp)
 
     fscanf(fp," ");      /* Skip white space. */
     while ((ch = fgetc(fp)) == '#') {
-      while ((ch = fgetc(fp)) != '\n'  &&  ch != EOF)
-    ;
+      while ((ch = fgetc(fp)) != '\n'  &&  ch != EOF);
+      
       fscanf(fp," ");
     }
     ungetc(ch, fp);      /* Replace last character read. */
