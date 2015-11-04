@@ -195,11 +195,7 @@ PointArray2D ArrayIO_PointArray2D_ConstructFromStream(FILE *stream)
        ret = fread(PointArray1D_GetStorage(row), sizeof(int32_t)*2, length, stream);
        
        assert(ret == length);
-
     }
-    /* Read array data */
-//     ret = fread(PointArray2D_GetStorage(&array), sizeof(int)*2, array.sizeX * array.sizeY, stream);
-//     assert(ret == array.sizeX * array.sizeY);
 
     return array;
 }

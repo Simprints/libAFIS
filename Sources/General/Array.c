@@ -266,11 +266,6 @@ void PointArray2D_Destruct(PointArray2D *me)
     me->size = 0;
 }
 
-PointArray1D* PointArray2D_GetStorage(PointArray2D *me, int rowId)
-{
-    return me->data[rowId];
-}
-
 Int16Array3D Int16Array3D_Construct(int32_t x, int32_t y, int32_t z)
 {
     Int16Array3D array;
