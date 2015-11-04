@@ -22,7 +22,7 @@ static bool thinner_IsRemovable(int i)
 
 			int count = Calc_CountBits(mask);
 
-			bool diagonal = !TC && !CL && TL || !CL && !BC && BL || !BC && !CR && BR || !CR && !TC && TR;
+			bool diagonal = (!TC && !CL && TL) || (!CL && !BC && BL) || (!BC && !CR && BR) || (!CR && !TC && TR);
 			bool horizontal = !TC && !BC && (TR || CR || BR) && (TL || CL || BL);
 			bool vertical = !CL && !CR && (TL || TC || TR) && (BL || BC || BR);
 			bool end = (count == 1);
@@ -121,7 +121,7 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 									if (x > 0 && x < input->width - 1 && BinaryMap_GetBit(&border, x, y))
 									{
 										uint32_t neighbors = BinaryMap_GetNeighborhood(&intermediate, x, y);
-										if (thinner_IsRemovable(neighbors) || thinner_IsEnding(neighbors) && Thinner_IsFalseEnding(&intermediate, Point_Construct(x, y)))
+										if (thinner_IsRemovable(neighbors) || (thinner_IsEnding(neighbors) && Thinner_IsFalseEnding(&intermediate, Point_Construct(x, y))))
 										{
 											removedAnything = true;
 											BinaryMap_SetBitZero(&intermediate, x, y);

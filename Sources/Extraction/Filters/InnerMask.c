@@ -12,18 +12,19 @@ InnerMask InnerMask_Construct(void)
 
 void InnerMask_ShrinkBy(const InnerMask *me, BinaryMap* temporary, const BinaryMap* inner, int amount)
 {
-  RectangleC innerA = RectangleC_ConstructFrom4Ints(amount,0,inner->width - amount,inner->height);
-  RectangleC innerB = RectangleC_ConstructFrom4Ints(0,0,inner->width - amount,inner->height);
-  RectangleC innerC = RectangleC_ConstructFrom4Ints(0,amount,inner->width,inner->height-amount);
-  RectangleC innerD = RectangleC_ConstructFrom4Ints(0,0,inner->width,inner->height-amount);
+	//TODO Fix This
+  //RectangleC innerA = RectangleC_ConstructFrom4Ints(amount,0,inner->width - amount,inner->height);
+  //RectangleC innerB = RectangleC_ConstructFrom4Ints(0,0,inner->width - amount,inner->height);
+  //RectangleC innerC = RectangleC_ConstructFrom4Ints(0,amount,inner->width,inner->height-amount);
+  //RectangleC innerD = RectangleC_ConstructFrom4Ints(0,0,inner->width,inner->height-amount);
 
-  Point origin = Point_Construct(0,0);
-  Point left = Point_Construct(amount, 0);
-  Point up = Point_Construct(0, amount);
+  //Point origin = Point_Construct(0,0);
+  //Point left = Point_Construct(amount, 0);
+  //Point up = Point_Construct(0, amount);
 
-  BinaryMap_Clear(temporary);
-  BinaryMap_CopyToArea(temporary, inner, &innerA, &origin);
+  //BinaryMap_Clear(temporary);
   //TODO: Create AndArea Implementation
+  //BinaryMap_CopyToArea(temporary, inner, &innerA, &origin);
   //BinaryMap_AndArea(temporary, inner, innerB, left);
   //BinaryMap_AndArea(temporary, inner, innerC, origin);
   //BinaryMap_AndArea(temporary, inner, innerD, up);
