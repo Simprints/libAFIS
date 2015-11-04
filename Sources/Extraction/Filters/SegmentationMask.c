@@ -33,7 +33,6 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
 
     ClippedContrast_Compute(&me->contrast, blocks, histogram, &blocksContrast);
 
-    //BinaryMap_Construct(blocksContrast.sizeX, blocksContrast.sizeY); 
     BinaryMap tmpBm = BinaryMap_Construct(output->width, output->height);   
 
     AbsoluteContrast_DetectLowContrast(me->absoluteContrastLimit, &blocksContrast, output); 
