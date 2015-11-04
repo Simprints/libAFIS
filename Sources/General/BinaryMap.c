@@ -4,6 +4,8 @@
 
 #include "General/BinaryMap.h"
 
+//TODO: BinaryMap_CopyTo, BinaryMap_AndNotTo, BinaryMap_GetNeighborhood
+
 Size BinaryMap_GetSize(const BinaryMap *me)
 {
     return Size_Construct(me->width, me->height);

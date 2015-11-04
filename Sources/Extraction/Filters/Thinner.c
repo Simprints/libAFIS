@@ -65,7 +65,7 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 					{
 						for (int xWord = 0; xWord < input->wordWidth; xWord++)
 						{
-							if (BinaryMap_IsWordNonZero(xWord, y))
+							if (BinaryMap_IsWordNonZero(&border, xWord, y))
 							{
 								for (int x = xWord << input->wordShift; x < (xWord << input->wordShift) + input->wordSize; x++)
 								{
@@ -91,7 +91,8 @@ BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input)
 		}
 		
 	}
-    
 
     return skeleton;
 }
+
+//TODO: IsRemovable[], IsEnding[], IsFalseEnding
