@@ -1,8 +1,8 @@
 #ifndef GENERAL_CALC_H
 #define GENERAL_CALC_H
 
-typedef struct Point Point;
-typedef struct PointF PointF;
+#include "General/Point.h"
+#include "General/PointF.h"
 
 int Calc_DivRoundUp(int input, int divider);
 int Calc_InterpolateFrom3Ints(int index, int count, int range);

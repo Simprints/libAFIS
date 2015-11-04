@@ -3,10 +3,11 @@
 
 #include <stdbool.h>
 
-typedef struct Point Point;
-typedef struct PointF PointF;
-typedef struct Size Size;
-typedef struct Range Range;
+#include "General/Point.h"
+#include "General/PointF.h"
+#include "General/Range.h"
+#include "General/Size.h"
+
 typedef struct RectangleC RectangleC;
 
 struct RectangleC {

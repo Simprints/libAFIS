@@ -4,12 +4,13 @@
 #include <stdbool.h>
 
 typedef struct Point Point;
-typedef struct Size Size;
 
 struct Point {
     int x;
     int y;
 };
+
+#include "General/Size.h"
 
 Point Point_Construct(int xx, int yy);
 int Point_GetHashCode(void);

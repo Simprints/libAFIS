@@ -46,7 +46,8 @@ UTEST_EXE = all_tests
 ##
 LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
-               Extraction/Model/*.c
+               Extraction/Model/*.c \
+               Extraction/*.c
 LIBAFIS_SRCS_EXCLUDE = 
 
 UTILS_SRCS =  IO/*.c
@@ -83,14 +84,18 @@ UNITY_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(UNITY_SRCS)))
 ##
 all: runall
 libafis: $(LIBAFIS_OBJS)
+tests: $(UTEST_EXE) $(BUILD_DIR)/Tests/extract
 utest: runUnitTest
 
 ##
 ## Rules
 ##
-$(LIBAFIS_OBJS): $(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
 	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
+
+$(BUILD_DIR)/Tests/extract: $(BUILD_DIR)/Tests/extract.o $(LIBAFIS_OBJS)
+	$(CC) $(LFLAGS) $^ -o $@
 
 $(UTILS_OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
@@ -115,7 +120,7 @@ archive: $(LIBAFIS_OBJS) runUnitTest
 	cd $(BUILD_DIR); \
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o -exec $(ZIP) -rvf libAFIS-$(BUILD_NUMBER).tar {} \+
 
-runall: clean $(LIBAFIS_OBJS) runUnitTest archive
+runall: clean libafis tests runUnitTest archive
 
 clean:
 	rm -rf $(BUILD_DIR)
