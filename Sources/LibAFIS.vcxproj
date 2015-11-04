@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Extraction\Extract.c" />
     <ClCompile Include="Extraction\Filters\AbsoluteContrast.c" />
     <ClCompile Include="Extraction\Filters\ClippedContrast.c" />
     <ClCompile Include="Extraction\Filters\CrossRemover.c" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Tests\all_tests.c" />
     <ClCompile Include="Tests\DataStructures\TestRunner_DataStructures.c" />
     <ClCompile Include="Tests\DataStructures\Test_DataStructures.c" />
+    <ClCompile Include="Tests\extract.c" />
     <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_LocalHistogram.c" />
     <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_VotingFilter.c" />
     <ClCompile Include="Tests\Extraction\Filters\Test_LocalHistogram.c" />
@@ -199,11 +201,15 @@
     <ClCompile Include="Utils\IO\ArrayIO.c" />
     <ClCompile Include="Utils\IO\BinaryMapIO.c" />
     <ClCompile Include="Utils\IO\BlockMapIO.c" />
+    <ClCompile Include="Utils\IO\HistogramIO.c" />
+    <ClCompile Include="Utils\IO\ImageIO.c" />
+    <ClCompile Include="Utils\IO\SimpleDataTypesIO.c" />
     <ClCompile Include="Utils\Misc\binarise.c" />
     <ClCompile Include="Utils\Unity\unity.c" />
     <ClCompile Include="Utils\Unity\unity_fixture.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Extraction\Extract.h" />
     <ClInclude Include="Extraction\Filters\AbsoluteContrast.h" />
     <ClInclude Include="Extraction\Filters\ClippedContrast.h" />
     <ClInclude Include="Extraction\Filters\CrossRemover.h" />
@@ -226,6 +232,7 @@
     <ClInclude Include="General\BlockMap.h" />
     <ClInclude Include="General\Calc.h" />
     <ClInclude Include="General\List.h" />
+    <ClInclude Include="General\Neighborhood.h" />
     <ClInclude Include="General\pgm.h" />
     <ClInclude Include="General\Point.h" />
     <ClInclude Include="General\PointF.h" />
@@ -237,6 +244,9 @@
     <ClInclude Include="Utils\IO\ArrayIO.h" />
     <ClInclude Include="Utils\IO\BinaryMapIO.h" />
     <ClInclude Include="Utils\IO\BlockMapIO.h" />
+    <ClInclude Include="Utils\IO\HistogramIO.h" />
+    <ClInclude Include="Utils\IO\ImageIO.h" />
+    <ClInclude Include="Utils\IO\SimpleDataTypesIO.h" />
     <ClInclude Include="Utils\Unity\unity.h" />
     <ClInclude Include="Utils\Unity\unity_fixture.h" />
     <ClInclude Include="Utils\Unity\unity_fixture_internals.h" />

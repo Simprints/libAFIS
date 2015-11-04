@@ -79,6 +79,12 @@
     <Filter Include="Header Files\Utils\Unity">
       <UniqueIdentifier>{a5038acc-9bb8-4bdd-a67c-4cebf52f5b53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tests\DataStructures">
+      <UniqueIdentifier>{ad462e8d-9647-41d2-a579-5d1694f0e77d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\DataStructures\runners">
+      <UniqueIdentifier>{4e7de3bd-8b14-41ba-b35c-8af1a921864b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Extraction\Model\DotRemover.c">
@@ -219,32 +225,47 @@
     <ClCompile Include="Tests\General\runners\TestRunner_BinaryMap.c">
       <Filter>Source Files\Tests\General\runners</Filter>
     </ClCompile>
-    <ClCompile Include="Test_Calc.c">
-      <Filter>Source Files\Tests\General</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRunner_Calc.c">
-      <Filter>Source Files\Tests\General\runners</Filter>
-    </ClCompile>
-    <ClCompile Include="General\pgm.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\General\runners\TestRunner_Equalizer.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\General\runners\TestRunner_Pgm.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\General\Test_Equalizer.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\General\Test_Pgm.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Tests\General\Test_Calc.c">
       <Filter>Source Files\Tests\General</Filter>
     </ClCompile>
     <ClCompile Include="Tests\General\runners\TestRunner_Calc.c">
       <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\extract.c">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Extract.c">
+      <Filter>Source Files\Extraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\HistogramIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\ImageIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="General\pgm.c">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\IO\SimpleDataTypesIO.c">
+      <Filter>Source Files\Utils\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Equalizer.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Equalizer.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Pgm.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_Pgm.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\DataStructures\Test_DataStructures.c">
+      <Filter>Source Files\Tests\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\DataStructures\TestRunner_DataStructures.c">
+      <Filter>Source Files\Tests\DataStructures\runners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +381,21 @@
       <Filter>Header Files\Utils\Unity</Filter>
     </ClInclude>
     <ClInclude Include="General\pgm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Extract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Neighborhood.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\HistogramIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\ImageIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\IO\SimpleDataTypesIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
