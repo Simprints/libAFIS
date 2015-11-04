@@ -2,12 +2,18 @@
 #include "General/Array.h"
 #include "General/Size.h"
 #include "General/BlockMap.h"
+#include "Utils/IO/ArrayIO.h"
+#include "Utils/IO/BlockMapIO.h"
 #include "unity.h"
 #include "unity_fixture.h"
 
 #include <stdio.h>
 
 TEST_GROUP(LocalHistogram);
+
+void Assert_Int16Array3D_AreEqual(Int16Array3D *expected, Int16Array3D *actual, const char *test);
+static const char *analyzeRegressionFile = "FilterData/LocalHistogram/101_1.tif.1.LocalHistogram.Analyze";
+static const char *smoothAroundCornersRegressionFiles = "FilterData/LocalHistogram/101_1.tif.2.LocalHistogram.SmoothAroundCorners";
 
 TEST_SETUP(LocalHistogram)
 {
@@ -105,4 +111,73 @@ TEST(LocalHistogram, LocalHistogram_SmoothAroundCorners_2x2x1)
 
     Int16Array3D_Destruct(&histogram);
     Int16Array3D_Destruct(&smoothHistogram);
+}
+
+TEST(LocalHistogram, LocalHistogram_Regression_Analyze)
+{
+    char outputFile[128];
+    char paramBlocks[128], paramImage[128];
+
+    sprintf(paramBlocks, "%s.blocks.dat", analyzeRegressionFile);
+    sprintf(paramImage, "%s.image.dat", analyzeRegressionFile);
+    sprintf(outputFile, "%s.result.dat", analyzeRegressionFile);
+
+    BlockMap blocks = BlockMapIO_ConstructFromFile(paramBlocks);
+    UInt8Array2D image = ArrayIO_UInt8Array2D_ConstructFromFile(paramImage);
+    
+    Int16Array3D actual = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    LocalHistogram_Analyze(&blocks, &image, &actual);
+    
+    Int16Array3D expected = ArrayIO_Int16Array3D_ConstructFromFile(outputFile);
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeX, actual.sizeX, "LocalHistogram_Regression_Analyze");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeY, actual.sizeY, "LocalHistogram_Regression_Analyze");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeZ, actual.sizeZ, "LocalHistogram_Regression_Analyze");
+    Assert_Int16Array3D_AreEqual(&expected, &actual, "LocalHistogram_Regression_Analyze");
+    
+    BlockMap_Destruct(&blocks);
+    UInt8Array2D_Destruct(&image);
+    Int16Array3D_Destruct(&actual);
+    Int16Array3D_Destruct(&expected);
+}
+
+TEST(LocalHistogram, LocalHistogram_Regression_SmoothAroundCorners)
+{
+    char outputFile[128];
+    char paramInput[128];
+
+    sprintf(paramInput, "%s.input.dat", smoothAroundCornersRegressionFiles);
+    sprintf(outputFile, "%s.result.dat", smoothAroundCornersRegressionFiles);
+
+    Int16Array3D input = ArrayIO_Int16Array3D_ConstructFromFile(paramInput);
+    
+    Int16Array3D actual = Int16Array3D_Construct(input.sizeX + 1, input.sizeY + 1, input.sizeZ);
+    LocalHistogram_SmoothAroundCorners(&input, &actual);
+    
+    Int16Array3D expected = ArrayIO_Int16Array3D_ConstructFromFile(outputFile);
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeX, actual.sizeX, "LocalHistogram_Regression_SmoothAroundCorners");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeY, actual.sizeY, "LocalHistogram_Regression_SmoothAroundCorners");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(expected.sizeZ, actual.sizeZ, "LocalHistogram_Regression_SmoothAroundCorners");
+    Assert_Int16Array3D_AreEqual(&expected, &actual, "LocalHistogram_Regression_SmoothAroundCorners");
+
+    Int16Array3D_Destruct(&input);
+    Int16Array3D_Destruct(&actual);
+    Int16Array3D_Destruct(&expected);
+}
+
+void Assert_Int16Array3D_AreEqual(Int16Array3D *expected, Int16Array3D *actual, const char *test)
+{
+    for (int x = 0; x < expected->sizeX; x++)
+    {
+        for (int y = 0; y < expected->sizeY; y++)
+        {
+            for (int z = 0; z < expected->sizeZ; z++)
+            {
+                char message[256];
+                sprintf(message, "%s %d,%d,%d was %d expected %d", test, x, y, z, expected->data[x][y][z], actual->data[x][y][z]);
+                TEST_ASSERT_EQUAL_INT_MESSAGE(expected->data[x][y][z], actual->data[x][y][z], message);
+            }
+        }
+    }
 }

@@ -276,3 +276,19 @@ void ArrayIO_Int16Array3D_Printf(const Int16Array3D *me)
         }
     }
 }
+
+UInt8Array2D ArrayIO_UInt8Array2D_Transpose(const UInt8Array2D *input)
+{
+    UInt8Array2D output = UInt8Array2D_Construct(input->sizeY, input->sizeY);
+    
+    for(int y = 0; y < input->sizeY; y++) 
+    {
+        for(int x = 0; x < input->sizeX; x++) 
+        {
+            output.data[y][x] = input->data[x][y];
+        }
+    }
+    
+    return output;
+}
+

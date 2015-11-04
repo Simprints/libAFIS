@@ -24,4 +24,6 @@ Int16Array3D ArrayIO_Int16Array3D_ConstructFromFile(const char *);
 Int16Array3D ArrayIO_Int16Array3D_ConstructFromStream(FILE *);
 void ArrayIO_Int16Array3D_Printf(const Int16Array3D *);
 
+UInt8Array2D ArrayIO_UInt8Array2D_Transpose(const UInt8Array2D *);
+
 #endif
