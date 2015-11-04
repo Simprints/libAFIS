@@ -6,7 +6,6 @@
 #include "General/Point.h"
 #include "General/List.h"
 
-typedef struct List List;
 typedef struct SkeletonBuilderMinutia SkeletonBuilderMinutia;
 typedef struct SkeletonBuilderRidge SkeletonBuilderRidge;
 typedef struct SkeletonBuilder SkeletonBuilder;
