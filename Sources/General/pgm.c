@@ -27,11 +27,9 @@ void skip_comments(FILE *fp)
 UInt8Array2D pgm_read(const char* fname) {
     FILE* fp = fopen(fname,"rb");
     if (NULL == fp) {
-        printf("Failed to open file %s", fname);
+        printf("Failed to open file %s\n", fname);
         return UInt8Array2D_Construct(1,1);
     }
-
-    
 
     UInt8Array2D r = read_pgm(fp);
     fclose(fp);
