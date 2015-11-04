@@ -65,8 +65,6 @@ UInt8Array2D read_pgm(FILE *fp) {
 
     int char1, char2, w, h, max, c1, c2, c3, x, y;
 
-    printf("Reading an open file");
-
     char1 = fgetc(fp);
     char2 = fgetc(fp);
     skip_comments(fp);
@@ -75,10 +73,6 @@ UInt8Array2D read_pgm(FILE *fp) {
     c2 = fscanf(fp, "%d", &h);
     skip_comments(fp);
     c3 = fscanf(fp, "%d", &max);
-
-    printf("char1=%d char2=%d",char1,char2);
-    printf("c1=%d c2=%d c3=%d", c1,c2,c3);
-    printf("width=%d height=%d max=%d", w,h,max);
 
     if (char1 != 'P' || char2 != '5' || c1 != 1 || c2 != 1 || c3 != 1 || max > 255) {
         printf("Input is not a standard raw 8-bit PGM file.\n"
