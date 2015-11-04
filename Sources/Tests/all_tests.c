@@ -13,6 +13,8 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(Array);
     printf("\nBinaryMap tests\n");
     RUN_TEST_GROUP(BinaryMap);
+    printf("\nCalc tests\n");
+    RUN_TEST_GROUP(Calc);
     printf("\nPgm tests\n");
     RUN_TEST_GROUP(Pgm);    
 

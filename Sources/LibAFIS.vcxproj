@@ -176,6 +176,7 @@
     <ClCompile Include="General\RectangleC.c" />
     <ClCompile Include="General\Size.c" />
     <ClCompile Include="General\SizeF.c" />
+    <ClCompile Include="TestRunner_Calc.c" />
     <ClCompile Include="Tests\all_tests.c" />
     <ClCompile Include="Tests\DataStructures\TestRunner_DataStructures.c" />
     <ClCompile Include="Tests\DataStructures\Test_DataStructures.c" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Tests\General\Test_Array.c" />
     <ClCompile Include="Tests\General\Test_BinaryMap.c" />
     <ClCompile Include="Tests\General\Test_Point.c" />
+    <ClCompile Include="Test_Calc.c" />
     <ClCompile Include="Utils\IO\ArrayIO.c" />
     <ClCompile Include="Utils\IO\BinaryMapIO.c" />
     <ClCompile Include="Utils\IO\BlockMapIO.c" />
