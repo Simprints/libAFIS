@@ -52,7 +52,6 @@ void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *bl
     BinaryMap_Clear(&tmpBm); 
 
     BinaryMap_Invert(output); 
-    BinaryMap_Clear(&tmpBm);
 
     for (int i = 0; i < 2; i++) {
        VotingFilter_Filter(&me->blockErrorFilter, output, &tmpBm); 
