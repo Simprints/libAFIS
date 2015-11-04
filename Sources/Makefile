@@ -81,15 +81,18 @@ UNITY_OBJS = $(addprefix $(BUILD_DIR)/, $(patsubst %.c, %.o, $(UNITY_SRCS)))
 ## Targets
 ##
 all: runall
-libafis: $(LIBAFIS_OBJS)
+libafis: $(LIBAFIS_OBJS) $(BUILD_DIR)/Tests/extract
 utest: runUnitTest
 
 ##
 ## Rules
 ##
-$(LIBAFIS_OBJS): $(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
 	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
+
+$(BUILD_DIR)/Tests/extract: $(BUILD_DIR)/Tests/extract.o
+	$(CC) $(LFLAGS) $^ -o $@
 
 $(UTILS_OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
@@ -114,7 +117,7 @@ archive: $(LIBAFIS_OBJS) runUnitTest
 	cd $(BUILD_DIR); \
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.o -exec $(ZIP) -rvf libAFIS-$(BUILD_NUMBER).tar {} \+
 
-runall: clean $(LIBAFIS_OBJS) runUnitTest archive
+runall: clean libafis runUnitTest archive
 
 clean:
 	rm -rf $(BUILD_DIR)
