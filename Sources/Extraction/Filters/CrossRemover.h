@@ -3,8 +3,6 @@
 
 #include "General/BinaryMap.h"
 
-typedef struct BinaryMap BinaryMap;
-
 void CrossRemover_Remove(BinaryMap *input);
 
 #endif

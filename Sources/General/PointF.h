@@ -3,14 +3,16 @@
 
 #include <stdbool.h>
 
-typedef struct Point Point;
-typedef struct SizeF SizeF;
+#include "General/Point.h"
+
+
 typedef struct PointF PointF;
 
 struct PointF {
     float x;
     float y;
 };
+#include "General/SizeF.h"
 
 PointF PointF_Construct(float xx, float yy);
 PointF PointF_ConstructFromPoint(const Point *p);

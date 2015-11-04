@@ -3,13 +3,14 @@
 
 #include <stdbool.h>
 
-typedef struct Point Point;
 typedef struct Size Size;
 
 struct Size {
     int width;
     int height;
 };
+
+#include "General/Point.h"
 
 Size Size_Construct(int w, int h);
 Size Size_ConstructFromPoint(const Point *p);
