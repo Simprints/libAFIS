@@ -17,6 +17,6 @@ struct RelativeContrast
 };
 
 RelativeContrast RelativeContrast_Construct(void);
-BinaryMap RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8Array2D *contrast, const BlockMap *blocks);
+void RelativeContrast_DetectLowContrast(const RelativeContrast *me, const UInt8Array2D *contrast, const BlockMap *blocks, BinaryMap *output);
 
 #endif

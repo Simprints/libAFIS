@@ -195,6 +195,33 @@ static void SaveLine(const BinaryMap *me, UInt32Array1D *vector, const Point *at
     me->map.data[at->y][lastX >> me->wordShift] = (me->map.data[at->y][lastX >> me->wordShift] & ~endMask) | (vector->data[words - 1] & endMask);
 }
 
+void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
+{
+    Size area = BinaryMap_GetSize(source);
+    int vectorSize = (area.width >> me->wordShift) + 2;
+
+    UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+    UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+
+    for (int y=0;y<area.height;++y) {
+        Point p = Point_Construct(0,y);
+
+        //TODO: This is probably a needless copy 
+        LoadLine(me, &vector, &p, area.width);
+        LoadLine(source, &srcVector, &p, area.width);
+
+        // The AND
+        for (int i=0;i<vectorSize;++i) {
+            vector.data[i] &= srcVector.data[i];
+        }
+
+        SaveLine(me, &vector, &p, area.width);
+    }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
+}
+
 void BinaryMap_Or(BinaryMap *me, const BinaryMap* source) 
 {
     Size area = BinaryMap_GetSize(source);
@@ -217,6 +244,9 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
 
         SaveLine(me, &vector, &p, area.width);
     }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
 }
 
 

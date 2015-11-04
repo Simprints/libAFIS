@@ -31,7 +31,8 @@ TEST(VotingFilter, VotingFilter_Filter)
     f.majority = 0.61f;
     f.borderDistance = 17;
 
-    BinaryMap actual = VotingFilter_Filter(&f, &input);
+    BinaryMap actual = BinaryMap_Construct(input.width, input.height);
+    VotingFilter_Filter(&f, &input, &actual);
 
     BinaryMap expected = BinaryMapIO_ConstructFromFile(expFile);
 

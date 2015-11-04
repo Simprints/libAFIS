@@ -7,12 +7,23 @@
 
 static void RunAllTests(void)
 {
+    printf("\nPoint tests\n");
     RUN_TEST_GROUP(Point);
+    printf("\nArray tests\n");
     RUN_TEST_GROUP(Array);
+    printf("\nBinaryMap tests\n");
     RUN_TEST_GROUP(BinaryMap);
+    printf("\nPgm tests\n");
+    RUN_TEST_GROUP(Pgm);    
 
+    printf("\nVoting filter tests\n");
     RUN_TEST_GROUP(VotingFilter);
+
+    printf("\nLocal histogram tests\n");
     RUN_TEST_GROUP(LocalHistogram);
+
+    printf("\nEqualizer tests\n");
+    RUN_TEST_GROUP(Equalizer); 
 }
 
 int main(int argc, const char * argv[])

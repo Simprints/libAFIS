@@ -14,6 +14,6 @@ struct VotingFilter
 };
 
 VotingFilter VotingFilter_Construct(void);
-BinaryMap VotingFilter_Filter(const VotingFilter *me, const BinaryMap *input);
+void VotingFilter_Filter(const VotingFilter *me, const BinaryMap *input, BinaryMap *output);
 
 #endif
