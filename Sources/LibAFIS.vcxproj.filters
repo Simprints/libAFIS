@@ -240,6 +240,12 @@
     <ClCompile Include="Tests\General\Test_Pgm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\General\Test_Calc.c">
+      <Filter>Source Files\Tests\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\runners\TestRunner_Calc.c">
+      <Filter>Source Files\Tests\General\runners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extraction\Model\DotRemover.h">

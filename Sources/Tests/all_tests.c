@@ -17,8 +17,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(BinaryMap);
 
     printf("\nCalc tests\n");
-    //TODO: Fix Calc Tests
-	//RUN_TEST_GROUP(Calc);
+    RUN_TEST_GROUP(Calc);
 
     printf("\nPgm tests\n");
     RUN_TEST_GROUP(Pgm);    
