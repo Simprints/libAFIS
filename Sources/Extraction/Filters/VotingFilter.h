@@ -2,8 +2,8 @@
 #define FILTERS_VOTINGFILTER_H
 
 #include <stdint.h>
+#include "General/BinaryMap.h"
 
-typedef struct BinaryMap BinaryMap;
 typedef struct VotingFilter VotingFilter;
 
 struct VotingFilter
