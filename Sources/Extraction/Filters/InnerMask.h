@@ -17,6 +17,4 @@ InnerMask InnerMask_Construct(void);
 // out should be allocated to be the same size as outer
 void InnerMask_Compute(const InnerMask *me, const BinaryMap *outer, BinaryMap* out);
 
-void InnerMask_ShrinkBy(const InnerMask *me, BinaryMap* temporary, const BinaryMap* inner, int amount);
-
 #endif

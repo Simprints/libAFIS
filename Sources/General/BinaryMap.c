@@ -222,6 +222,39 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
+void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
+{
+	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+	int vectorSize = (area->width >> me->wordShift) + 2;
+
+	UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+	UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+
+	for (int y = 0; y < area->height; y++)
+	{
+		Point atOffset = Point_Construct(at->x, at->y + y);
+		Point areaOffset = Point_Construct(area->x, area->y + y);
+
+		LoadLine(me, &vector, &atOffset, area->width);
+		LoadLine(source, &srcVector, &areaOffset, area->width);
+
+		if (shift >= 0)
+		{
+			ShiftLeft(me, &srcVector, shift);
+		}
+		else
+		{
+			ShiftRight(me, &srcVector, shift);
+		}
+
+		for (int i = 0; i < vector.size; ++i)
+		{
+			vector.data[i] &= srcVector.data[i];
+		}
+		SaveLine(me, &vector, &atOffset, area->width);
+	}
+}
+
 void BinaryMap_Or(const BinaryMap *me, const BinaryMap* source) 
 {
     Size area = BinaryMap_GetSize(source);
@@ -288,7 +321,6 @@ uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
 	}
 }
 
-//TODO: Write Implementations
 void BinaryMap_CopyTo(const BinaryMap *me, BinaryMap *source)
 {
 	RectangleC defaultArea = RectangleC_ConstructFrom2Ints(me->width, me->height);
@@ -296,7 +328,7 @@ void BinaryMap_CopyTo(const BinaryMap *me, BinaryMap *source)
 	BinaryMap_CopyToArea(me, source, &defaultArea, &defaultPoint);
 }
 
-void BinaryMap_CopyToArea(const BinaryMap *me, BinaryMap *source, const RectangleC *area, const Point *at)
+void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
 {
 	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
 
@@ -376,5 +408,4 @@ void BinaryMap_AndNotToArea(const BinaryMap *me, BinaryMap *source, const Rectan
 		}
 		SaveLine(me, &vector, &atOffset, area->width);
 	}
-
 }
