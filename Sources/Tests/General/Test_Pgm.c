@@ -22,6 +22,15 @@ TEST_TEAR_DOWN(Pgm)
 TEST(Pgm, Pgm_Read)
 {
     UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-0-1.png.pgm");
+    /*UInt8Array2D v = UInt8Array2D_Construct(3, 3); 
+
+    uint8_t imgData[][3] = {{1, 255, 1}, {255, 120, 240}, {3, 5, 19}};
+
+    for (int i = 0; i < v.sizeX; i++) {
+        for (int j = 0; j < v.sizeY; j++) {
+            v.data[i][j] = imgData[i][j]; 
+        }
+    }*/
 
     Size imgSize = {.width = v.sizeX, .height = v.sizeY};
     BlockMap blocks = BlockMap_Construct(&imgSize, 15);
@@ -40,13 +49,13 @@ TEST(Pgm, Pgm_Read)
 
     FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
     Equalizer eq = Equalizer_Construct();
-    Equalizer_Equalize(&eq, &blocks, &v, &histogram, &mask, &equalized);
+    Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
 
 
     UInt8Array2D newV = UInt8Array2D_Construct(equalized.sizeX, equalized.sizeY); 
     for (int i = 0; i < equalized.sizeX; i++) {
         for (int j = 0; j < equalized.sizeY; j++) {
-            newV.data[i][j] = equalized.data[i][j];
+            newV.data[i][j] = (equalized.data[i][j] + 1.0) * 127.0; 
         }
     }
 
