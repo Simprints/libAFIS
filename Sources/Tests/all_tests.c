@@ -22,7 +22,7 @@ static void RunAllTests(void)
     printf("\nLocal histogram tests\n");
     RUN_TEST_GROUP(LocalHistogram);
 
-    printf("\nEqualizer tests");
+    printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 
 }
 
