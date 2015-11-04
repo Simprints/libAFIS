@@ -19,6 +19,10 @@ Point Calc_Add2Points(const Point *p1, const Point *p2)
     return Point_AddSize(p1, &s);
 }
 
+PointF Calc_Scalar_Multiply(float scalar, Point p) {
+  return (PointF) { .x = scalar * p.x, .y = scalar * p.y };
+}
+
 float Calc_InterpolateFrom3Floats(float value0, float value1, float fraction)
 {
     return value0 + fraction * (value1 - value0);
