@@ -56,7 +56,9 @@ TEST(VotingFilter, VotingFilter_regression_tests_against_sourceAfis)
         f.radius = Int32_ConstructFromFile(paramRadius);
         f.majority = Float_ConstructFromFile(paramMajority);
         f.borderDistance = Int32_ConstructFromFile(paramBorderDistance);
-        BinaryMap actual = VotingFilter_Filter(&f, &input);
+        
+        BinaryMap actual = BinaryMap_Construct(input.width, input.height);
+        VotingFilter_Filter(&f, &input, &actual);
 
         BinaryMap expected = BinaryMapIO_ConstructFromFile(outputFile);
 
@@ -83,7 +85,8 @@ TEST(VotingFilter, VotingFilter_Filter)
     f.majority = 0.61f;
     f.borderDistance = 17;
 
-    BinaryMap actual = VotingFilter_Filter(&f, &input);
+    BinaryMap actual = BinaryMap_Construct(input.width, input.height);
+    VotingFilter_Filter(&f, &input, &actual);
 
     BinaryMap expected = BinaryMapIO_ConstructFromFile(expFile);
 

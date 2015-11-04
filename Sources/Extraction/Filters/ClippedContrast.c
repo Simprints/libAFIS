@@ -12,9 +12,9 @@ ClippedContrast ClippedContrast_Construct(void)
 
 void ClippedContrast_Compute(const ClippedContrast *me, const BlockMap *blocks, const Int16Array3D *histogram, UInt8Array2D *output)
 {
-    for (int y = RectangleC_GetBottom(&blocks->allCorners); y < RectangleC_GetTop(&blocks->allCorners); y++) 
+    for (int y = RectangleC_GetBottom(&blocks->allBlocks); y < RectangleC_GetTop(&blocks->allBlocks); y++) 
     {
-        for (int x = RectangleC_GetLeft(&blocks->allCorners); x < RectangleC_GetRight(&blocks->allCorners); x++) 
+        for (int x = RectangleC_GetLeft(&blocks->allBlocks); x < RectangleC_GetRight(&blocks->allBlocks); x++) 
         {
             int area = 0;
 

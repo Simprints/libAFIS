@@ -23,6 +23,14 @@ struct SegmentationMask
 };
 
 SegmentationMask SegmentationMask_Construct(void);
+
+/*****************************************************
+ * output - A pre-allocated BinaryMap that is number 
+ *          of block columns in the first dimension 
+ *          and the number of block rows in the second 
+ *          dimension
+ *
+ ****************************************************/
 void SegmentationMask_ComputeMask(const SegmentationMask *me, const BlockMap *blocks, const Int16Array3D *histogram, BinaryMap *output);
 
 #endif

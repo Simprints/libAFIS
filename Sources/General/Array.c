@@ -248,12 +248,12 @@ PointArray1D* PointArray2D_ConstructRow(PointArray2D *me, int rowId, int32_t x)
     
     return array;
 }
+
 Point *PointArray2D_Get(PointArray2D *me, int x, int y)
 {
-	PointArray1D *row = me->data[x];
-	return &row->data[y];
+    PointArray1D *row = me->data[x];
+    return &row->data[y];
 }
-
 
 void PointArray2D_Destruct(PointArray2D *me)
 {
