@@ -27,6 +27,9 @@ static void RunAllTests(void)
 
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 
+    
+    printf("\nEnd to End Image to Template tests\n");
+    RUN_TEST_GROUP(EndToEnd); 
 }
 
 int main(int argc, const char * argv[])
