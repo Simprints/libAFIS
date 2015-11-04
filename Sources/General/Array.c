@@ -209,7 +209,7 @@ PointArray1D* PointArray1D_Construct(int32_t x)
     assert(x > 0 );
     array->size = x;
 
-    array->data = calloc(x, sizeof(uint32_t*)*2);
+    array->data = calloc(x, sizeof(Point));
     assert(array->data);
 
     return array;
