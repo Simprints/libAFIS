@@ -217,6 +217,9 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
 
         SaveLine(me, &vector, &p, area.width);
     }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
 }
 
 void BinaryMap_Or(BinaryMap *me, const BinaryMap* source) 
@@ -241,6 +244,9 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
 
         SaveLine(me, &vector, &p, area.width);
     }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
 }
 
 
