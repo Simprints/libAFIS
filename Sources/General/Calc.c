@@ -30,8 +30,3 @@ float Calc_InterpolateRect(float topLeft, float topRight, float bottomLeft, floa
     float right = Calc_InterpolateFrom3Floats(bottomRight, topRight, fraction->y);
     return Calc_InterpolateFrom3Floats(left, right, fraction->x);
 }
-
-Point Calc_Negate(Point point)
-{
-    return Point_Construct(-point.x, -point.y);
-}

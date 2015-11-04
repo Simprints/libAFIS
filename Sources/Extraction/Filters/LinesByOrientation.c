@@ -3,6 +3,7 @@
 
 #include "General/Point.h"
 #include "General/Calc.h"
+#include "General/Angle.h"
 #include "LinesByOrientation.h"
 
 //    int32_t angularResolution = 32;  /* Lower = 4, Upper = 128 */
@@ -42,10 +43,11 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
 
         temp[numPoints++] = Point_Construct(0, 0); 
 
-        //PointF PointF direction = Angle.ToVector(Angle.ByBucketCenter(orientationIndex, 2 * AngularResolution));
+        PointF direction = Angle_ToVector(Angle_ByBucketCenter(orientationIndex, 2 * angularResolution));
 
         for (float r = radius; r >= 0.5f; r /= stepFactor) {
-            Point p = Point_Construct(0, 0);//TODO; 
+            PointF scaledPoint = PointF_Construct(r * direction.x, r * direction.y); 
+            Point p = Point_Construct(scaledPoint.x, scaledPoint.y);
 
             if(!contains_point(temp, p, numPoints)) {
                 //Check our temp array is big enough 
@@ -55,7 +57,7 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
                 }
 
                 temp[numPoints++] = p; 
-                temp[numPoints] = Calc_Negate(p); 
+                temp[numPoints] = Point_Construct(-p.x, -p.y); 
             }
         }
 
