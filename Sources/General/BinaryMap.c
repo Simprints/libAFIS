@@ -219,4 +219,25 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     }
 }
 
+void BinaryMap_And(BinaryMap *me, const BinaryMap *source)
+{
+    Size area = BinaryMap_GetSize(source);
+    int vectorSize = (area.width >> me->wordShift) + 2;
 
+    UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+    UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+
+    for (int y=0;y<area.height;++y) {
+        Point p = Point_Construct(0,y);
+
+        //TODO: This is probably a needless copy 
+        LoadLine(me, &vector, &p, area.width);
+        LoadLine(source, &srcVector, &p, area.width);
+
+        for (int i=0;i<vectorSize;++i) {
+            vector.data[i] &= srcVector.data[i];
+        }
+
+        SaveLine(me, &vector, &p, area.width);
+    }
+}
