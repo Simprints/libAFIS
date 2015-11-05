@@ -1,10 +1,12 @@
 #ifndef _FINGERPRINTMATCHER_H_
 #define _FINGERPRINTMATCHER_H_
 
+#include <stdint.h>
+
 struct MinutiaPair
 {
-  int probe;
-  int candidate;
+  int32_t probe;
+  int32_t candidate;
 };
 
 struct EdgePair
@@ -17,17 +19,17 @@ struct PairInfo
 {
   struct MinutiaPair pair;
   struct MinutiaPair reference;
-  int supportingEdges;
+  int32_t supportingEdges;
 };
 
 struct IndexedEdge
 {
   //  EdgeShape shape;
-  int reference;
-  int neighbour;
+  int32_t reference;
+  int32_t neighbour;
 };
 
-struct FingerprintMatcher
+struct Fingerprint32_tMatcher
 {
   // TODO: dictionary
 
@@ -36,7 +38,7 @@ struct FingerprintMatcher
   struct PairInfo* pairsByCandidate;
   struct PairInfo* pairsByProbe;
   struct PairInfo* pairLife;
-  int pairCount;  
+  int32_t pairCount;  
 };
   
 #endif
