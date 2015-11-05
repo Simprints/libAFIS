@@ -13,7 +13,7 @@ typedef struct SkeletonBuilder SkeletonBuilder;
 struct SkeletonBuilderMinutia
 {
     Point position;
-    List allRidges;
+    List ridges;
 };
 
 struct SkeletonBuilderRidge
