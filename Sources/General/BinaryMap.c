@@ -300,6 +300,7 @@ uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
 	else
 	{
             uint32_t mask = 0;
+            
             if (BinaryMap_GetBit(me, x - 1, y + 1))
                 mask |= 1;
             if (BinaryMap_GetBit(me, x, y + 1))
