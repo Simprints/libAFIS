@@ -2,18 +2,6 @@
 
 #include "SkeletonBuilder.h"
 
-SkeletonBuilderMinutia SkeletonBuilderMinutia_Construct(const Point *position)
-{
-    SkeletonBuilderMinutia sbm;
-    sbm.position = *position;
-    sbm.ridges = List_Construct();
-    return sbm;
-}
-
-void SkeletonBuilderMinutia_Destruct(const SkeletonBuilderMinutia *me)
-{
-}
-
 List* SkeletonBuilderMinutia_GetRidges(const SkeletonBuilderMinutia *me)
 {
     return (List *) &me->ridges;

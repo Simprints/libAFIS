@@ -16,8 +16,6 @@ void DotRemover_Filter(SkeletonBuilder *skeleton)
         {
             int32_t ret = List_Remove(list, i, NULL);
             assert(ret == 0);
-
-            SkeletonBuilderMinutia_Destruct(minutia);
         }
     }
 }
