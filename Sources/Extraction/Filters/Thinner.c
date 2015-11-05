@@ -108,11 +108,11 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
                 {
                   if (y % 2 == odd) // Confused, why not +=2 on the line above?
                     {
-                        for (int xWord = 0; xWord < input->wordWidth; xWord++)
+                        for (int xw = 0; xw < input->wordWidth; xw++)
                         {
-                            if (BinaryMap_IsWordNonZero(&border, xWord, y))
+                            if (BinaryMap_IsWordNonZero(&border, xw, y))
                             {
-                                for (int x = xWord << input->wordShift; x < (xWord << input->wordShift) + input->wordSize; x++)
+                                for (int x = xw << input->wordShift; x < (xw << input->wordShift) + input->wordSize; x++)
                                 {
                                     if (x > 0 && x < input->width - 1 && BinaryMap_GetBit(&border, x, y))
                                     {
