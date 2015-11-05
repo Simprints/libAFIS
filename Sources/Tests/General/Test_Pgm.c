@@ -61,6 +61,7 @@ TEST(Pgm, Pgm_Read)
 
     pgm_write("../TestImages/Person1/output-Hamster-0.1.pgm", &newV);
 
+    UInt8Array2D_Destruct(&v);
     UInt8Array2D_Destruct(&newV);
     BinaryMap_Destruct(&mask);
     Int16Array3D_Destruct(&histogram);
