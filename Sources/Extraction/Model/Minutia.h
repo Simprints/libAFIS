@@ -5,7 +5,7 @@ typedef struct Minutia Minutia;
 
 #include "General/Point.h"
 #include "General/List.h"
-#include "Extraction/Model/SkeletonBuilderRidge.h"
+#include "Extraction/Model/Ridge.h"
 
 typedef enum { RidgeEnd, Bifurcation } MinutiaType;
 
@@ -17,7 +17,7 @@ struct Minutia
 };
 
 List* Minutia_GetRidges(const Minutia *me);
-void Minutia_AttachStart(Minutia *me, SkeletonBuilderRidge *ridge);
-void Minutia_DetachStart(Minutia *me, SkeletonBuilderRidge *ridge);
+void Minutia_AttachStart(Minutia *me, Ridge *ridge);
+void Minutia_DetachStart(Minutia *me, Ridge *ridge);
 
 #endif
