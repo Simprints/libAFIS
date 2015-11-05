@@ -18,7 +18,10 @@ static void RunAllTests(void)
     
     printf("\nList tests\n");
     RUN_TEST_GROUP(List);
-    
+
+    printf("\nCalc tests\n");
+    RUN_TEST_GROUP(Calc);
+
     printf("\nPgm tests\n");
     RUN_TEST_GROUP(Pgm);    
 
@@ -36,6 +39,12 @@ static void RunAllTests(void)
 
     printf("\nEnd to End Image to Template tests\n");
     RUN_TEST_GROUP(EndToEnd); 
+
+    printf("\nThinner tests\n");
+    RUN_TEST_GROUP(Thinner);
+
+    printf("\nBestMatchSkipper tests\n");
+    RUN_TEST_GROUP(BestMatchSkipper);
 }
 
 int main(int argc, const char * argv[])

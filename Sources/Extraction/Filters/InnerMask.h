@@ -13,6 +13,7 @@ struct InnerMask
 };
 
 InnerMask InnerMask_Construct(void);
-BinaryMap InnerMask_Compute(const InnerMask *me, BinaryMap *outer);
 
+// inner should be allocated to be the same size as outer
+void InnerMask_Compute(const InnerMask *me, const BinaryMap *outer, BinaryMap* inner);
 #endif
