@@ -33,6 +33,9 @@ static void RunAllTests(void)
 
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 
+
+    printf("\nThinner tests\n");
+    RUN_TEST_GROUP(Thinner);
 }
 
 int main(int argc, const char * argv[])
