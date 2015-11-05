@@ -75,6 +75,7 @@ void List_AddData(List *me, const void *data)
     else
     {
         elem->prev = me->tail;
+        elem->prev->next = elem;
     }
 
     me->tail = elem;

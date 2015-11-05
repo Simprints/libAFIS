@@ -1,6 +1,6 @@
 #ifndef GENERAL_LIST_H
 #define GENERAL_LIST_H
-
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef struct ListElement
