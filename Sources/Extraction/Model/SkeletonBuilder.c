@@ -2,12 +2,12 @@
 
 #include "SkeletonBuilder.h"
 
-List* SkeletonBuilderMinutia_GetRidges(const SkeletonBuilderMinutia *me)
+List* Minutia_GetRidges(const Minutia *me)
 {
     return (List *) &me->ridges;
 }
 
-void SkeletonBuilderMinutia_AttachStart(SkeletonBuilderMinutia *me, SkeletonBuilderRidge *ridge)
+void Minutia_AttachStart(Minutia *me, SkeletonBuilderRidge *ridge)
 {
     if (!List_ContainsData(&me->ridges, ridge))
     {
@@ -16,7 +16,7 @@ void SkeletonBuilderMinutia_AttachStart(SkeletonBuilderMinutia *me, SkeletonBuil
     }
 }
 
-void SkeletonBuilderMinutia_DetachStart(SkeletonBuilderMinutia *me, SkeletonBuilderRidge *ridge)
+void Minutia_DetachStart(Minutia *me, SkeletonBuilderRidge *ridge)
 {
     if (List_ContainsData(&me->ridges, ridge))
     {
@@ -37,34 +37,34 @@ void SkeletonBuilderRidge_Destruct(SkeletonBuilderRidge *me)
 {
 }
 
-SkeletonBuilderMinutia* SkeletonBuilderRidge_GetStart(const SkeletonBuilderRidge *me)
+Minutia* SkeletonBuilderRidge_GetStart(const SkeletonBuilderRidge *me)
 {
     return me->startMinutia;
 }
 
-void SkeletonBuilderRidge_SetStart(SkeletonBuilderRidge *me, SkeletonBuilderMinutia *value)
+void SkeletonBuilderRidge_SetStart(SkeletonBuilderRidge *me, Minutia *value)
 {
     if (me->startMinutia != value)
     {
         if (me->startMinutia != NULL)
         {
-            SkeletonBuilderMinutia *detachFrom = me->startMinutia;
+            Minutia *detachFrom = me->startMinutia;
             me->startMinutia = NULL;
-            SkeletonBuilderMinutia_DetachStart(detachFrom, me);
+            Minutia_DetachStart(detachFrom, me);
         }
         me->startMinutia = value;
         if (me->startMinutia != NULL)
-            SkeletonBuilderMinutia_AttachStart(me->startMinutia, me);
+            Minutia_AttachStart(me->startMinutia, me);
         me->reversed->endMinutia = value;
     }
 }
 
-SkeletonBuilderMinutia* SkeletonBuilderRidge_GetEnd(const SkeletonBuilderRidge *me)
+Minutia* SkeletonBuilderRidge_GetEnd(const SkeletonBuilderRidge *me)
 {
     return me->endMinutia;
 }
 
-void SkeletonBuilderRidge_SetEnd(SkeletonBuilderRidge *me, SkeletonBuilderMinutia *value)
+void SkeletonBuilderRidge_SetEnd(SkeletonBuilderRidge *me, Minutia *value)
 {
     if (me->endMinutia != value)
     {
@@ -84,12 +84,12 @@ List* SkeletonBuilder_GetMinutiae(const SkeletonBuilder *me)
     return (List *) &me->allMinutiae;
 }
 
-void SkeletonBuilder_AddMinutia(SkeletonBuilder *me, SkeletonBuilderMinutia *minutia)
+void SkeletonBuilder_AddMinutia(SkeletonBuilder *me, Minutia *minutia)
 {
     List_AddData(&me->allMinutiae, minutia);
 }
 
-void SkeletonBuilder_RemoveMinutia(SkeletonBuilder *me, SkeletonBuilderMinutia *minutia)
+void SkeletonBuilder_RemoveMinutia(SkeletonBuilder *me, Minutia *minutia)
 {
     List_RemoveData(&me->allMinutiae, minutia);
 }
