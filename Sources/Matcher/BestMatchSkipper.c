@@ -2,7 +2,7 @@
 
 struct BestMatchSkipper BestMatchSkipper_Construct(int32_t persons, int32_t skip)
 {
-  struct BestMatchSkipper r;
+  BestMatchSkipper r;
 
   return r;
 }
