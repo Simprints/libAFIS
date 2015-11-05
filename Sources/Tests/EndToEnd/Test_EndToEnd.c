@@ -45,7 +45,7 @@ static void ReadTemplate(const char *expectedFileName, Template *expectedTemplat
     
     for(int i = 0; i < count; i++) 
     {
-        Minutia *minutia = calloc(1, sizeof(Minutia));
+        TemplateMinutia *minutia = calloc(1, sizeof(TemplateMinutia));
         
         ret = fread(&(minutia->direction), sizeof(int8_t), 1, f);
         TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutia->direction");
@@ -59,7 +59,7 @@ static void ReadTemplate(const char *expectedFileName, Template *expectedTemplat
         ret = fread(&(minutia->type), sizeof(int32_t), 1, f);
         TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutia->type");
         
-        Template_AddMinitia(expectedTemplate, minutia); 
+        Template_AddMinuitia(expectedTemplate, minutia); 
     }
     
     /* Check end of file */
@@ -72,6 +72,17 @@ static void ReadTemplate(const char *expectedFileName, Template *expectedTemplat
     assert(ret != EOF);
 }
 
+
+static void UnityFreeTemplate(Template *template)
+{
+    while (List_GetCount(&template->minutiae) > 0)
+    {
+        void *dataFound;
+        List_Remove(&template->minutiae, template->minutiae.tail, &dataFound);
+        free(dataFound);
+    }
+}
+
 static void ImageToTemplate(const char *inputFileName, const char *expectedFileName)
 {
     UInt8Array2D image = pgm_read(inputFileName);
@@ -81,23 +92,17 @@ static void ImageToTemplate(const char *inputFileName, const char *expectedFileN
 
     perfdata perfdata;
 
-    Template template = Template_Constuct();
-    template.minutiae = List_Construct();
-    
-    printf("%s %s\r\n", inputFileName, expectedFileName);
-    
+    Template template = Template_Constuct();    
     Template expectedTemplate;
     expectedTemplate.minutiae = List_Construct();
+    
+    printf("%s %s\r\n", inputFileName, expectedFileName);
 
-    void *dataFound = malloc(sizeof(Minutia));
-    printf("Data %ld %p\r\n", sizeof(Minutia), dataFound);
-    Template_AddMinitia(&expectedTemplate, dataFound );
     Extract(&image, &template, &perfdata);
 
-    // ::TODO:: Load some sort of template to check against the output...
     ReadTemplate(expectedFileName, &expectedTemplate);
-    
-//     Template_Free(&expectedTemplate);
+
+    UnityFreeTemplate(&expectedTemplate);
 }
 
 TEST(EndToEnd, ImageToTemplate)

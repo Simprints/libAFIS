@@ -7,11 +7,11 @@
 
 typedef enum {ENDING = 0, BIFURCATION = 1, OTHER = 2} MinutiaType;
 
-typedef struct Minutia
+typedef struct TemplateMinutia
 {
     Point position;
     uint8_t direction;
     MinutiaType type;
-} Minutia;
+} TemplateMinutia;
 
 #endif

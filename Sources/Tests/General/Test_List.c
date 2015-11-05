@@ -1,7 +1,7 @@
-#include "General/List.h"
-#include "General/Point.h"
 #include "unity.h"
 #include "unity_fixture.h"
+#include "General/List.h"
+#include "Templates/Template.h"
 
 TEST_GROUP(List);
 
@@ -67,7 +67,7 @@ TEST(List, TestListDyanmicMemoryAlloc)
     
     for (int i = 0; i< MAX_NUMBER_ELEMENTS; i++)
     {
-        void *data1 = calloc(1, sizeof(Point));
+        void *data1 = calloc(1, sizeof(TemplateMinutia));
         List_AddData(&data.Points, data1);
     }
     
@@ -77,4 +77,6 @@ TEST(List, TestListDyanmicMemoryAlloc)
         List_Remove(&data.Points, data.Points.head, &dataFound);
         free(dataFound);
     }
+    
+    
 }

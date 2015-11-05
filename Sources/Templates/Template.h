@@ -14,7 +14,7 @@ typedef struct Template
 } Template;
 
 Template Template_Constuct(void);
-void Template_AddMinitia(Template *, Minutia *);
+void Template_AddMinuitia(Template *, TemplateMinutia *);
 void Template_Free(Template *);
 
 #endif
