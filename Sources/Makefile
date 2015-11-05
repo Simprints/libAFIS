@@ -47,7 +47,8 @@ UTEST_EXE = all_tests
 LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
                Extraction/Model/*.c \
-               Extraction/*.c
+               Extraction/*.c \
+               Matcher/*.c
 LIBAFIS_SRCS_EXCLUDE = 
 
 UTILS_SRCS =  IO/*.c
@@ -56,7 +57,7 @@ UTILS_SRCS_EXCLUDE =
 UTEST_SRCS =  General/*.c  General/runners/*.c \
               Extraction/Filters/*.c Extraction/Filters/runners/*.c \
               DataStructures/*.c
-              
+
 UTEST_SRCS_EXCLUDE = 
 UTEST_SRCS += $(UTEST_EXE).c
 
