@@ -51,4 +51,6 @@ void InnerMask_Compute(const InnerMask *me, const BinaryMap *outer, BinaryMap* i
     {
       InnerMask_ShrinkBy(&temporary, inner, me->minBorderDistance - total);
     }
+
+    BinaryMap_Destruct(&temporary);
 }
