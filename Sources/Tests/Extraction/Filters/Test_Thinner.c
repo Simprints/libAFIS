@@ -30,3 +30,7 @@ TEST(Thinner, Thinner_FalseEndings)
 
   BinaryMap_Destruct(&bm);
 }
+
+TEST(Thinner, Thinner_Thin)
+{
+}
