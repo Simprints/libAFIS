@@ -102,7 +102,7 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
                   break;
             }
             
-            BinaryMap_AndNotTo(&border, skeleton);
+            BinaryMap_AndNot(&border, skeleton);
             
             for (int odd = 0; odd < 2; ++odd)
             {

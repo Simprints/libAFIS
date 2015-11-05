@@ -350,7 +350,7 @@ void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const Re
 
 }
 
-void BinaryMap_AndNotTo(const BinaryMap *me, BinaryMap* source)
+void BinaryMap_AndNot(const BinaryMap *me, BinaryMap* source)
 {
 	Size area = BinaryMap_GetSize(source);
 	int vectorSize = (area.width >> me->wordShift) + 2;

@@ -54,7 +54,7 @@ uint32_t BinaryMap_GetNeighborhoodFromPoint(const BinaryMap *me, const Point *at
 uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y);
 void BinaryMap_CopyTo(const BinaryMap *me, BinaryMap *source);
 void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at);
-void BinaryMap_AndNotTo(const BinaryMap *me, BinaryMap *source);
+void BinaryMap_AndNot(const BinaryMap *me, BinaryMap *source);
 void BinaryMap_AndNotToArea(const BinaryMap *me, BinaryMap *source, const RectangleC *area, const Point *at);
 
 #endif
