@@ -15,4 +15,4 @@ struct perfdata {
     struct timeval end;
 };
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata, BinaryMap *binarized, BinaryMap *thinned);
+void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *binarized, UInt8Array2D *thinned);

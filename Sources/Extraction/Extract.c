@@ -1,5 +1,6 @@
 #include <sys/time.h>
 #include "General/BlockMap.h"
+#include "General/BinaryMap.h"
 #include "Extraction/Extract.h"
 #include "Extraction/Filters/Equalizer.h"
 #include "Extraction/Filters/LocalHistogram.h"
@@ -11,7 +12,7 @@
 
 const int blockSize = 16;
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata, BinaryMap *outBinarized, BinaryMap *outThinned)
+void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBinarized, UInt8Array2D *outThinned)
 {
     if (perfdata) gettimeofday(&perfdata->start, 0);
     Size size = Size_Construct(image->sizeX, image->sizeY);
@@ -49,25 +50,14 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, BinaryMap *outBinar
     // Binarisation
     if (perfdata) gettimeofday(&perfdata->start_binarisation, 0);
     BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothed, &orthogonal, &mask, &blocks);
-    if (outBinarized)
-    {
-        outBinarized->wordWidth = binarized.wordWidth;
-        outBinarized->width = binarized.width;
-        outBinarized->height = binarized.height;
-        outBinarized->map = binarized.map;
-    }
+    if (outBinarized) BinaryMapToImage(&binarized, outBinarized);
 
     // Ridge thinning
     if (perfdata) gettimeofday(&perfdata->start_thinning, 0);
     Thinner thinner = Thinner_Construct();
-    BinaryMap thinned = Thinner_Thin(&thinner, &binarized);
-    if (outThinned)
-    {
-        outThinned->wordWidth = thinned.wordWidth;
-        outThinned->width = thinned.width;
-        outThinned->height = thinned.height;
-        outThinned->map = thinned.map;
-    }
+    BinaryMap thinned = BinaryMap_Construct(size.width, size.height);
+    Thinner_Thin(&thinner, &binarized, &thinned);
+    if (outThinned) BinaryMapToImage(&thinned, outThinned);
 
     // Minutiae detection
     if (perfdata) gettimeofday(&perfdata->start_detection, 0);
