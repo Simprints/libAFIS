@@ -41,8 +41,9 @@ static void ImageToTemplate(const char *fileName)
     TEST_ASSERT_TRUE_MESSAGE(image.sizeX > 1, "Image Size X < 1");
     TEST_ASSERT_TRUE_MESSAGE(image.sizeY > 1, "Image Size Y < 1");
 
-    struct perfdata perfdata;
-    Extract(&image, &perfdata);
+    perfdata perfdata;
+    Template template;
+    Extract(&image, &template, &perfdata);
 
     // ::TODO:: Load some sort of template to check against the output...
 }

@@ -47,7 +47,8 @@ UTEST_EXE = all_tests
 LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
                Extraction/Model/*.c \
-               Extraction/*.c
+               Extraction/*.c \
+               Templates/*.c
 LIBAFIS_SRCS_EXCLUDE = 
 
 UTILS_SRCS =  IO/*.c

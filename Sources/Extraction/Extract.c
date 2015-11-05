@@ -7,7 +7,7 @@
 
 const int blockSize = 16;
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata)
+void Extract(UInt8Array2D *image, Template *template, perfdata *perfdata)
 {
     if (perfdata) gettimeofday(&perfdata->start, 0);
     Size size = Size_Construct(image->sizeX, image->sizeY);
@@ -47,5 +47,8 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata)
     // Minutiae filtering
     if (perfdata) gettimeofday(&perfdata->start_filtering, 0);
 
+    // Generate Template
+    if (perfdata) gettimeofday(&perfdata->start_template, 0);
+    
     if (perfdata) gettimeofday(&perfdata->end, 0);
 }
