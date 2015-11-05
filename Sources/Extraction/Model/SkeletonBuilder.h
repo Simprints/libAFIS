@@ -10,8 +10,11 @@ typedef struct SkeletonBuilderMinutia SkeletonBuilderMinutia;
 typedef struct SkeletonBuilderRidge SkeletonBuilderRidge;
 typedef struct SkeletonBuilder SkeletonBuilder;
 
+typedef enum { RidgeEnd, Bifurcation } MinutiaType;
+
 struct SkeletonBuilderMinutia
 {
+    MinutiaType minutiaType;
     Point position;
     List ridges;
 };
