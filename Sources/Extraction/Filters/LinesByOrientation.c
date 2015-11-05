@@ -31,7 +31,7 @@ static bool contains_point(Point *points, Point point, int numPoints)
     return false;
 }
 
-void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius, float stepFactor, PointArray2D *lines, int32_t *totalPoints)
+void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius, float stepFactor, PointArray2D *lines)
 {
     assert(lines != NULL);
 
@@ -65,9 +65,7 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
                 temp[numPoints++] = Point_Construct(-p.x, -p.y); 
             }
         }
-
-        *totalPoints += numPoints;
-
+        
         qsort(temp, numPoints, sizeof(Point), (int (*) (const void *, const void *)) point_compare);
 
         PointArray2D_ConstructRow(lines, orientationIndex, numPoints);

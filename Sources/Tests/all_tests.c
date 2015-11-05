@@ -7,6 +7,9 @@
 
 static void RunAllTests(void)
 {
+    printf("\nOriented smoother tests\n");
+    RUN_TEST_GROUP(OrientedSmoother); 
+    
     printf("\nPoint tests\n");
     RUN_TEST_GROUP(Point);
     printf("\nArray tests\n");

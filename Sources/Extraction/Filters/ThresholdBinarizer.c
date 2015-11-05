@@ -14,9 +14,9 @@ BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArra
 			if (BinaryMap_GetBit(mask, blockX, blockY))
 			{
 				RectangleC rectangle = RectangleGrid_GetRectangleCFromCoordinates(&(blocks->blockAreas), blockX, blockY);
-				for (int y = rectangle.y; y < rectangle.height; y++)
+				for (int y = RectangleC_GetBottom(&rectangle); y < RectangleC_GetTop(&rectangle); y++)
 				{
-					for (int x = rectangle.x; x < rectangle.width; x++)
+					for (int x = RectangleC_GetLeft(&rectangle); x < RectangleC_GetRight(&rectangle); x++)
 					{
 						if (input->data[x][y] - baseline->data[x][y] > 0)
 						{

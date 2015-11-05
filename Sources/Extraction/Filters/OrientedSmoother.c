@@ -11,7 +11,7 @@ static const float StepFactor = 1.5f;           /* Lower = 1.1, Upper = 4 */
 
 void OrientedSmoother_Smooth
     (const FloatArray2D *input,
-     const UInt8Array2D *orientation,
+     const UInt16Array2D *orientation,
      const BinaryMap *mask,
      const BlockMap *blocks,
      const uint8_t angleOffset, 
@@ -22,8 +22,7 @@ void OrientedSmoother_Smooth
 
     PointArray2D lines = PointArray2D_Construct(AngularResolution); 
 
-    int32_t totalPoints = 0; 
-    LinesByOrientation_ConstructLines(AngularResolution, Radius, StepFactor, &lines, &totalPoints); 
+    LinesByOrientation_ConstructLines(AngularResolution, Radius, StepFactor, &lines); 
 
     RectangleC pixelRect = RectangleC_ConstructFromSize(&blocks->pixelCount);
     //TODO: We could probably just use allBlocks.height, and allBlocks.width
@@ -35,11 +34,11 @@ void OrientedSmoother_Smooth
             if (BinaryMap_GetBit(mask, block.x, block.y)) 
             {
                 //Add angles
-                int8_t orientationAngle = orientation->data[block.x][block.y]; 
-                int8_t offsetOrientation = orientationAngle + angleOffset; 
+                uint8_t orientationAngle = orientation->data[block.x][block.y]; 
+                uint8_t offsetOrientation = orientationAngle + angleOffset; 
 
-                int32_t quantized = (((int)offsetOrientation) * totalPoints) / 256; 
-
+                int32_t quantized = (((int)offsetOrientation) * AngularResolution) / 256; 
+                
                 PointArray1D *line = lines.data[quantized];  
 
                 RectangleC blockArea = RectangleGrid_GetRectangleCFromPoint(&blocks->blockAreas, &block);

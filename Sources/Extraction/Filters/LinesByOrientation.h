@@ -5,6 +5,6 @@
 
 #include "General/Array.h"
 
-void LinesByOrientation_ConstructLines(int32_t angularResoltuion, int32_t radius, float stepFactor, PointArray2D *lines, int32_t *totalPoints); 
+void LinesByOrientation_ConstructLines(int32_t angularResoltuion, int32_t radius, float stepFactor, PointArray2D *lines); 
 
 #endif
