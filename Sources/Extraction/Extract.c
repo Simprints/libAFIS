@@ -4,10 +4,14 @@
 #include "Extraction/Filters/Equalizer.h"
 #include "Extraction/Filters/LocalHistogram.h"
 #include "Extraction/Filters/SegmentationMask.h"
+#include "Extraction/Filters/HillOrientation.h"
+#include "Extraction/Filters/OrientedSmoother.h"
+#include "Extraction/Filters/ThresholdBinarizer.h"
+#include "Extraction/Filters/Thinner.h"
 
 const int blockSize = 16;
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata)
+void Extract(UInt8Array2D *image, struct perfdata *perfdata, BinaryMap *outBinarized, BinaryMap *outThinned)
 {
     if (perfdata) gettimeofday(&perfdata->start, 0);
     Size size = Size_Construct(image->sizeX, image->sizeY);
@@ -34,12 +38,36 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata)
 
     // Orientation
     if (perfdata) gettimeofday(&perfdata->start_orientation, 0);
+    UInt16Array2D orientation = HillOrientation_Detect(equalized, size, &mask, &blocks);
+    SmootherConfig ridgeSmoother = { .radius = 7, .angularResolution = 32, .stepFactor = 1.59f };
+    FloatArray2D smoothed = FloatArray2D_Construct(size.width, size.height);
+    OrientedSmoother_Smooth(ridgeSmoother, &equalized, &orientation, &mask, &blocks, 0, &smoothed);
+    SmootherConfig orthogonalSmoother = { .radius = 4, .angularResolution = 11, .stepFactor = 1.11f };
+    FloatArray2D orthogonal = FloatArray2D_Construct(size.width, size.height);
+    OrientedSmoother_Smooth(orthogonalSmoother, &smoothed, &orientation, &mask, &blocks, 128, &orthogonal);
 
     // Binarisation
     if (perfdata) gettimeofday(&perfdata->start_binarisation, 0);
+    BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothed, &orthogonal, &mask, &blocks);
+    if (outBinarized)
+    {
+        outBinarized->wordWidth = binarized.wordWidth;
+        outBinarized->width = binarized.width;
+        outBinarized->height = binarized.height;
+        outBinarized->map = binarized.map;
+    }
 
     // Ridge thinning
     if (perfdata) gettimeofday(&perfdata->start_thinning, 0);
+    Thinner thinner = Thinner_Construct();
+    BinaryMap thinned = Thinner_Thin(&thinner, &binarized);
+    if (outThinned)
+    {
+        outThinned->wordWidth = thinned.wordWidth;
+        outThinned->width = thinned.width;
+        outThinned->height = thinned.height;
+        outThinned->map = thinned.map;
+    }
 
     // Minutiae detection
     if (perfdata) gettimeofday(&perfdata->start_detection, 0);

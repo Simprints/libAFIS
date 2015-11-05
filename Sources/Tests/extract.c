@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <string.h>
 #include "Extraction/Extract.h"
+#include "General/Array.h"
+#include "General/BinaryMap.h"
 #include "General/pgm.h"
 
 double diff(struct timeval x, struct timeval y)
@@ -31,7 +34,9 @@ int main(int argc, char* argv[])
         if (image.sizeX == 1 && image.sizeY == 1) continue;
 
         struct perfdata perfdata;
-        Extract(&image, &perfdata);
+        BinaryMap binarized = BinaryMap_Construct(image.sizeX, image.sizeY);
+        BinaryMap thinned = BinaryMap_Construct(image.sizeX, image.sizeY);
+        Extract(&image, &perfdata, &binarized, &thinned);
 
         printf("Histogram generation: %f\n", diff(perfdata.start_segmentation, perfdata.start_histogram));
         printf("        Segmentation: %f\n", diff(perfdata.start_equalization, perfdata.start_segmentation));
@@ -42,6 +47,22 @@ int main(int argc, char* argv[])
         printf("  Minutiae detection: %f\n", diff(perfdata.start_filtering, perfdata.start_detection));
         printf("  Minutiae filtering: %f\n", diff(perfdata.end, perfdata.start_filtering));
         printf("               TOTAL: %f\n", diff(perfdata.end, perfdata.start));
+
+        int filenameLen = strlen(filename);
+
+        char binarizedFilename[filenameLen + 11];
+        strcpy(binarizedFilename, filename);
+        strcpy(binarizedFilename + filenameLen - 4, ".binarized.pgm");
+        UInt8Array2D binarizedImage = UInt8Array2D_Construct(binarized.width, binarized.height);
+        BinaryMapToImage(&binarized, &binarizedImage);
+        pgm_write(binarizedFilename, &binarizedImage);
+
+        char thinnedFilename[filenameLen + 9];
+        strcpy(thinnedFilename, filename);
+        strcpy(thinnedFilename + filenameLen - 4, ".thinned.pgm");
+        UInt8Array2D thinnedImage = UInt8Array2D_Construct(thinned.width, thinned.height);
+        BinaryMapToImage(&thinned, &thinnedImage);
+        pgm_write(thinnedFilename, &thinnedImage);
     }
 
     return 0;
