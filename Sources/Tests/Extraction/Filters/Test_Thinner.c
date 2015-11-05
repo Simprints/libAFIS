@@ -24,5 +24,10 @@ TEST(Thinner, Thinner_PassThrough)
 
 TEST(Thinner, Thinner_FalseEndings)
 {
-  BinaryMap* bm = BinaryMap_Construct(3,3);
+  BinaryMap bm = BinaryMap_Construct(3,3);
+
+  Thinner_IsFalseEnding(&bm, (Point) { .x = 1, .y = 1 });
+
+
+  BinaryMap_Destruct(&bm);
 }
