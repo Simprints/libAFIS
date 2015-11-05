@@ -13,6 +13,8 @@ typedef struct Template
     List minutiae; 
 } Template;
 
-void AddMinitia(Template *, Minutia *);
+Template Template_Constuct(void);
+void Template_AddMinitia(Template *, Minutia *);
+void Template_Free(Template *);
 
 #endif

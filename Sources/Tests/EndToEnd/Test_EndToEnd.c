@@ -1,8 +1,10 @@
 #include "Extraction/Extract.h"
 #include "General/pgm.h"
-
+#include "Templates/Template.h"
 #include "unity.h"
 #include "unity_fixture.h"
+#include <assert.h>
+#include <string.h>
 
 TEST_GROUP(EndToEnd);
 
@@ -16,16 +18,6 @@ static const char *inputFiles[] =
     "../TestImages/Person1/Bas1440999265-Hamster-1-2.png.pgm"
 };
 
-// static const char *templateFiles[] =
-// {
-//     "EndToEnd/Person1/Bas1440999265-Hamster-0-0.png.pgm.template",
-//     "EndToEnd/Person1/Bas1440999265-Hamster-0-1.png.pgm.template",
-//     "EndToEnd/Person1/Bas1440999265-Hamster-0-2.png.pgm.template",
-//     "EndToEnd/Person1/Bas1440999265-Hamster-1-0.png.pgm.template",
-//     "EndToEnd/Person1/Bas1440999265-Hamster-1-1.png.pgm.template",
-//     "EndToEnd/Person1/Bas1440999265-Hamster-1-2.png.pgm.template"
-// };
-
 TEST_SETUP(EndToEnd)
 {
 }
@@ -34,18 +26,78 @@ TEST_TEAR_DOWN(EndToEnd)
 {
 }
 
-static void ImageToTemplate(const char *fileName)
+static void ReadTemplate(const char *expectedFileName, Template *expectedTemplate)
 {
-    UInt8Array2D image = pgm_read(fileName);
+    FILE *f = fopen(expectedFileName, "rb");
+    
+    int ret = fread(&expectedTemplate->originalDpi, sizeof(int32_t), 1, f);
+    TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed originalDPI");
+    
+    ret = fread(&expectedTemplate->originalHeight, sizeof(int32_t), 1, f);
+    TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed originalHeight");
+    
+    ret = fread(&expectedTemplate->originalWidth, sizeof(int32_t), 1, f);
+    TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed originalWidth");
+    
+    int32_t count;
+    ret = fread(&count, sizeof(int32_t), 1, f);
+    TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutiae count");
+    
+    for(int i = 0; i < count; i++) 
+    {
+        Minutia *minutia = calloc(1, sizeof(Minutia));
+        
+        ret = fread(&(minutia->direction), sizeof(int8_t), 1, f);
+        TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutia->direction");
+        
+        ret = fread(&(minutia->position.x), sizeof(int32_t), 1, f);
+        TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed minutia->position.x");
+        
+        ret = fread(&(minutia->position.y), sizeof(int32_t), 1, f);
+        TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed minutia->position.y");
+        
+        ret = fread(&(minutia->type), sizeof(int32_t), 1, f);
+        TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutia->type");
+        
+        Template_AddMinitia(expectedTemplate, minutia); 
+    }
+    
+    /* Check end of file */
+    uint8_t tmp;
+    ret = fread(&tmp, sizeof(uint8_t), 1, f);
+    TEST_ASSERT_TRUE_MESSAGE(ret == 0 && feof(f), "ReadTemplate: Bad end of file");
+ 
+    /* Close file */
+    ret = fclose(f);
+    assert(ret != EOF);
+}
+
+static void ImageToTemplate(const char *inputFileName, const char *expectedFileName)
+{
+    UInt8Array2D image = pgm_read(inputFileName);
 
     TEST_ASSERT_TRUE_MESSAGE(image.sizeX > 1, "Image Size X < 1");
     TEST_ASSERT_TRUE_MESSAGE(image.sizeY > 1, "Image Size Y < 1");
 
     perfdata perfdata;
-    Template template;
+
+    Template template = Template_Constuct();
+    template.minutiae = List_Construct();
+    
+    printf("%s %s\r\n", inputFileName, expectedFileName);
+    
+    Template expectedTemplate;
+    expectedTemplate.minutiae = List_Construct();
+
+    void *dataFound = malloc(sizeof(Minutia));
+    printf("Data %ld %p\r\n", sizeof(Minutia), dataFound);
+    Template_AddMinitia(&expectedTemplate, dataFound );
     Extract(&image, &template, &perfdata);
 
     // ::TODO:: Load some sort of template to check against the output...
+    ReadTemplate(expectedFileName, &expectedTemplate);
+    
+//     Template_Free(&expectedTemplate);
 }
 
 TEST(EndToEnd, ImageToTemplate)
@@ -53,6 +105,9 @@ TEST(EndToEnd, ImageToTemplate)
     int length = sizeof(inputFiles) / sizeof(inputFiles[0]);
     for(int i = 0; i < length; i++) 
     {
-        ImageToTemplate(inputFiles[i]);
+        char templateFile[256];
+        strcpy(templateFile, inputFiles[i]);
+        strcat(templateFile, ".template");
+        ImageToTemplate(inputFiles[i], templateFile);
     }
 }
