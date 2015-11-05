@@ -8,6 +8,11 @@ float Angle_FromFraction(float fraction)
     return fraction * 2 * PI;
 }
 
+float Angle_ToFraction(float radians) 
+{
+    return radians / (2 * PI); 
+}
+
 float Angle_ByBucketCenter(int32_t bucket, int32_t resolution)
 {
     return Angle_FromFraction((2 * bucket + 1) / (2 * resolution));
@@ -16,4 +21,31 @@ float Angle_ByBucketCenter(int32_t bucket, int32_t resolution)
 PointF Angle_ToVector(float angle) 
 {
     return PointF_Construct(cos(angle), sin(angle));
+}
+
+float Angle_Atan(Point p) 
+{
+    double result = atan2(p.y, p.x); 
+
+    if (result < 0) {
+        result += 2 * PI; 
+    }
+
+    return result; 
+}
+
+float Angle_ToOrientation(float direction) {
+    if (direction < PI) return 2 * direction; 
+
+    return 2 * (direction - PI); 
+}
+
+float Angle_Add(float angle1, float angle2) {
+    float result = angle1 + angle2; 
+
+    if (result < (2 * PI)) {
+        return result; 
+    }
+
+    return result - (2 * PI); 
 }

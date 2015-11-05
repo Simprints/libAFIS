@@ -25,7 +25,7 @@ PointF Calc_Add2PointsF(const PointF *p1, const PointF *p2) {
   return PointF_AddSizeF(p1, &s);
 }
 
-PointF Calc_Scalar_Multiply(float scalar, Point p) {
+PointF Calc_Scalar_Multiply(float scalar, PointF p) {
   return (PointF) { .x = scalar * p.x, .y = scalar * p.y };
 }
 

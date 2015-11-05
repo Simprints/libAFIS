@@ -7,6 +7,9 @@
 
 static void RunAllTests(void)
 {
+    printf("\nOrientation tests\n");
+    RUN_TEST_GROUP(HillOrientation);
+
     printf("\nOriented smoother tests\n");
     RUN_TEST_GROUP(OrientedSmoother); 
     
@@ -30,9 +33,6 @@ static void RunAllTests(void)
     
     printf("\nEnsure we an load serialised binary data\n");
     RUN_TEST_GROUP(DataStructures);
-
-    printf("\nOrientation tests\n");
-    RUN_TEST_GROUP(HillOrientation);
 
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 

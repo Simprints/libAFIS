@@ -123,6 +123,7 @@ BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize)
     bm.blockAreas = RectangleGrid_Construct(&bm.corners);
     bm.blockCenters = InitBlockCenters(&bm);
     bm.cornerAreas = InitCornerAreas(&bm);
+    bm.maxBlockSize = maxBlockSize;
     return bm;
 }
 

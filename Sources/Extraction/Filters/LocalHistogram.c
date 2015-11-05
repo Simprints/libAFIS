@@ -12,8 +12,9 @@ void LocalHistogram_Analyze(const BlockMap *blocks, const UInt8Array2D *image, I
         {
             RectangleC area = RectangleGrid_GetRectangleCFromPoint(&blocks->blockAreas, &block);
             for (int x = RectangleC_GetLeft(&area); x < RectangleC_GetRight(&area); ++x)
-                for (int y = RectangleC_GetBottom(&area); y < RectangleC_GetTop(&area); ++y)
+                for (int y = RectangleC_GetBottom(&area); y < RectangleC_GetTop(&area); ++y) {
                     ++histogram->data[block.x][block.y][image->data[x][y]];
+                }
         }
     }
 }

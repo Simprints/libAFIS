@@ -28,7 +28,7 @@ static void print_orientations(UInt16Array2D orientations) {
 
 TEST(HillOrientation, VisualiseOrientations)
 {
-  UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-0-1.png.pgm");
+  UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-1-0.png.pgm");
 
   Size imgSize = {.width = v.sizeX, .height = v.sizeY};
   BlockMap blocks = BlockMap_Construct(&imgSize, 15);
@@ -102,7 +102,7 @@ TEST(HillOrientation, VisualiseOrientations)
 
     }
   }
-  pgm_write("../TestImages/Person1/output-Hamster-0.1.pgm", &outV);
+  pgm_write("../TestImages/Person1/output-Hamster-1-0.pgm", &outV);
 }
 
 TEST(HillOrientation, VisualisePixelMask)
@@ -132,4 +132,91 @@ TEST(HillOrientation, VisualisePixelMask)
     }
   }
   pgm_write("../TestImages/Person1/output-Hamster-0.1-pixelmask.pgm", &outV);
+}
+
+TEST(HillOrientation, ComputeOrientations) 
+{
+    UInt8Array2D v = UInt8Array2D_Construct(7, 9); 
+
+    uint8_t imgData[][9] = {
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+    };
+
+    /* uint8_t imgData[][9] = {
+      {127, 127, 127, 127, 127, 127 , 127, 127, 127},   
+      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
+      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
+      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
+      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
+      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
+      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
+      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
+      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
+    };*/
+
+    for (int i = 0; i < v.sizeX; i++) {
+        for (int j = 0; j < v.sizeY; j++) {
+            v.data[i][j] = imgData[i][j]; 
+        }
+    }
+
+    Size imgSize = {.width = v.sizeX, .height = v.sizeY};
+    BlockMap blocks = BlockMap_Construct(&imgSize, 4);
+
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    Int16Array3D smoothedHistogram = Int16Array3D_Construct(blocks.cornerCount.width, blocks.cornerCount.height, 256);
+
+    LocalHistogram_Analyze(&blocks, &v, &histogram); 
+    LocalHistogram_SmoothAroundCorners(&histogram, &smoothedHistogram); 
+
+    BinaryMap mask = BinaryMap_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+
+    SegmentationMask sm = SegmentationMask_Construct(); 
+    SegmentationMask_ComputeMask(&sm, &blocks, &histogram, &mask);   
+
+
+    FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
+    Equalizer eq = Equalizer_Construct();
+    Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
+    //UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+   /*for (int i = 0; i < histogram.sizeX; i++) {
+    for (int j = 0; j < histogram.sizeY; j++) {
+      for (int k = 0; k < histogram.sizeZ; k++) {
+        if (histogram.data[i][j][k]) {
+          printf("[%d][%d][%d] = %d ", i, j, k, histogram.data[i][j][k]);
+        }
+      }
+      printf("\n");
+    }
+   }
+   printf("Smooothed histogram\n");
+   for (int i = 0; i < smoothedHistogram.sizeX; i++) {
+    for (int j = 0; j < smoothedHistogram.sizeY; j++) {
+      for (int k = 0; k < smoothedHistogram.sizeZ; k++) {
+        if (smoothedHistogram.data[i][j][k]) {
+          printf("[%d][%d][%d] = %d ", i, j, k, smoothedHistogram.data[i][j][k]);
+        }
+      }
+      printf("\n");
+    }
+   }
+
+
+    for (int i = 0; i < equalized.sizeX; i++) {
+      for (int j = 0; j < equalized.sizeY; j++) {
+        printf("equalized[%d][%d] = %f\n", i, j, equalized.data[i][j]);
+      }
+    }
+
+    for (int i = 0; i < orientations.sizeX; i++) {
+      for (int j = 0; j < orientations.sizeY; j++) {
+        printf("orientation[%d][%d] = %d\n", i, j, orientations.data[i][j]);
+      }
+    }*/
 }
