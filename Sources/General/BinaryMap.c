@@ -243,7 +243,7 @@ void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC 
         }
         else
         {
-            ShiftRight(me, &srcVector, shift);
+            ShiftRight(me, &srcVector, -shift);
         }
         
         for (int i = 0; i < vector.size; ++i)
