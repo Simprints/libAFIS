@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "Extraction/Model/Minutia.h"
 #include "DotRemover.h"
 
 void DotRemover_Filter(SkeletonBuilder *skeleton)

@@ -2,6 +2,7 @@
 #define GENERAL_LIST_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct ListElement
 {
