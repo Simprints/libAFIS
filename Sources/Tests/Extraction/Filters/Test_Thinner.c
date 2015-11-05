@@ -35,7 +35,9 @@ TEST(Thinner, Thinner_Thin)
 {
   Thinner t = Thinner_Construct();
   BinaryMap bm = BinaryMap_Construct(3,3);
-  BinaryMap out = Thinner_Thin(&t, &bm);
+  BinaryMap out = BinaryMap_Construct(3,3);
+  
+  Thinner_Thin(&t, &bm, &out);
 
   BinaryMap_Destruct(&bm);
   BinaryMap_Destruct(&out);

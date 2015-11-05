@@ -13,7 +13,9 @@ struct Thinner
 };
 
 Thinner Thinner_Construct(void);
-BinaryMap Thinner_Thin(const Thinner *me, const BinaryMap *input);
+
+// out should be allocated to be size of input
+void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* out);
 bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding);
 
 #endif
