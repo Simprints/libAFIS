@@ -223,36 +223,35 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
 
 void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
 {
-	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
-	int vectorSize = (area->width >> me->wordShift) + 2;
-
-	UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
-	UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
-
-	for (int y = 0; y < area->height; y++)
-	{
-		Point atOffset = Point_Construct(at->x, at->y + y);
-		Point areaOffset = Point_Construct(area->x, area->y + y);
-
-		LoadLine(me, &vector, &atOffset, area->width);
-		LoadLine(source, &srcVector, &areaOffset, area->width);
-
-		if (shift >= 0)
-		{
-			ShiftLeft(me, &srcVector, shift);
-		}
-		else
-		{
-			ShiftRight(me, &srcVector, shift);
-		}
-
-		// The AND
-		for (int i = 0; i < vector.size; ++i)
-		{
-			vector.data[i] &= srcVector.data[i];
-		}
-		SaveLine(me, &vector, &atOffset, area->width);
-	}
+    int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+    int vectorSize = (area->width >> me->wordShift) + 2;
+    
+    UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+    UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+    
+    for (int y = 0; y < area->height; y++)
+    {
+        Point atOffset = Point_Construct(at->x, at->y + y);
+        Point areaOffset = Point_Construct(area->x, area->y + y);
+        
+        LoadLine(me, &vector, &atOffset, area->width);
+        LoadLine(source, &srcVector, &areaOffset, area->width);
+        
+        if (shift >= 0)
+        {
+            ShiftLeft(me, &srcVector, shift);
+        }
+        else
+        {
+            ShiftRight(me, &srcVector, shift);
+        }
+        
+        for (int i = 0; i < vector.size; ++i)
+        {
+            vector.data[i] &= srcVector.data[i];
+        }
+        SaveLine(me, &vector, &atOffset, area->width);
+    }
 }
 
 void BinaryMap_Or(const BinaryMap *me, const BinaryMap* source) 

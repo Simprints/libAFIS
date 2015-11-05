@@ -136,6 +136,11 @@ TEST(BinaryMap, BinaryMap_AndArea)
 {
    BinaryMap source = BinaryMap_Construct(3,3);
 
+   /*
+          ***
+          ---
+          ***
+    */
     BinaryMap_SetBitOne(&source,0,0);
     BinaryMap_SetBitOne(&source,1,0);
     BinaryMap_SetBitZero(&source,0,1);
@@ -149,6 +154,11 @@ TEST(BinaryMap, BinaryMap_AndArea)
 
     BinaryMap target = BinaryMap_Construct(3,3);
 
+    /*
+         ---
+         ***
+         ---
+     */
     BinaryMap_SetBitZero(&target,0,0);
     BinaryMap_SetBitZero(&target,1,0);
     BinaryMap_SetBitOne(&target,0,1);
