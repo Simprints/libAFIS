@@ -7,8 +7,16 @@
 #include "General/BinaryMap.h"
 #include "LinesByOrientation.h"
 
+typedef struct SmootherConfig SmootherConfig; 
+
+struct SmootherConfig {
+    int radius, angularResolution; 
+    float stepFactor; 
+};
+
 void OrientedSmoother_Smooth
-    (const FloatArray2D *input,
+    (const SmootherConfig config, 
+     const FloatArray2D *input,
      const UInt16Array2D *orientation,
      const BinaryMap *mask,
      const BlockMap *blocks,

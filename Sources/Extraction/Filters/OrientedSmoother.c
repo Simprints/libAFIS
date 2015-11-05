@@ -3,14 +3,9 @@
 
 #include "OrientedSmoother.h"
 
-static const int32_t AngularResolution = 32;  /* Lower = 4, Upper = 128 */
-static const int32_t Radius = 7;             /* Upper = 50 */
-static const float StepFactor = 1.5f;           /* Lower = 1.1, Upper = 4 */
-
-
-
 void OrientedSmoother_Smooth
-    (const FloatArray2D *input,
+    (const SmootherConfig config, 
+     const FloatArray2D *input,
      const UInt16Array2D *orientation,
      const BinaryMap *mask,
      const BlockMap *blocks,
@@ -20,9 +15,9 @@ void OrientedSmoother_Smooth
     assert(output->sizeX == input->sizeX);
     assert(output->sizeY == input->sizeY);
 
-    PointArray2D lines = PointArray2D_Construct(AngularResolution); 
+    PointArray2D lines = PointArray2D_Construct(config.angularResolution); 
 
-    LinesByOrientation_ConstructLines(AngularResolution, Radius, StepFactor, &lines); 
+    LinesByOrientation_ConstructLines(config.angularResolution, config.radius, config.stepFactor, &lines); 
 
     RectangleC pixelRect = RectangleC_ConstructFromSize(&blocks->pixelCount);
     //TODO: We could probably just use allBlocks.height, and allBlocks.width
@@ -37,8 +32,8 @@ void OrientedSmoother_Smooth
                 uint8_t orientationAngle = orientation->data[block.x][block.y]; 
                 uint8_t offsetOrientation = orientationAngle + angleOffset; 
 
-                int32_t quantized = (((int)offsetOrientation) * AngularResolution) / 256; 
-                
+                int32_t quantized = (((int)offsetOrientation) * config.angularResolution) / 256; 
+
                 PointArray1D *line = lines.data[quantized];  
 
                 RectangleC blockArea = RectangleGrid_GetRectangleCFromPoint(&blocks->blockAreas, &block);

@@ -21,7 +21,7 @@ TEST_TEAR_DOWN(OrientedSmoother)
 
 TEST(OrientedSmoother, VisualiseSmoother)
 {
-  UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-0-1.png.pgm");
+  UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-1-0.png.pgm");
 
   Size imgSize = {.width = v.sizeX, .height = v.sizeY};
   BlockMap blocks = BlockMap_Construct(&imgSize, 15);
@@ -43,13 +43,18 @@ TEST(OrientedSmoother, VisualiseSmoother)
 
   UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
 
+  //StepFactor = 1.59
+  SmootherConfig ridgeConfig = {.stepFactor = 1.59, .angularResolution = 32, .radius = 7};
   FloatArray2D smoothedImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY); 
+  OrientedSmoother_Smooth(ridgeConfig, &equalized, &orientations, &mask, &blocks, 0, &smoothedImage); 
 
-  OrientedSmoother_Smooth(&equalized, &orientations, &mask, &blocks, 0, &smoothedImage); 
-
+  //AngleOffset = 128
+  //Stepfactor = 1.11
+  //Radius = 4
+  //AngularResolution = 11
+  SmootherConfig orthogonalConfig = {.stepFactor = 1.11, .angularResolution = 11, .radius = 4}; 
   FloatArray2D orthogonalImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY);
-
-  OrientedSmoother_Smooth(&smoothedImage, &orientations, &mask, &blocks, 128, &orthogonalImage); 
+  OrientedSmoother_Smooth(orthogonalConfig, &smoothedImage, &orientations, &mask, &blocks, 128, &orthogonalImage); 
 
   //TODO: YOU COULD PROBABLY REMOVE THIS
   BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothedImage, &orthogonalImage, &mask, &blocks); 
@@ -65,5 +70,5 @@ TEST(OrientedSmoother, VisualiseSmoother)
       }
   }
 
-  pgm_write("../TestImages/Person1/output-binarised-Hamster-0.1.pgm", &newV);
+  pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
 }
