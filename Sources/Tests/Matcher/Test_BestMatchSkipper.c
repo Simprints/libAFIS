@@ -22,3 +22,12 @@ TEST(BestMatchSkipper, BestMatchSkipper_Construct)
   
   BestMatchSkipper_Destruct(&b);
 }
+
+TEST(BestMatchSkipper, BestMatchSkipper_Scores)
+{
+  BestMatchSkipper b = BestMatchSkipper_Construct(3,2);
+
+  BestMatchSkipper_AddScore(&b, 0,1.1);
+  BestMatchSkipper_AddScore(&b, 1,1.2);
+  BestMatchSkipper_AddScore(&b, 2,1.2);
+}
