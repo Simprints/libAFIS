@@ -6,7 +6,7 @@ SkeletonBuilderMinutia SkeletonBuilderMinutia_Construct(const Point *position)
 {
     SkeletonBuilderMinutia sbm;
     sbm.position = *position;
-    sbm.allRidges = List_Construct();
+    sbm.ridges = List_Construct();
     return sbm;
 }
 
@@ -16,23 +16,23 @@ void SkeletonBuilderMinutia_Destruct(const SkeletonBuilderMinutia *me)
 
 List* SkeletonBuilderMinutia_GetRidges(const SkeletonBuilderMinutia *me)
 {
-    return (List *) &me->allRidges;
+    return (List *) &me->ridges;
 }
 
 void SkeletonBuilderMinutia_AttachStart(SkeletonBuilderMinutia *me, SkeletonBuilderRidge *ridge)
 {
-    if (!List_ContainsData(&me->allRidges, ridge))
+    if (!List_ContainsData(&me->ridges, ridge))
     {
-        List_AddData(&me->allRidges, ridge);
+        List_AddData(&me->ridges, ridge);
         SkeletonBuilderRidge_SetStart(ridge, me);
     }
 }
 
 void SkeletonBuilderMinutia_DetachStart(SkeletonBuilderMinutia *me, SkeletonBuilderRidge *ridge)
 {
-    if (List_ContainsData(&me->allRidges, ridge))
+    if (List_ContainsData(&me->ridges, ridge))
     {
-        List_RemoveData(&me->allRidges, ridge);
+        List_RemoveData(&me->ridges, ridge);
         if (SkeletonBuilderRidge_GetStart(ridge) == me)
             SkeletonBuilderRidge_SetStart(ridge, NULL);
     }
