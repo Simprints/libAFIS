@@ -30,3 +30,14 @@ float Calc_InterpolateRect(float topLeft, float topRight, float bottomLeft, floa
     float right = Calc_InterpolateFrom3Floats(bottomRight, topRight, fraction->y);
     return Calc_InterpolateFrom3Floats(left, right, fraction->x);
 }
+
+int Calc_CountBits(uint32_t value)
+{
+	int count = 0;
+	while (value != 0)
+	{
+		++count;
+		value &= value - 1;
+	}
+	return count;
+}
