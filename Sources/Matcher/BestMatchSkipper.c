@@ -21,8 +21,15 @@ void BestMatchSkipper_Destruct(BestMatchSkipper* me)
 
 void BestMatchSkipper_AddScore(const BestMatchSkipper* me, int32_t person, float score)
 {
-  for (int nth = me->collected.sizeX; nth >=0; --nth)
+  for (int nth = me->collected.sizeX - 1; nth >=0; --nth)
   {
+    if (me->collected.data[nth][person] < score)
+    {
+      if (nth + 1 < me->collected.sizeX)
+        me->collected.data[nth+1][person] = me->collected.data[nth][person];
+
+      me->collected.data[nth][person] = score;
+    }
   }
 }
 
