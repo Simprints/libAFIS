@@ -117,8 +117,9 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
                                     if (x > 0 && x < input->width - 1 && BinaryMap_GetBit(&border, x, y))
                                     {
                                         uint32_t neighbors = BinaryMap_GetNeighborhood(&intermediate, x, y);
+                                        Point p = Point_Construct(x,y);
                                         if (thinner_IsRemovable(neighbors) || 
-                                            (thinner_IsEnding(neighbors) && Thinner_IsFalseEnding(&intermediate, Point_Construct(x, y))))
+                                            (thinner_IsEnding(neighbors) && Thinner_IsFalseEnding(&intermediate, p)))
                                         {
                                             removedAnything = true;
                                             BinaryMap_SetBitZero(&intermediate, x, y);
