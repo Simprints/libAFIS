@@ -9,7 +9,7 @@ struct NeighbourEdge
 {
   EdgeShape edge;
   int32_t neighbour;
-}
+};
 
 #endif
 

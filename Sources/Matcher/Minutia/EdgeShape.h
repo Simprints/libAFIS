@@ -10,6 +10,6 @@ struct EdgeShape
   int16_t length;
   uint8_t referenceAngle;
   uint8_t neighbourAngle;
-}
+};
 
 #endif
