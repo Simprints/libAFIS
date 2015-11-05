@@ -3,6 +3,7 @@
 #include "General/Calc.h"
 #include "Thinner.h"
 
+static bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding);
 static bool thinner_IsRemovable(int i)
 {
 	static bool isRemovable[256] = { 0 };
@@ -141,7 +142,7 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
     }
 }
 
-bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding)
+static bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding)
 {
 	for (int x = -1; x < 2; x++)
 	{

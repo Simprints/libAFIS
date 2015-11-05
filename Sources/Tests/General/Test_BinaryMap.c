@@ -164,15 +164,6 @@ TEST(BinaryMap, BinaryMap_AndArea)
 
     BinaryMap_AndArea(&source,  &target, &rect, &origin);
 
-    printf("\n\n");
-    for (int i=0;i<3;++i) {
-      for (int j=0;j<3;++j) {
-        printf("%d", BinaryMap_GetBit(&source,j,i));
-      }
-      printf("\n");
-    }
-    printf("\nBAR\n");
-
     // Area being "and"
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,0,0), "Failed at: 0,0");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,1,0), "Failed at: 1,0");

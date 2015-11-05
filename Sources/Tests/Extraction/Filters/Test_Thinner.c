@@ -22,21 +22,6 @@ TEST(Thinner, Thinner_PassThrough)
   Thinner_Construct();
 }
 
-TEST(Thinner, Thinner_FalseEndings)
-{
-  BinaryMap bm = BinaryMap_Construct(3,3);
-
-  /*  *-*
-      -*-
-      -*- */
-  BinaryMap_SetBitOne(&bm,0,0);   BinaryMap_SetBitOne(&bm,2,0);
-  BinaryMap_SetBitOne(&bm,1,1);   BinaryMap_SetBitOne(&bm,1,2);
-
-  TEST_ASSERT_FALSE(Thinner_IsFalseEnding(&bm, (Point) { .x = 1, .y = 1 }));
-
-  BinaryMap_Destruct(&bm);
-}
-
 TEST(Thinner, Thinner_Thin)
 {
   Thinner t = Thinner_Construct();
