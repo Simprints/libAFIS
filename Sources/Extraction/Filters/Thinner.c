@@ -30,6 +30,7 @@ static bool thinner_IsRemovable(int i)
 
 			isRemovable[mask] = !diagonal && !horizontal && !vertical && !end;
 		}
+                init = true;
 	}
 
 	return isRemovable[i];
@@ -47,6 +48,7 @@ static bool thinner_IsEnding(int i)
 			bool end = (count == 1);
 			isEnding[mask] = end;
 		}
+                init = true;
 	}
 	return isEnding[i];
 }
