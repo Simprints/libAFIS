@@ -5,7 +5,6 @@
 SkeletonBuilderMinutia SkeletonBuilderMinutia_Construct(const Point *position)
 {
     SkeletonBuilderMinutia sbm;
-    sbm.valid = true;
     sbm.position = *position;
     sbm.allRidges = List_Construct();
     return sbm;
