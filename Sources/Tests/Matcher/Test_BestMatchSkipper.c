@@ -15,4 +15,7 @@ TEST_TEAR_DOWN(BestMatchSkipper)
 
 TEST(BestMatchSkipper, BestMatchSkipper_Construct)
 {
+  BestMatchSkipper b = BestMatchSkipper_Construct(3,4);
+
+  BestMatchSkipper_Destruct(&b);
 }
