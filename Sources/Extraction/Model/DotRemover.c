@@ -3,10 +3,8 @@
 
 #include "DotRemover.h"
 
-void DotRemover_Filter(SkeletonBuilder *skeleton)
+void DotRemover_Filter(List *minutiae)
 {
-    List *minutiae = SkeletonBuilder_GetMinutiae(skeleton);
-
     for (ListElement *i = minutiae->head; i != NULL; i = i->next)
     {
         SkeletonBuilderMinutia *minutia = (SkeletonBuilderMinutia *) i->data;
