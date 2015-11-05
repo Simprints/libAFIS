@@ -9,6 +9,7 @@ float Angle_FromFraction(float fraction);
 float Angle_ToFraction(float radians); 
 PointF Angle_ToVector(float angle); 
 float Angle_Atan(Point p); 
+float Angle_AtanF(PointF p); 
 float Angle_ToOrientation(float direction); 
 float Angle_Add(float angle1, float angle2); 
 

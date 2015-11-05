@@ -29,8 +29,8 @@ static bool IsInsideImageAndMask(int imageHeight, int imageWidth, BoolArray2D pi
     bool ok = x >= 0
         && y >= 0
         && x < imageWidth
-        && y < imageHeight
-        && pixelMask.data[x][y];
+        && y < imageHeight;
+       // && pixelMask.data[x][y];
 
     return ok;
 }
@@ -76,6 +76,8 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
                 Point antiPoint = (Point) { .x = -neighbors[i].x, .y = -neighbors[i].y };
                 Point antiNeighbor = Calc_Add2Points(&antiPoint, &(Point) { .x = x, .y = y });
 
+                //printf("considering neighbor (%d, %d)\n", neighbor.x, neighbor.y);
+
                 if(!IsInsideImageAndMask(imageHeight, imageWidth, pixelMask, neighbor.x, neighbor.y) || !IsInsideImageAndMask(imageHeight, imageWidth, pixelMask, antiNeighbor.x, antiNeighbor.y))
                     continue;
 
@@ -85,20 +87,21 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
 
                 float strength = pixelValue - MAX(neighborValue, antiNeighborValue);
 
-                PointF orientation = Angle_ToVector(Angle_Add(Angle_ToOrientation(Angle_Atan(neighbors[i])), PI));
+                PointF orientation = Angle_ToVector(Angle_ToOrientation(Angle_Atan(neighbors[i])));
                 PointF contribution = Calc_Scalar_Multiply(strength, orientation);
 
-               /* printf("neighbor (%d, %d): %f\n", neighbor.x, neighbor.y, input.data[neighbor.x][neighbor.y]);
+                /*printf("neighbor (%d, %d): %f\n", neighbor.x, neighbor.y, input.data[neighbor.x][neighbor.y]);
                 printf("anti-neighbor (%d, %d): %f\n", antiNeighbor.x, antiNeighbor.y, input.data[antiNeighbor.x][antiNeighbor.y]);
                 printf("strength: %f, orientation: (%f, %f), pixelValue: %f neighborValue: %f, anti-neighborValue: %f\n", strength, orientation.x, orientation.y, pixelValue, neighborValue, antiNeighborValue);
-                printf("Setting hill orientation for %d, %d: (%f, %f)\n", x, y, contribution.x, contribution.y);
-                */
+                printf("Setting hill orientation for %d, %d: (%f, %f)\n", x, y, contribution.x, contribution.y);*/
+                
                 if (strength > 0) {
                     directions.data[x][y] = Calc_Add2PointsF(&directions.data[x][y], &contribution);
                 }
             }
 
-            //printf("FINISHED Calculate hill orientation for %d, %d ------------------------------------------\n", x, y);
+            //printf("FINISHED Calculate hill orientation for %d, %d: (%f, %f) ------------------------------------------\n", x, y, directions.data[x][y].x, directions.data[x][y].y);
+
         }
     }
 
@@ -185,7 +188,7 @@ UInt16Array2D HillOrientation_DirectionsToAngles(PointFArray2D directions, Binar
             //printf("directions[%d][%d] = (%f, %f)\n", x, y, directions.data[x][y].x, directions.data[x][y].y);
             if(!BinaryMap_GetBit(mask, x, y))
                 continue;
-            double angle = atan2(directions.data[x][y].y, directions.data[x][y].x);
+            double angle = Angle_AtanF(directions.data[x][y]);
             //multiply by 2 to collapse opposite angles onto each other
             angles.data[x][y] = quantize(angle, 256); 
         }
@@ -197,11 +200,11 @@ UInt16Array2D HillOrientation_DirectionsToAngles(PointFArray2D directions, Binar
 UInt16Array2D HillOrientation_Detect(FloatArray2D image, Size imageDimensions, BinaryMap * blockMask, BlockMap * blocks)
 {
     BoolArray2D pixelMask = HillOrientation_BlockMapToPixelMask(imageDimensions, blockMask, blocks);
-//    for (int i = 0; i < pixelMask.sizeX; i++) {
-//        for (int j = 0; j < pixelMask.sizeY; j++) {
-//            printf("pixelMask[%d][%d] = %d\n", i, j, pixelMask.data[i][j]);
-//        }
-//    }
+    /*for (int i = 0; i < pixelMask.sizeX; i++) {
+        for (int j = 0; j < pixelMask.sizeY; j++) {
+            printf("pixelMask[%d][%d] = %d\n", i, j, pixelMask.data[i][j]);
+        }
+    }*/
 
     PointFArray2D pixelDirections = HillOrientation_AccumulateDirections(image, imageDimensions.height, imageDimensions.width, pixelMask);
 //    for (int i = 0; i < pixelDirections.sizeX; i++) {

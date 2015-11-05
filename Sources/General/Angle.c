@@ -23,15 +23,23 @@ PointF Angle_ToVector(float angle)
     return PointF_Construct(cos(angle), sin(angle));
 }
 
-float Angle_Atan(Point p) 
-{
-    double result = atan2(p.y, p.x); 
+static float Angle_atan(double x, double y) {
+    double result = atan2(y, x); 
 
     if (result < 0) {
         result += 2 * PI; 
     }
 
-    return result; 
+    return result;
+}
+
+float Angle_Atan(Point p) 
+{
+     return Angle_atan(p.x, p.y); 
+}
+
+float Angle_AtanF(PointF p) {
+    return Angle_atan(p.x, p.y); 
 }
 
 float Angle_ToOrientation(float direction) {

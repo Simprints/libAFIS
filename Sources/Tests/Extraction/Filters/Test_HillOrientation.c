@@ -184,8 +184,8 @@ TEST(HillOrientation, ComputeOrientations)
     FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
     Equalizer eq = Equalizer_Construct();
     Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
-    //UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
-   /*for (int i = 0; i < histogram.sizeX; i++) {
+    UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+   for (int i = 0; i < histogram.sizeX; i++) {
     for (int j = 0; j < histogram.sizeY; j++) {
       for (int k = 0; k < histogram.sizeZ; k++) {
         if (histogram.data[i][j][k]) {
@@ -218,5 +218,5 @@ TEST(HillOrientation, ComputeOrientations)
       for (int j = 0; j < orientations.sizeY; j++) {
         printf("orientation[%d][%d] = %d\n", i, j, orientations.data[i][j]);
       }
-    }*/
+    }
 }

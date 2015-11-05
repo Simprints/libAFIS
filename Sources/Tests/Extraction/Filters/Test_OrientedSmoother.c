@@ -59,6 +59,22 @@ TEST(OrientedSmoother, VisualiseSmoother)
   //TODO: YOU COULD PROBABLY REMOVE THIS
   BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothedImage, &orthogonalImage, &mask, &blocks); 
 
+  /*VotingFilter binarySmoother = VotingFilter_Construct();
+  binarySmoother.radius = 2;
+  binarySmoother.majority = 0.61;
+  binarySmoother.borderDistance = 17; 
+
+  BinaryMap binSmoothed = BinaryMap_Construct(binarized.width, binarized.height);
+  BinaryMap_Invert(&binarized); 
+  VotingFilter_Filter(&binarySmoother, &binarized, &binSmoothed);
+
+  BinaryMap_AndNot(&binarized, &binSmoothed);
+
+  BinaryMap_Clear(&binSmoothed); 
+  VotingFilter_Filter(&binarySmoother, &binarized, &binSmoothed);
+  BinaryMap_Or(&binarized, &binSmoothed); */
+
+
   UInt8Array2D newV = UInt8Array2D_Construct(binarized.width, binarized.height); 
   for (int i = 0; i < binarized.width; i++) {
       for (int j = 0; j < binarized.height; j++) {
@@ -70,5 +86,5 @@ TEST(OrientedSmoother, VisualiseSmoother)
       }
   }
 
-  pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
+  pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0-2.pgm", &newV);
 }
