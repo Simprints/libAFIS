@@ -16,6 +16,8 @@ struct BinaryMap
     int32_t wordWidth;
     int32_t width;
     int32_t height;
+
+  // TODO lift these consts out of the structure - why duplicate per instance?
     const int32_t wordShift;
     const uint32_t wordMask;
     const int32_t wordSize;

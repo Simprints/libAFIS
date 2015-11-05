@@ -104,9 +104,9 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
             
             BinaryMap_AndNotTo(&border, skeleton);
             
-            for (int odd = 0; odd < 2; odd++)
+            for (int odd = 0; odd < 2; ++odd)
             {
-                for (int y = 1; y < input->height - 1; y++)
+                for (int y = 1; y < input->height - 1; ++y)
                 {
                   if (y % 2 == odd) // Confused, why not +=2 on the line above?
                     {
