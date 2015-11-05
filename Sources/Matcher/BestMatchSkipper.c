@@ -4,6 +4,13 @@ BestMatchSkipper BestMatchSkipper_Construct(int32_t persons, int32_t skip)
 {
   BestMatchSkipper r;
 
+  r.collected = FloatArray2D_Construct(skip + 1, persons);
+  for (int i=0;i<skip+1;++i) {
+    for (int j=0;j<persons;++j) {
+      r.collected.data[i][j] = -1;
+    }
+  }
+
   return r;
 }
 
