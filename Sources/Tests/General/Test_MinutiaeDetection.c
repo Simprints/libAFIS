@@ -41,10 +41,11 @@ static bool DetectBifurcation(int image[3][3]) {
 
 TEST(MinutiaeDetection, CanDetectARidgeEnding)
 {
-  int BinarizedThinnedImage[3][3] = {
-    { 0, 0, 0 },
-    { 1, 0, 0 },
-    { 0, 1, 1 },
+  int BinarizedThinnedImage[4][4] = {
+    { 0, 0, 0, 0 },
+    { 1, 0, 0, 0 },
+    { 0, 1, 1, 0 },
+    { 0, 0, 0, 0 }
   };
 
   bool result = DetectRidgeEnding(BinarizedThinnedImage);
@@ -55,7 +56,7 @@ TEST(MinutiaeDetection, CanDetectARidgeEnding)
 TEST(MinutiaeDetection, CanDetectABifurcation) {
   int BinarizedThinnedImage[3][3] = {
     { 1, 1, 0 },
-    { 0, 0, 1 },
+    { 0, 1, 1 },
     { 1, 1, 0 },
   };
 
