@@ -3,7 +3,7 @@
 #include <malloc.h>
 #include <assert.h>
 
-void Template_AddMinuitia(Template *template, TemplateMinutia *minutia)
+void Template_AddMinutia(Template *template, TemplateMinutia *minutia)
 {
     List_AddData(&(template->minutiae), minutia);
 }
@@ -13,7 +13,7 @@ List *Template_GetMinutiae(Template *template)
     return &template->minutiae;
 }
 
-Template Template_Constuct()
+Template Template_Construct()
 {
     Template template;
     template.originalDpi = 0;
