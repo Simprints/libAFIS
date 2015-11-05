@@ -142,6 +142,9 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
             }
         }
     }
+
+    BinaryMap_Destruct(&intermediate);
+    BinaryMap_Destruct(&border);
 }
 
 static bool Thinner_IsFalseEnding(BinaryMap *map, Point possibleEnding)
