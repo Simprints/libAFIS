@@ -93,7 +93,7 @@ TEST(BinaryMap, BinaryMap_Or)
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
 }
 
-TEST(BinaryMap, BinaryMap_AndNotTo)
+TEST(BinaryMap, BinaryMap_AndNot)
 {
     BinaryMap source = BinaryMap_Construct(3,3);
 
@@ -124,9 +124,9 @@ TEST(BinaryMap, BinaryMap_AndNotTo)
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,0), "Failed at: 0,0");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,0), "Failed at: 1,0");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,0), "Failed at: 2,0");
-    TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,1), "Failed at: 0,1");
-    TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,1), "Failed at: 1,1");
-    TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,1), "Failed at: 2,1");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,0,1), "Failed at: 0,1");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,1,1), "Failed at: 1,1");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,2,1), "Failed at: 2,1");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,2), "Failed at: 0,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,2), "Failed at: 1,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
