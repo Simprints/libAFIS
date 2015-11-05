@@ -19,9 +19,6 @@ static void RunAllTests(void)
     printf("\nCalc tests\n");
     RUN_TEST_GROUP(Calc);
 
-    printf("\nPriority Queue tests\n");
-    RUN_TEST_GROUP(PriorityQueue);
-
     printf("\nPgm tests\n");
     RUN_TEST_GROUP(Pgm);    
 
