@@ -83,21 +83,25 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
                 case 0:
                   area = RectangleC_ConstructFrom4Ints(1, 0, border.width - 1, border.height);
                   point = Point_Construct(0, 0);
+                  BinaryMap_AndNotToArea(&intermediate, &border, &area, &point);
                   break;
                 case 1:
                   area = RectangleC_ConstructFrom4Ints(0, 0, border.width - 1, border.height);
                   point = Point_Construct(1, 0);
+                  BinaryMap_AndNotToArea(&intermediate, &border, &area, &point);
                   break;
                 case 2:
                   area = RectangleC_ConstructFrom4Ints(0, 1, border.width, border.height - 1);
                   point = Point_Construct(0, 0);
+                  BinaryMap_AndNotToArea(&intermediate, &border, &area, &point);
                   break;
                 case 4:
                   area = RectangleC_ConstructFrom4Ints(0, 0, border.width, border.height - 1);
                   point = Point_Construct(0, 1);
+                  BinaryMap_AndNotToArea(&intermediate, &border, &area, &point);
                   break;
             }
-            BinaryMap_AndNotToArea(&intermediate, &border, &area, &point);
+            
             BinaryMap_AndNotTo(&border, skeleton);
             
             for (int odd = 0; odd < 2; odd++)
