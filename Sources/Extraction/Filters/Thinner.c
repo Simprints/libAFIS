@@ -76,7 +76,7 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
 	{
             RectangleC area;
             Point point;
-            BinaryMap_CopyTo(&intermediate, &border);
+            BinaryMap_CopyTo(&border, &intermediate);
             
             switch (j)
             {
