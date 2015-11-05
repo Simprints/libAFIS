@@ -12,7 +12,6 @@ typedef struct SkeletonBuilder SkeletonBuilder;
 
 struct SkeletonBuilderMinutia
 {
-    bool valid;
     Point position;
     List allRidges;
 };
