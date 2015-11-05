@@ -318,6 +318,7 @@ void PointArray2D_Destruct(PointArray2D *me)
 {
     for (int row = 0; row < me->size; row++)
     {
+        PointArray1D_Destruct(me->data[row]);
         free(me->data[row]);
     }
     free(me->data);

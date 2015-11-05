@@ -47,3 +47,26 @@ The result is an executable called `all_tests` in the `Build/` directory.
 $ Sources/Build/all_tests ../TestData
 ~~~
 
+### Checking for memory leaks and other problems
+
+#### Valgrind
+
+You can check for memory leaks using [`valgrind`](http://valgrind.org/). 
+
+Once you've built using `make`, run the tests/program in your console, but prefix the command with the `valgrind` options like this:
+
+~~~
+$ valgrind --leak-check=full --log-file="valgrind.log" -v ./Build/all_tests ../TestData/
+~~~
+
+This will make `valgrind` run a memory check on the tests and save its result to the file `valgrind.log`. This will include the amount of `alloc`'s and `free`'s, along with information on any memory which might have leaked. It also includes the total amount of heap memory allocated while the program was running.
+
+#### Clang scan-build
+
+If you have `clang` installed, you can use [`scan-build`](http://clang-analyzer.llvm.org/scan-build.html) to perform static analysis on the code. It generates a html report which you can view for any problems it might have found with the code.
+
+~~~
+$ scan-build -V make libafis
+~~~
+
+This will generate a html report for you after building libAFIS and open a web browser for you with the generated report open.

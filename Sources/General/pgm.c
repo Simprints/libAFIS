@@ -42,7 +42,7 @@ void pgm_write(const char* fname, UInt8Array2D* p) {
     fprintf(fp,"P5\n");
     fprintf(fp,"%d %d\n255\n", p->sizeX, p->sizeY);
 
-    for (int i=p->sizeY; i >=0; i--) {
+    for (int i=p->sizeY-1; i >=0; i--) {
         for (int j=0;j<p->sizeX;j++) {
             fputc(p->data[j][i], fp);
         }
