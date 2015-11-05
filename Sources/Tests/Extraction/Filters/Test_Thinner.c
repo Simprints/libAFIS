@@ -22,3 +22,7 @@ TEST(Thinner, Thinner_PassThrough)
   Thinner_Construct();
 }
 
+TEST(Thinner, Thinner_FalseEndings)
+{
+  BinaryMap* bm = BinaryMap_Construct(3,3);
+}
