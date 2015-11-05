@@ -57,4 +57,6 @@ void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const Re
 void BinaryMap_AndNot(const BinaryMap *me, const BinaryMap *source);
 void BinaryMap_AndNotToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at);
 
+void BinaryMapToImage(const BinaryMap *me, UInt8Array2D *image);
+
 #endif
