@@ -148,7 +148,7 @@ bool BinaryMap_IsEmpty(const BinaryMap *me)
     return true;
 }
 
-/*static void ShiftLeft(const BinaryMap *me, UInt32Array1D *vector, int32_t shift)
+static void ShiftLeft(const BinaryMap *me, UInt32Array1D *vector, int32_t shift)
 {
     if (shift > 0)
     {
@@ -166,7 +166,7 @@ static void ShiftRight(const BinaryMap *me, UInt32Array1D *vector, int32_t shift
             vector->data[i] = (vector->data[i] << shift) | (vector->data[i - 1] >> (me->wordSize - shift));
         vector->data[0] <<= shift;
     }
-}*/
+}
 
 static void LoadLine(const BinaryMap *me, UInt32Array1D *vector, const Point *at, int32_t length)
 {
@@ -195,7 +195,7 @@ static void SaveLine(const BinaryMap *me, UInt32Array1D *vector, const Point *at
     me->map.data[at->y][lastX >> me->wordShift] = (me->map.data[at->y][lastX >> me->wordShift] & ~endMask) | (vector->data[words - 1] & endMask);
 }
 
-void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
+void BinaryMap_And(const BinaryMap *me, const BinaryMap* source)
 {
     Size area = BinaryMap_GetSize(source);
     int vectorSize = (area.width >> me->wordShift) + 2;
@@ -206,7 +206,6 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
     for (int y=0;y<area.height;++y) {
         Point p = Point_Construct(0,y);
 
-        //TODO: This is probably a needless copy 
         LoadLine(me, &vector, &p, area.width);
         LoadLine(source, &srcVector, &p, area.width);
 
@@ -222,7 +221,43 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
-void BinaryMap_Or(BinaryMap *me, const BinaryMap* source) 
+void BinaryMap_AndArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
+{
+    int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+    int vectorSize = (area->width >> me->wordShift) + 2;
+    
+    UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+    UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+    
+    for (int y = 0; y < area->height; y++)
+    {
+        Point atOffset = Point_Construct(at->x, at->y + y);
+        Point areaOffset = Point_Construct(area->x, area->y + y);
+        
+        LoadLine(me, &vector, &atOffset, area->width);
+        LoadLine(source, &srcVector, &areaOffset, area->width);
+        
+        if (shift >= 0)
+        {
+            ShiftLeft(me, &srcVector, shift);
+        }
+        else
+        {
+            ShiftRight(me, &srcVector, -shift);
+        }
+        
+        for (int i = 0; i < vector.size; ++i)
+        {
+            vector.data[i] &= srcVector.data[i];
+        }
+        SaveLine(me, &vector, &atOffset, area->width);
+    }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
+}
+
+void BinaryMap_Or(const BinaryMap *me, const BinaryMap* source) 
 {
     Size area = BinaryMap_GetSize(source);
     int vectorSize = (area.width >> me->wordShift) + 2;
@@ -233,7 +268,6 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     for (int y=0;y<area.height;++y) {
         Point p = Point_Construct(0,y);
 
-        //TODO: This is probably a needless copy 
         LoadLine(me, &vector, &p, area.width);
         LoadLine(source, &srcVector, &p, area.width);
 
@@ -249,4 +283,136 @@ void BinaryMap_Or(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
+uint32_t BinaryMap_GetNeighborhoodFromPoint(const BinaryMap *me, const Point *at)
+{
+	return BinaryMap_GetNeighborhood(me, at->x, at->y);
+}
 
+uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
+{
+	if ((x & me->wordMask) >= 1 && (x & me->wordMask) <= 30)
+	{
+            int xWord = x >> me->wordShift;
+            int shift = (int)((uint32_t)(x - 1) & me->wordMask);
+            return ((BinaryMap_GetWord(me, xWord, y + 1) >> shift) & 7u)
+              | (((BinaryMap_GetWord(me, xWord, y) >> shift) & 1u) << 3)
+              | (((BinaryMap_GetWord(me, xWord, y) >> shift) & 4u) << 2)
+              | (((BinaryMap_GetWord(me, xWord, y - 1) >> shift) & 7u) << 5);
+	}
+	else
+	{
+            uint32_t mask = 0;
+            
+            if (BinaryMap_GetBit(me, x - 1, y + 1))
+                mask |= 1;
+            if (BinaryMap_GetBit(me, x, y + 1))
+                mask |= 2;
+            if (BinaryMap_GetBit(me, x + 1, y + 1))
+                mask |= 4;
+            if (BinaryMap_GetBit(me, x - 1, y))
+              mask |= 8;
+            if (BinaryMap_GetBit(me, x + 1, y))
+                mask |= 16;
+            if (BinaryMap_GetBit(me, x - 1, y - 1))
+                mask |= 32;
+            if (BinaryMap_GetBit(me, x, y - 1))
+                mask |= 64;
+            if (BinaryMap_GetBit(me, x + 1, y - 1))
+                mask |= 128;
+            return mask;
+	}
+}
+
+void BinaryMap_CopyTo(const BinaryMap *me, const BinaryMap *source)
+{
+    RectangleC defaultArea = RectangleC_ConstructFrom2Ints(me->width, me->height);
+    Point defaultPoint = Point_Construct(0, 0);
+    BinaryMap_CopyToArea(me, source, &defaultArea, &defaultPoint);
+}
+
+void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
+{
+    int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+    
+    UInt32Array1D vector = UInt32Array1D_Construct((area->width >> me->wordShift) + 2);
+    
+    for (int y = 0; y < area->height; y++)
+    {
+        Point areaOffset = Point_Construct(area->x, area->y + y);
+        Point atOffset = Point_Construct(at->x, at->y + y);
+        
+        LoadLine(source, &vector, &areaOffset, area->width);
+        if (shift >= 0)
+            ShiftLeft(me, &vector, shift);
+        else
+            ShiftRight(me, &vector, -shift);
+        
+        SaveLine(me, &vector, &atOffset, area->width);      
+    }
+    UInt32Array1D_Destruct(&vector);
+}
+
+void BinaryMap_AndNot(const BinaryMap *me, const BinaryMap* source)
+{
+    Size area = BinaryMap_GetSize(source);
+    int vectorSize = (area.width >> me->wordShift) + 2;
+    
+    UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+    UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+
+    for (int y = 0; y<area.height; ++y) 
+    {
+        Point p = Point_Construct(0, y);
+        
+        LoadLine(me, &vector, &p, area.width);
+        LoadLine(source, &srcVector, &p, area.width);
+        
+        // The AND NOT
+        for (int i = 0; i<vectorSize; ++i) 
+        {
+            vector.data[i] &= ~srcVector.data[i];
+        }
+        
+        SaveLine(me, &vector, &p, area.width);
+    }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
+}
+
+void BinaryMap_AndNotToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
+{
+	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
+	int vectorSize = (area->width >> me->wordShift) + 2;
+
+	UInt32Array1D vector = UInt32Array1D_Construct(vectorSize);
+	UInt32Array1D srcVector = UInt32Array1D_Construct(vectorSize);
+
+	for (int y = 0; y < area->height; y++)
+	{
+		Point atOffset = Point_Construct(at->x, at->y + y);
+		Point areaOffset = Point_Construct(area->x, area->y + y);
+		
+		LoadLine(me, &vector, &atOffset, area->width);
+		LoadLine(source, &srcVector, &areaOffset, area->width);
+
+		if (shift >= 0)
+		{
+			ShiftLeft(me, &srcVector, shift);
+		}
+		else
+		{
+			ShiftRight(me, &srcVector, -shift);
+		}
+
+		// The AND NOT
+		for (int i = 0; i < vector.size; ++i)
+		{
+			vector.data[i] &= ~srcVector.data[i];
+		}
+		SaveLine(me, &vector, &atOffset, area->width);
+	}
+
+	UInt32Array1D_Destruct(&vector);
+	UInt32Array1D_Destruct(&srcVector);
+}

@@ -9,10 +9,16 @@ static void RunAllTests(void)
 {
     printf("\nPoint tests\n");
     RUN_TEST_GROUP(Point);
+
     printf("\nArray tests\n");
     RUN_TEST_GROUP(Array);
+
     printf("\nBinaryMap tests\n");
     RUN_TEST_GROUP(BinaryMap);
+
+    printf("\nCalc tests\n");
+    RUN_TEST_GROUP(Calc);
+
     printf("\nPgm tests\n");
     RUN_TEST_GROUP(Pgm);    
 
@@ -27,6 +33,9 @@ static void RunAllTests(void)
 
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer); 
+
+    printf("\nThinner tests\n");
+    RUN_TEST_GROUP(Thinner);
 }
 
 int main(int argc, const char * argv[])
