@@ -6,7 +6,7 @@
 struct EdgeLocation {
   uint16_t reference;
   uint16_t neighbour;
-}
+};
 
 #endif
 
