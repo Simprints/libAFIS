@@ -26,8 +26,12 @@ TEST(BestMatchSkipper, BestMatchSkipper_Construct)
 TEST(BestMatchSkipper, BestMatchSkipper_Scores)
 {
   BestMatchSkipper b = BestMatchSkipper_Construct(3,2);
-
+  float skipScore;
+  
   BestMatchSkipper_AddScore(&b, 0,1.1);
   BestMatchSkipper_AddScore(&b, 1,1.2);
-  BestMatchSkipper_AddScore(&b, 2,1.2);
+  BestMatchSkipper_AddScore(&b, 2,1.4);
+
+  skipScore = BestMatchSkipper_GetSkipScore(&b, 2);
+  TEST_ASSERT_EQUAL_FLOAT_MESSAGE(1.4, skipScore, "Skip score");
 }

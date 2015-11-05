@@ -36,7 +36,16 @@ void BestMatchSkipper_AddScore(const BestMatchSkipper* me, int32_t person, float
 
 float BestMatchSkipper_GetSkipScore(const BestMatchSkipper* me, int32_t person)
 {
-  return 1.0f;
+  float score = 0;
+  for (int nth = me->collected.sizeX - 1; nth >= 0; --nth)
+  {
+    if (me->collected.data[nth][person] > 0)
+    {
+      score = me->collected.data[nth][person];
+      break;
+    }
+  }
+  return score;
 }
 
 PersonsSkipScore* GetSortedScores(const BestMatchSkipper* me, int* size)
