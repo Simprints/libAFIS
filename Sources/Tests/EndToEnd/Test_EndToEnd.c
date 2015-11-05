@@ -93,15 +93,49 @@ static void ImageToTemplate(const char *inputFileName, const char *expectedFileN
     perfdata perfdata;
 
     Template template = Template_Constuct();    
-    Template expectedTemplate;
-    expectedTemplate.minutiae = List_Construct();
-    
+    Template expectedTemplate = Template_Constuct();
+
     printf("%s %s\r\n", inputFileName, expectedFileName);
 
     Extract(&image, &template, &perfdata);
 
     ReadTemplate(expectedFileName, &expectedTemplate);
+    
+    printf("originalDpi    %d %d\n", expectedTemplate.originalDpi, template.originalDpi);
+    printf("originalWidth  %d %d\n", expectedTemplate.originalWidth, template.originalWidth);
+    printf("originalHeight %d %d\n", expectedTemplate.originalHeight, template.originalHeight);
+    printf("#minutiae      %d %d\n", expectedTemplate.minutiae.count, template.minutiae.count);
+    List matching = List_Construct();
+    List missingFromExpected = List_Construct();
+    List missingFromTemplate= List_Construct();
+    
+    for (ListElement *i = expectedTemplate.minutiae.head; i != NULL; i = i->next)
+    {
+        TemplateMinutia *expected = i->data;
+        bool found = false;
+        for (ListElement *j = template.minutiae.head; j != NULL; j = j->next)
+        {
+            TemplateMinutia *templateMin = i->data;
+            if ((templateMin->type == expected->type) && (templateMin->direction == expected->direction) && (templateMin->position.x == expected->position.x) && (templateMin->position.y == expected->position.y))
+            {
+                List_AddData(&matching, expected);
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            List_AddData(&missingFromTemplate, expected);
+        }
+    }
+    if (expectedTemplate.minutiae.count > 0)
+    {
+        printf("Matching = %d%%\n", matching.count * 100 / expectedTemplate.minutiae.count);
+        printf("Missing from template = %d%%\n", missingFromTemplate.count * 100 / expectedTemplate.minutiae.count);        
+        printf("Missing from expected = %d%%\n", missingFromExpected.count * 100 / expectedTemplate.minutiae.count);
+    }
 
+    
+    UnityFreeTemplate(&template);
     UnityFreeTemplate(&expectedTemplate);
 }
 

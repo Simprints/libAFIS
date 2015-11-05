@@ -16,6 +16,9 @@ List *Template_GetMinutiae(Template *template)
 Template Template_Constuct()
 {
     Template template;
+    template.originalDpi = 0;
+    template.originalWidth = 0;
+    template.originalHeight = 0;
     template.minutiae = List_Construct();
     return template;
 }
