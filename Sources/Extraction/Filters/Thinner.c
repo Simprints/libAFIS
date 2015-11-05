@@ -63,14 +63,12 @@ void Thinner_Thin(const Thinner *me, const BinaryMap *input, BinaryMap* skeleton
 {
     Size size = BinaryMap_GetSize(input);
     BinaryMap intermediate = BinaryMap_ConstructFromSize(&size);
-
     RectangleC copyArea = RectangleC_ConstructFrom4Ints(1, 1, input->width - 2, input->height - 2);
-    Point startPoint = Point_Construct(1, 1);
-    BinaryMap_CopyToArea(input, &intermediate, &copyArea, &startPoint);
-    
-    BinaryMap border = BinaryMap_ConstructFromSize(&size);
-    
+    Point startPoint = Point_Construct(1, 1);        
+    BinaryMap border = BinaryMap_ConstructFromSize(&size);   
     bool removedAnything = true;
+
+    BinaryMap_CopyToArea(input, &intermediate, &copyArea, &startPoint);
     for (int i = 0; i < me->maxIterations && removedAnything; i++)
     {
         removedAnything = false;
