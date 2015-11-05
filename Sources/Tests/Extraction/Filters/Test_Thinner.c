@@ -19,5 +19,6 @@ TEST_TEAR_DOWN(Thinner)
 
 TEST(Thinner, Thinner_PassThrough)
 {
+  Thinner_Construct();
 }
 
