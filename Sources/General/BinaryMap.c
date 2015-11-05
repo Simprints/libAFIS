@@ -397,7 +397,7 @@ void BinaryMap_AndNotToArea(const BinaryMap *me, BinaryMap *source, const Rectan
 		}
 		else
 		{
-			ShiftRight(me, &srcVector, shift);
+			ShiftRight(me, &srcVector, -shift);
 		}
 
 		// The AND NOT
