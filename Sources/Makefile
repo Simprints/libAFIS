@@ -48,7 +48,9 @@ LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
                Extraction/Model/*.c \
                Extraction/*.c \
-               Matcher/*.c
+               Matcher/*.c \
+               Matcher/Minutia/*.c
+
 LIBAFIS_SRCS_EXCLUDE = 
 
 UTILS_SRCS =  IO/*.c
