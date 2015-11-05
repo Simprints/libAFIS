@@ -19,8 +19,8 @@ static void RunAllTests(void)
     printf("\nCalc tests\n");
     RUN_TEST_GROUP(Calc);
 
-    printf("\nPgm tests\n");
-    RUN_TEST_GROUP(Pgm);    
+    //printf("\nPgm tests\n");
+    //RUN_TEST_GROUP(Pgm);    
 
     printf("\nVoting filter tests\n");
     RUN_TEST_GROUP(VotingFilter);
