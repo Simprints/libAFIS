@@ -5,20 +5,25 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "PointF.h"
 
 typedef struct Int32Array1D Int32Array1D;
 typedef struct UInt32Array1D UInt32Array1D;
 typedef struct FloatArray1D FloatArray1D;
 typedef struct BoolArray1D BoolArray1D;
 typedef struct PointArray1D PointArray1D;
+typedef struct BoolArray2D BoolArray2D;
 
 typedef struct UInt8Array2D UInt8Array2D;
+typedef struct UInt16Array2D UInt16Array2D;
 typedef struct UInt32Array2D UInt32Array2D;
 typedef struct FloatArray2D FloatArray2D;
 typedef struct PointArray2D PointArray2D;
 
 typedef struct Int16Array3D Int16Array3D;
 typedef struct FloatArray3D FloatArray3D;
+
+typedef struct PointFArray2D PointFArray2D;
 
 struct Int32Array1D
 {
@@ -44,9 +49,23 @@ struct BoolArray1D
     int32_t size;
 };
 
+struct BoolArray2D
+{
+    bool **data;
+    int32_t sizeX;
+    int32_t sizeY;
+};
+
 struct UInt8Array2D
 {
     uint8_t **data;
+    int32_t sizeX;
+    int32_t sizeY;
+};
+
+struct UInt16Array2D
+{
+    uint16_t **data;
     int32_t sizeX;
     int32_t sizeY;
 };
@@ -93,6 +112,13 @@ struct FloatArray3D
     int32_t sizeZ;
 };
 
+struct PointFArray2D
+{
+    PointF **data;
+    int32_t sizeX;
+    int32_t sizeY;
+};
+
 Int32Array1D Int32Array1D_Construct(int32_t x);
 void Int32Array1D_Destruct(Int32Array1D *me);
 int32_t* Int32Array1D_GetStorage(Int32Array1D *me);
@@ -105,9 +131,15 @@ FloatArray1D FloatArray1D_Construct(int32_t x);
 void FloatArray1D_Destruct(FloatArray1D *me);
 float* FloatArray1D_GetStorage(FloatArray1D *me);
 
+BoolArray2D BoolArray2D_Construct(int32_t x, int32_t y);
+void BoolArray2D_Destruct(BoolArray2D *me);
+
 UInt8Array2D UInt8Array2D_Construct(int32_t x, int32_t y);
 void UInt8Array2D_Destruct(UInt8Array2D *me);
 uint8_t* UInt8Array2D_GetStorage(UInt8Array2D *me);
+
+UInt16Array2D UInt16Array2D_Construct(int32_t x, int32_t y);
+void UInt16Array2D_Destruct(UInt16Array2D *me);
 
 UInt32Array2D UInt32Array2D_Construct(int32_t x, int32_t y);
 void UInt32Array2D_Destruct(UInt32Array2D *me);
@@ -134,5 +166,8 @@ int16_t* Int16Array3D_GetStorage(Int16Array3D *me);
 FloatArray3D FloatArray3D_Construct(int32_t x, int32_t y, int32_t z);
 void FloatArray3D_Destruct(FloatArray3D *me);
 float* FloatArray3D_GetStorage(FloatArray3D *me);
+
+PointFArray2D PointFArray2D_Construct(int32_t x, int32_t y);
+void PointFArray2D_Destruct(PointFArray2D *me);
 
 #endif

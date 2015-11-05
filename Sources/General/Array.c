@@ -100,6 +100,35 @@ bool* BoolArray1D_GetStorage(BoolArray1D *me)
     return &me->data[0];
 }
 
+BoolArray2D BoolArray2D_Construct(int32_t x, int32_t y)
+{
+    BoolArray2D array;
+
+    assert(x > 0 && y > 0);
+    array.sizeX = x;
+    array.sizeY = y;
+
+    array.data = calloc(x, sizeof(bool*));
+    assert(array.data);
+
+    array.data[0] = calloc(x * y, sizeof(bool));
+    assert(array.data[0]);
+
+    for (int i = 1; i < x; i++)
+        array.data[i] = array.data[0] + i * y;
+
+    return array;
+}
+
+void BoolArray2D_Destruct(BoolArray2D *me)
+{
+    free(me->data[0]);
+    free(me->data);
+    me->data = NULL;
+    me->sizeX = 0;
+    me->sizeY = 0;
+}
+
 UInt8Array2D UInt8Array2D_Construct(int32_t x, int32_t y)
 {
     UInt8Array2D array;
@@ -132,6 +161,35 @@ void UInt8Array2D_Destruct(UInt8Array2D *me)
 uint8_t* UInt8Array2D_GetStorage(UInt8Array2D *me)
 {
     return &me->data[0][0];
+}
+
+UInt16Array2D UInt16Array2D_Construct(int32_t x, int32_t y)
+{
+    UInt16Array2D array;
+
+    assert(x > 0 && y > 0);
+    array.sizeX = x;
+    array.sizeY = y;
+
+    array.data = calloc(x, sizeof(uint16_t*));
+    assert(array.data);
+
+    array.data[0] = calloc(x * y, sizeof(uint16_t));
+    assert(array.data[0]);
+
+    for (int i = 1; i < x; i++)
+        array.data[i] = array.data[0] + i * y;
+
+    return array;
+}
+
+void UInt16Array2D_Destruct(UInt16Array2D *me)
+{
+    free(me->data[0]);
+    free(me->data);
+    me->data = NULL;
+    me->sizeX = 0;
+    me->sizeY = 0;
 }
 
 UInt32Array2D UInt32Array2D_Construct(int32_t x, int32_t y)
@@ -363,4 +421,33 @@ void FloatArray3D_Destruct(FloatArray3D *me)
 float* FloatArray3D_GetStorage(FloatArray3D *me)
 {
     return &me->data[0][0][0];
+}
+
+PointFArray2D PointFArray2D_Construct(int32_t x, int32_t y)
+{
+    PointFArray2D array;
+
+    array.sizeX = x;
+    array.sizeY = y;
+
+    array.data = calloc(x, sizeof(PointF*));
+
+    for (int i = 0; i < x; i++)
+    {
+        array.data[i] = calloc(y, sizeof(PointF));
+    }
+
+    return array;
+}
+
+
+void PointFArray2D_Destruct(PointFArray2D *me)
+{
+    for(int i = 0; i < me->sizeX; i++){
+        free(me->data[i]);
+    }
+    free(me->data);
+    me->data = NULL;
+    me->sizeX = 0;
+    me->sizeY = 0;
 }
