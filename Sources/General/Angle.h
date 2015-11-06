@@ -2,6 +2,7 @@
 #define GENERAL_ANGLE_H
 
 #include <stdint.h>
+#include "General/Point.h"
 #include "General/PointF.h"
 
 float Angle_ByBucketCenter(int32_t bucket, int32_t resolution);
