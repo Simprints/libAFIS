@@ -45,7 +45,7 @@ UTEST_EXE = all_tests
 ## Source files to include and exclude
 ##
 LIBAFIS_SRCS = General/*.c \
-               Extraction/Filters/*.c Extraction/Model/*.c Extraction/*.c \
+               Extraction/Filters/*.c Extraction/Model/*.c Extraction/MinutiaeDetection/*.c Extraction/*.c \
                Templates/*.c \
                Matcher/*.c  Matcher/Minutia/*.c
 
