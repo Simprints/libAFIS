@@ -80,10 +80,4 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBi
     BinaryMap_Destruct(&mask);
     BinaryMap_Destruct(&thinned);
     if (perfdata) gettimeofday(&perfdata->end, 0);
-
-    BlockMap_Destruct(&blocks);
-    Int16Array3D_Destruct(&histogram);
-    Int16Array3D_Destruct(&smoothHistogram);
-    BinaryMap_Destruct(&mask);
-    Equalizer_Destruct(&eq);
 }
