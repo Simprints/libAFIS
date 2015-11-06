@@ -15,7 +15,7 @@ float Angle_ToFraction(float radians)
 
 float Angle_ByBucketCenter(int32_t bucket, int32_t resolution)
 {
-    return Angle_FromFraction((2 * bucket + 1) / (2 * resolution));
+    return Angle_FromFraction((float)(2 * bucket + 1) / (float)(2 * resolution));
 }
 
 PointF Angle_ToVector(float angle) 

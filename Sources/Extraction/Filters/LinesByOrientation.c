@@ -5,6 +5,7 @@
 #include "General/Calc.h"
 #include "General/Angle.h"
 #include "LinesByOrientation.h"
+#include <math.h> 
 
 //    int32_t angularResolution = 32;  /* Lower = 4, Upper = 128 */
 //    int32_t radius = 7;             /* Upper = 50 */
@@ -44,13 +45,19 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
 
         temp[numPoints++] = Point_Construct(0, 0); 
 
-        PointF direction = Angle_ToVector(Angle_ByBucketCenter(orientationIndex, 2 * angularResolution));
+        float angleByBucketCenter = Angle_ByBucketCenter(orientationIndex, 2 * angularResolution);
+
+        //printf("orientationIndex: %d, angleByBucketCenter: %f\n", orientationIndex, angleByBucketCenter);
+        PointF direction = Angle_ToVector(angleByBucketCenter);
+        //printf("orientationIndex: %d, direction: (%f, %f)\n", orientationIndex, direction.x, direction.y);
 
         for (float r = radius; r >= 0.5f; r /= stepFactor) 
         {
             PointF scaledPoint = PointF_Construct(r * direction.x, r * direction.y); 
 
-            Point p = Point_Construct((long) (scaledPoint.x + 0.5), (long) (scaledPoint.y + 0.5));
+            Point p = Point_Construct(lroundf(scaledPoint.x), lroundf(scaledPoint.y));
+
+            //printf("orientationIndex: %d, point: (%d, %d), radius: %f\n", orientationIndex, p.x, p.y, r);
 
             if(!contains_point(temp, p, numPoints)) 
             {
@@ -65,6 +72,8 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
                 temp[numPoints++] = Point_Construct(-p.x, -p.y); 
             }
         }
+
+        //printf("FINISHED\n");
         
         qsort(temp, numPoints, sizeof(Point), (int (*) (const void *, const void *)) point_compare);
 

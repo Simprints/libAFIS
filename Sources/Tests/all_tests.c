@@ -7,8 +7,8 @@
 
 static void RunAllTests(void)
 {
-    printf("\nOrientation tests\n");
-    RUN_TEST_GROUP(HillOrientation);
+    //printf("\nOrientation tests\n");
+    //RUN_TEST_GROUP(HillOrientation);
 
     
     printf("\nOriented smoother tests\n");

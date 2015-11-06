@@ -19,6 +19,55 @@ TEST_TEAR_DOWN(OrientedSmoother)
 {
 }
 
+TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
+    UInt8Array2D v = UInt8Array2D_Construct(7, 9); 
+
+    uint8_t imgData[][9] = {
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+      {127, 255, 255, 0, 0, 0 , 255, 255, 255},
+    };
+
+    for (int i = 0; i < v.sizeX; i++) {
+        for (int j = 0; j < v.sizeY; j++) {
+            v.data[i][j] = imgData[i][j]; 
+        }
+    }
+
+    Size imgSize = {.width = v.sizeX, .height = v.sizeY};
+    BlockMap blocks = BlockMap_Construct(&imgSize, 4);
+
+    Int16Array3D histogram = Int16Array3D_Construct(blocks.blockCount.width, blocks.blockCount.height, 256);
+    Int16Array3D smoothedHistogram = Int16Array3D_Construct(blocks.cornerCount.width, blocks.cornerCount.height, 256);
+
+    LocalHistogram_Analyze(&blocks, &v, &histogram); 
+    LocalHistogram_SmoothAroundCorners(&histogram, &smoothedHistogram); 
+
+    BinaryMap mask = BinaryMap_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+
+    SegmentationMask sm = SegmentationMask_Construct(); 
+    SegmentationMask_ComputeMask(&sm, &blocks, &histogram, &mask);   
+
+    FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
+    Equalizer eq = Equalizer_Construct();
+    Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
+    UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+
+    SmootherConfig orthogonalConfig = {.stepFactor = 1.11, .angularResolution = 11, .radius = 4}; 
+    FloatArray2D orthogonalImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY);
+    OrientedSmoother_Smooth(orthogonalConfig, &equalized, &orientations, &mask, &blocks, 0, &orthogonalImage);
+
+    for (int i = 0; i < orthogonalImage.sizeX; i++) {
+      for (int j = 0; j < orthogonalImage.sizeY; j++) {
+        printf("orthogonalImage[%d][%d] = %f\n", i, j, orthogonalImage.data[i][j]);
+      }
+    }
+}
+
 TEST(OrientedSmoother, VisualiseSmoother)
 {
   UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-1-0.png.pgm");
@@ -46,7 +95,7 @@ TEST(OrientedSmoother, VisualiseSmoother)
   //StepFactor = 1.59
   SmootherConfig ridgeConfig = {.stepFactor = 1.59, .angularResolution = 32, .radius = 7};
   FloatArray2D smoothedImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY); 
-  OrientedSmoother_Smooth(ridgeConfig, &equalized, &orientations, &mask, &blocks, 0, &smoothedImage); 
+  OrientedSmoother_Smooth(ridgeConfig, &equalized, &orientations, &mask, &blocks, 128, &smoothedImage); 
 
   //AngleOffset = 128
   //Stepfactor = 1.11
@@ -54,7 +103,7 @@ TEST(OrientedSmoother, VisualiseSmoother)
   //AngularResolution = 11
   SmootherConfig orthogonalConfig = {.stepFactor = 1.11, .angularResolution = 11, .radius = 4}; 
   FloatArray2D orthogonalImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY);
-  OrientedSmoother_Smooth(orthogonalConfig, &smoothedImage, &orientations, &mask, &blocks, 128, &orthogonalImage); 
+  OrientedSmoother_Smooth(orthogonalConfig, &smoothedImage, &orientations, &mask, &blocks, 0, &orthogonalImage); 
 
   //TODO: YOU COULD PROBABLY REMOVE THIS
   BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothedImage, &orthogonalImage, &mask, &blocks); 
