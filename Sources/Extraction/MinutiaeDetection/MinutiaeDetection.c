@@ -140,6 +140,14 @@ static void TraceRidges(List minutiae, BinaryMap * image)
 
       List_AddData(&minutia->ridges, CopyRidge(ridge));
     }
+    
+    // Free up the active neighburs list to stop leaking memory...
+    for(ListElement *element = activeNeighbors.head; element != NULL; element = element->next)
+    {
+        Point *point;
+        List_Remove(&activeNeighbors, element, (void **) &point);
+        free(point);
+    }
   }
 }
 
