@@ -10,7 +10,7 @@ static void RunAllTests(void)
     printf("\nOrientation tests\n");
     RUN_TEST_GROUP(HillOrientation);
 
-    /*printf("\nOriented smoother tests\n");
+    printf("\nOriented smoother tests\n");
     RUN_TEST_GROUP(OrientedSmoother); 
     
     printf("\nPoint tests\n");
@@ -50,7 +50,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(DotRemover);
 
     printf("\nBestMatchSkipper tests\n");
-    RUN_TEST_GROUP(BestMatchSkipper);*/
+    RUN_TEST_GROUP(BestMatchSkipper);
 }
 
 int main(int argc, const char * argv[])

@@ -55,7 +55,8 @@ TEST(HillOrientation, VisualiseOrientations)
   Int16Array3D_Destruct(&smoothedHistogram); 
   UInt8Array2D_Destruct(&v); 
   BinaryMap_Destruct(&mask); 
-
+  FloatArray2D_Destruct(&equalized); 
+  Equalizer_Destruct(&eq); 
 
   print_orientations(orientations);
   UInt8Array2D outV = UInt8Array2D_Construct(imgSize.width, imgSize.height);
@@ -110,6 +111,7 @@ TEST(HillOrientation, VisualiseOrientations)
   }
   pgm_write("../TestImages/Person1/output-Hamster-1-0.pgm", &outV);
 
+  UInt16Array2D_Destruct(&orientations); 
   UInt8Array2D_Destruct(&outV); 
 }
 
