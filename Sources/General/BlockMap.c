@@ -109,6 +109,22 @@ static RectangleGrid InitCornerAreas(const BlockMap *me)
     return RectangleGrid_Construct(&grid);
 }
 
+static RectangleGrid InitBlockAreas(const PointGrid *c)
+{
+  RectangleGrid rg;
+
+  rg.corners.allX =  Int32Array1D_Construct(c->allX.size);
+  rg.corners.allY =  Int32Array1D_Construct(c->allY.size);
+  for(int i = 0; i < c->allX.size; i++){
+    rg.corners.allX.data[i] = c->allX.data[i];
+  }
+  for(int i = 0; i < c->allY.size; i++){
+    rg.corners.allY.data[i] = c->allY.data[i];
+  }
+
+  return rg;
+}
+
 BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize)
 {
     BlockMap bm;
@@ -120,7 +136,7 @@ BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize)
     bm.allBlocks = RectangleC_ConstructFromSize(&bm.blockCount);
     bm.allCorners = RectangleC_ConstructFromSize(&bm.cornerCount);
     bm.corners = InitCorners(&bm);
-    bm.blockAreas = RectangleGrid_Construct(&bm.corners);
+    bm.blockAreas = InitBlockAreas(&bm.corners);
     bm.blockCenters = InitBlockCenters(&bm);
     bm.cornerAreas = InitCornerAreas(&bm);
     bm.maxBlockSize = maxBlockSize;
@@ -130,7 +146,7 @@ BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize)
 void BlockMap_Destruct(BlockMap *me)
 {
     PointGrid_Destruct(&me->corners);
-    //PointGrid_Destruct(&me->blockAreas.corners);
+    PointGrid_Destruct(&me->blockAreas.corners);
     PointGrid_Destruct(&me->blockCenters);
     PointGrid_Destruct(&me->cornerAreas.corners);
 }

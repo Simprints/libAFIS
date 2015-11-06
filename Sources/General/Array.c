@@ -234,10 +234,10 @@ FloatArray2D FloatArray2D_Construct(int32_t x, int32_t y)
     array.sizeX = x;
     array.sizeY = y;
 
-    array.data = calloc(x, sizeof(uint32_t*));
+    array.data = calloc(x, sizeof(float*));
     assert(array.data);
 
-    array.data[0] = calloc(x * y, sizeof(uint32_t));
+    array.data[0] = calloc(x * y, sizeof(float));
     assert(array.data[0]);
 
     for (int i = 1; i < x; i++)
@@ -292,7 +292,7 @@ PointArray2D PointArray2D_Construct(int32_t x)
     assert(x > 0 );
     array.size = x;
 
-    array.data = calloc(x, sizeof(uint32_t*));
+    array.data = calloc(x, sizeof(PointArray1D*));
     assert(array.data);
 
     return array;
@@ -301,9 +301,9 @@ PointArray2D PointArray2D_Construct(int32_t x)
 PointArray1D* PointArray2D_ConstructRow(PointArray2D *me, int rowId, int32_t x)
 {
     PointArray1D *array = PointArray1D_Construct(x);
-    
+
     me->data[rowId] = array;
-    
+
     return array;
 }
 
