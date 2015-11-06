@@ -1,5 +1,6 @@
 ## libAFIS -- Rewriting SourceAFIS in C
 
+[![Slack Status](https://simprints-slackin.herokuapp.com/badge.svg)](https://simprints-slackin.herokuapp.com/)
 [![Build Status](https://drone.io/github.com/SimPrints/libAFIS/status.png)](https://drone.io/github.com/SimPrints/libAFIS/latest)
 
 ### Directory structure
@@ -30,9 +31,10 @@ Object files are created in the `Build/` directory. The library sources are comp
 - You will have to add additional include directories to `\Sources` & `\Sources\Utils\Unity`
 - You may have to comment out the contents of file: `\Sources\Utils\Misc\binarise.c`
 
-### Unit tests
+### Tests
+#### Unit Tests
 
-#### Building
+##### Building
 
 ~~~
 $ cd Sources
@@ -41,7 +43,7 @@ $ make utest
 
 The result is an executable called `all_tests` in the `Build/` directory.
 
-#### Running
+##### Running
 
 ~~~
 $ Sources/Build/all_tests ../TestData
@@ -51,7 +53,7 @@ $ Sources/Build/all_tests ../TestData
 
 #### Valgrind
 
-You can check for memory leaks using [`valgrind`](http://valgrind.org/). 
+You can check for memory leaks using [`valgrind`](http://valgrind.org/).
 
 Once you've built using `make`, run the tests/program in your console, but prefix the command with the `valgrind` options like this:
 
@@ -70,3 +72,7 @@ $ scan-build -V make libafis
 ~~~
 
 This will generate a html report for you after building libAFIS and open a web browser for you with the generated report open.
+
+#### Template Tests
+
+There is a 'MinutiaeTestApp' inside TestData to test the expoted templates with SourceAFIS

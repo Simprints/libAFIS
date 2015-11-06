@@ -2,6 +2,7 @@
 #include "General/PointF.h"
 #include "General/Size.h"
 #include "General/Calc.h"
+#include "General/SizeF.h"
 
 int Calc_DivRoundUp(int input, int divider)
 {
@@ -17,6 +18,15 @@ Point Calc_Add2Points(const Point *p1, const Point *p2)
 {
     Size s = Size_ConstructFromPoint(p2);
     return Point_AddSize(p1, &s);
+}
+
+PointF Calc_Add2PointsF(const PointF *p1, const PointF *p2) {
+  SizeF s = SizeF_ConstructFromPointF(p2);
+  return PointF_AddSizeF(p1, &s);
+}
+
+PointF Calc_Scalar_Multiply(float scalar, PointF p) {
+  return (PointF) { .x = scalar * p.x, .y = scalar * p.y };
 }
 
 float Calc_InterpolateFrom3Floats(float value0, float value1, float fraction)
@@ -41,3 +51,4 @@ int Calc_CountBits(uint32_t value)
 	}
 	return count;
 }
+
