@@ -1,7 +1,3 @@
-//
-// Created by bob.arnott on 11/5/2015.
-//
-
 #include "General/Calc.h"
 #include "Templates/TemplateIO.h"
 
@@ -113,7 +109,7 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
         TemplateMinutia *minutia = element->data;
 
         // 2B minutia position X in pixels
-        //      2b (upper) minutia type (01 ending, 10 bifurcation, 00 other (considered ending))ore
+        //      2b (upper) minutia type (01 ending, 10 bifurcation, 00 other (considered ending))
         int16_t x = minutia->position.x;
         assert(x <= 0x3fff);
 
