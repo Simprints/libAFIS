@@ -3,5 +3,5 @@
 
 TEST_GROUP_RUNNER(LinesByOrientation)
 {
-    RUN_TEST_CASE(LinesByOrientation, LinesByOrientation_ConstructLines);
+    RUN_TEST_CASE(LinesByOrientation, LinesByOrientation_ConstructLines_lines_are_correct);
 }

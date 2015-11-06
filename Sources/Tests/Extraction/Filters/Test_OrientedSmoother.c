@@ -8,6 +8,7 @@
 #include "unity.h"
 #include "unity_fixture.h"
 #include <stdio.h>
+#include <math.h>
 
 TEST_GROUP(OrientedSmoother);
 
@@ -61,10 +62,23 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
     FloatArray2D orthogonalImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY);
     OrientedSmoother_Smooth(orthogonalConfig, &equalized, &orientations, &mask, &blocks, 0, &orthogonalImage);
 
-    for (int i = 0; i < orthogonalImage.sizeX; i++) {
-      for (int j = 0; j < orthogonalImage.sizeY; j++) {
-        printf("orthogonalImage[%d][%d] = %f\n", i, j, orthogonalImage.data[i][j]);
-      }
+    float expected[][9] = {
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+      {0.148003, 0.148003, 0.148003, 0, 0, 0, 0, 0, 0},
+    };
+
+    const float EPSILON = 1e-6F; 
+    char assertMessage[100];
+    for (int i = 0; i < equalized.sizeX; i++) {
+        for (int j = 0; j < equalized.sizeY; j++) {
+             sprintf(assertMessage, "[%d][%d] expected:, %f, actual: %f", i, j, expected[i][j], orthogonalImage.data[i][j]);
+             TEST_ASSERT_MESSAGE(fabs(expected[i][j] - orthogonalImage.data[i][j]) < EPSILON, assertMessage);
+        }
     }
 }
 
