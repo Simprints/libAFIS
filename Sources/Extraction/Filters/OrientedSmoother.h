@@ -10,7 +10,8 @@
 typedef struct SmootherConfig SmootherConfig; 
 
 struct SmootherConfig {
-    int radius, angularResolution; 
+    int radius;
+    int angularResolution; 
     float stepFactor; 
 };
 
