@@ -40,13 +40,13 @@ static MinutiaType GetMinutiaType(int numberOfNeighbors) {
   }
 }
 
-static List GetPointsWithXNeighbors(int X, BinaryMap * image, List minutiae)
+static List GetPointsWithNNeighbors(int n, BinaryMap * image, List minutiae)
 {
   for ( int i=0; i < image->width; ++i ) {
     for ( int j=0; j < image->height; ++j ) {
-      if ( CountNeighbors(i, j, image) == X && BinaryMap_GetBit(image, i, j) == 1) {
+      if ( CountNeighbors(i, j, image) == n && BinaryMap_GetBit(image, i, j) == 1) {
         Minutia * minutia = calloc(1, sizeof(*minutia));
-        minutia->minutiaType = GetMinutiaType(X);
+        minutia->minutiaType = GetMinutiaType(n);
         minutia->position = (Point) { .x = i, .y = j };
         List_AddData(&minutiae, minutia);
         minutiaeLocations.data[i][j] = minutia->minutiaType;
@@ -155,8 +155,8 @@ List FindMinutiae(BinaryMap* image, List minutiae)
 {
   minutiaeLocations = UInt8Array2D_Construct(image->width, image->height);
 
-  minutiae = GetPointsWithXNeighbors(1, image, minutiae);
-  minutiae = GetPointsWithXNeighbors(3, image, minutiae);
+  minutiae = GetPointsWithNNeighbors(1, image, minutiae);
+  minutiae = GetPointsWithNNeighbors(3, image, minutiae);
 
   TraceRidges(minutiae, image);
 
