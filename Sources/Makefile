@@ -47,6 +47,7 @@ UTEST_EXE = all_tests
 LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
                Extraction/Model/*.c \
+	       Extraction/MinutiaeDetection/*.c \
                Extraction/*.c
 LIBAFIS_SRCS_EXCLUDE = 
 
