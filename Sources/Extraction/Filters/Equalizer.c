@@ -109,10 +109,7 @@ static void PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Arra
 
             if(BinaryMap_GetBit(blockMask, block.x, block.y))
             {
-                Point firstPoint = PointGrid_GetPointFromCoordinates(&blocks->blockAreas.corners, block.x, block.y);
-                Point secondPoint = PointGrid_GetPointFromCoordinates(&blocks->blockAreas.corners, block.x + 1, block.y + 1);
-
-                RectangleC area = RectangleC_ConstructFrom2Points(&firstPoint, &secondPoint);
+                RectangleC area = RectangleGrid_GetRectangleCFromPoint(&blocks->blockAreas, &block);
 
                 for(int x = RectangleC_GetLeft(&area); x < RectangleC_GetRight(&area); ++x){
                     for(int y = RectangleC_GetBottom(&area); y < RectangleC_GetTop(&area); ++y){
@@ -120,8 +117,8 @@ static void PerformEqualization(const Equalizer *me, BlockMap *blocks, UInt8Arra
                         uint8_t pixel = image->data[x][y];
 
                         float bottomLeft = equalization->data[block.x][block.y][pixel];
-                        float bottomRight = equalization->data[block.x][block.y + 1][pixel];
-                        float topLeft = equalization->data[block.x + 1][block.y][pixel];
+                        float bottomRight = equalization->data[block.x + 1][block.y][pixel];
+                        float topLeft = equalization->data[block.x][block.y + 1][pixel];
                         float topRight = equalization->data[block.x + 1][block.y + 1][pixel];
 
                         Point p = { .x = x, .y = y };

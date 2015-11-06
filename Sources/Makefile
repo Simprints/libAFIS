@@ -20,7 +20,7 @@ UNITY_CFLAGS = -Wall -Wextra -Werror -Wpointer-arith -Wcast-align -Wwrite-string
 ##
 ## Linker flags
 ##
-LFLAGS = -g
+LFLAGS = -g -lm
 
 ##
 ## Root directories
@@ -45,7 +45,7 @@ UTEST_EXE = all_tests
 ## Source files to include and exclude
 ##
 LIBAFIS_SRCS = General/*.c \
-               Extraction/Filters/*.c Extraction/Model/*.c Extraction/*.c \
+               Extraction/Filters/*.c Extraction/Model/*.c Extraction/MinutiaeDetection/*.c Extraction/*.c \
                Templates/*.c \
                Matcher/*.c  Matcher/Minutia/*.c
 
@@ -98,7 +98,7 @@ $(BUILD_DIR)/%.o: %.c
 	$(CC) -c $(COMMON_CFLAGS) $(LIBAFIS_CFLAGS) $(LIBAFIS_INCS) $< -o $@
 
 $(BUILD_DIR)/Tests/extract: $(BUILD_DIR)/Tests/extract.o $(LIBAFIS_OBJS)
-	$(CC) $(LFLAGS) $^ -o $@
+	$(CC) $^ $(LFLAGS) -o $@
 
 $(UTILS_OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(MKDIR) $(@D)
@@ -113,7 +113,7 @@ $(UNITY_OBJS):  $(BUILD_DIR)/%.o: %.c
 	$(CC) -c $(COMMON_CFLAGS) $(UNITY_CFLAGS) $(UNITY_INCS) $< -o $@
 
 $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(LIBAFIS_OBJS)
-	$(CC) $(LFLAGS) $^ -o $(BUILD_DIR)/$@
+	$(CC) $^ $(LFLAGS) -o $(BUILD_DIR)/$@
 
 runUnitTest: $(UTEST_EXE)
 	$(BUILD_DIR)/all_tests ../TestData/

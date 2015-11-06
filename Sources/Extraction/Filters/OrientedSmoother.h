@@ -7,15 +7,21 @@
 #include "General/BinaryMap.h"
 #include "LinesByOrientation.h"
 
-typedef struct OrientedSmoother OrientedSmoother;
+typedef struct SmootherConfig SmootherConfig; 
 
-struct OrientedSmoother
-{
-    uint8_t angleOffset;
-    LinesByOrientation lines;
+struct SmootherConfig {
+    int radius;
+    int angularResolution; 
+    float stepFactor; 
 };
 
-OrientedSmoother OrientedSmoother_Construct(void);
-FloatArray2D OrientedSmoother_Smooth(const OrientedSmoother *me, const FloatArray2D *input, const UInt8Array2D *orientation, const BinaryMap *mask, const BlockMap *blocks);
+void OrientedSmoother_Smooth
+    (const SmootherConfig config, 
+     const FloatArray2D *input,
+     const UInt16Array2D *orientation,
+     const BinaryMap *mask,
+     const BlockMap *blocks,
+     const uint8_t angleOffset, 
+     FloatArray2D *output);
 
 #endif

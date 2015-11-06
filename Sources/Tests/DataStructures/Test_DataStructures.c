@@ -31,6 +31,7 @@ TEST(DataStructures, BlockMap_SanityCheck)
     {
         BlockMapIO_Printf(&blockMap);
     }
+    BlockMap_Destruct(&blockMap);
 }
 
 TEST(DataStructures, Image_SanityCheck)
@@ -40,6 +41,7 @@ TEST(DataStructures, Image_SanityCheck)
     {
         ImageIO_Printf(&image);
     }
+    UInt8Array2D_Destruct(&image);
 }
 
 TEST(DataStructures, Histogram_SanityCheck)
@@ -49,6 +51,7 @@ TEST(DataStructures, Histogram_SanityCheck)
     {
         HistogramIO_Printf(&histogram);
     }
+    Int16Array3D_Destruct(&histogram);
 }
 
 TEST(DataStructures, TwoDFloatArray_SanityCheck)
@@ -58,24 +61,26 @@ TEST(DataStructures, TwoDFloatArray_SanityCheck)
     {
         ArrayIO_FloatArray2D_Printf(&array);
     }
+    FloatArray2D_Destruct(&array);
 }
 
-TEST(DataStructures, TwoDByteArray_SanityCheck) 
+TEST(DataStructures, TwoDByteArray_SanityCheck)
 {
     UInt8Array2D array = ArrayIO_UInt8Array2D_ConstructFromFile("DataStructures/101_1.tif.4.ClippedContrast.result.dat");
     if (OutputDebug)
     {
         ArrayIO_UInt8Array2D_Printf(&array);
     }
+    UInt8Array2D_Destruct(&array);
 }
 
-TEST(DataStructures, Int_SanityCheck) 
+TEST(DataStructures, Int_SanityCheck)
 {
     int32_t  value = Int32_ConstructFromFile("DataStructures/101_1.tif.5.AbsoluteContrast.Limit.dat");
     assert(value == 17);
 }
 
-TEST(DataStructures, Float_SanityCheck) 
+TEST(DataStructures, Float_SanityCheck)
 {
     float value = Float_ConstructFromFile("DataStructures/101_1.tif.15.LinesByOrientation.StepFactor.dat");
     float valueToLookFor = 1.59f;
@@ -89,4 +94,5 @@ TEST(DataStructures, Two2PointArray_SanityCheck)
     {
         ArrayIO_PointArray2D_Printf(&array);
     }
+    PointArray2D_Destruct(&array);
 }

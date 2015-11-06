@@ -16,3 +16,6 @@ Int16Array3D LocalHistogram_Analyze(const BlockMap *blocks, const UInt8Array2D *
 ~~~
 
 Therefore, a unit test for this function uses the following three data files: `n001_d1_in.dat`, `n001_d2_in.dat` and `n001_d1_exp.dat` representing a `BlockMap`, a `UInt8Array2D` and a `Int16Array3D` object respectively.
+
+### Manually extracted minutiae
+This folder contains minutiae that have been extracted by eye in order to be able to test against what is hopefully a full perfect (no false) set of minutiae.  There is a xlst template file that you can enter minutiae details into that will generate the hex for the ISO template.  The template file contains a number of minutiae as examples which should be removed when creating new templates.

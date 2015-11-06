@@ -51,4 +51,10 @@ void Extract(UInt8Array2D *image, Template *template, perfdata *perfdata)
     if (perfdata) gettimeofday(&perfdata->start_template, 0);
     
     if (perfdata) gettimeofday(&perfdata->end, 0);
+
+    BlockMap_Destruct(&blocks);
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothHistogram);
+    BinaryMap_Destruct(&mask);
+    Equalizer_Destruct(&eq);
 }
