@@ -36,8 +36,6 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
     // Open a binary file to output the template to...
     FILE *output = fopen(outputFileName, "wb");
 
-    printf("\nWriting header...");
-
     // 4B magic "FMR\0"
     char magic[] = {'F', 'M', 'R', '\0'};
     int count = fwrite(magic, sizeof(magic), 1, output);
@@ -105,8 +103,6 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
     count = fwrite(&minutiaCount, sizeof(int8_t), 1, output);
     assert(count == 1);
 
-    printf("\nWriting %d minutiae...", minutiaCount);
-
     for (ListElement *element = template->minutiae.head; element != NULL; element = element->next)
     {
         // Get the minutia from the list element...
@@ -115,8 +111,7 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
         // 2B minutia position X in pixels
         //      2b (upper) minutia type (01 ending, 10 bifurcation, 00 other (considered ending))ore
         int x = minutia->position.x;
-        printf("minutia->position.x - %d", minutia->position.x);
-        assert(x <= 0x3fff); // ::TODO:: Query this...?
+        assert(x <= 0x3fff);
 
         int type;
         switch (minutia->type)
