@@ -49,4 +49,4 @@ $ Sources/Build/all_tests ../TestData
 ~~~
 
 #### Template Tests
-There is a 'MinutiaeTestApp' inside TestData to test the expoted templates with SourceAFIS
+There is a 'MinutiaeTestApp' inside TestData to test the exported templates with SourceAFIS
