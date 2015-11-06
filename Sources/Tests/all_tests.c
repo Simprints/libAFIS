@@ -39,6 +39,11 @@ static void RunAllTests(void)
 
     printf("\nMinutiae detection tests\n");
     RUN_TEST_GROUP(MinutiaeDetection);
+    printf("\nDot remover tests\n");
+    RUN_TEST_GROUP(DotRemover);
+
+    printf("\nBestMatchSkipper tests\n");
+    RUN_TEST_GROUP(BestMatchSkipper);
 }
 
 int main(int argc, const char * argv[])
