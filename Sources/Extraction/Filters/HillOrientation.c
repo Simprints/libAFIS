@@ -24,7 +24,7 @@ static const Point neighbors[NUM_VECTORS] = {
     { -5, 0 }, { -5, 5 }, { 0, 5 }, { 5, 5 }
 };
 
-static bool IsInsideImageAndMask(int imageHeight, int imageWidth, int x, int y)
+static bool IsInsideImage(int imageHeight, int imageWidth, int x, int y)
 {
     bool ok = x >= 0
         && y >= 0
@@ -34,7 +34,7 @@ static bool IsInsideImageAndMask(int imageHeight, int imageWidth, int x, int y)
     return ok;
 }
 
-PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int imageHeight, int imageWidth, BoolArray2D pixelMask)
+static PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int imageHeight, int imageWidth, BoolArray2D pixelMask)
 {
     Size imageDimensions = { .height = imageHeight, .width = imageWidth };
     PointFArray2D directions = PointFArray2D_Construct(imageDimensions.width, imageDimensions.height);
@@ -52,8 +52,8 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
                 Point antiPoint = (Point) { .x = -neighbors[i].x, .y = -neighbors[i].y };
                 Point antiNeighbor = Calc_Add2Points(&antiPoint, &(Point) { .x = x, .y = y });
 
-                if (!IsInsideImageAndMask(imageHeight, imageWidth, neighbor.x, neighbor.y) 
-                 || !IsInsideImageAndMask(imageHeight, imageWidth, antiNeighbor.x, antiNeighbor.y))
+                if (!IsInsideImage(imageHeight, imageWidth, neighbor.x, neighbor.y) 
+                 || !IsInsideImage(imageHeight, imageWidth, antiNeighbor.x, antiNeighbor.y))
                     continue;
 
                 float antiNeighborValue = input.data[antiNeighbor.x][antiNeighbor.y];
@@ -75,7 +75,7 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
     return directions;
 }
 
-PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations, const BinaryMap * blockMask, const BlockMap * blocks)
+static PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations, const BinaryMap * blockMask, const BlockMap * blocks)
 {
     const PointFArray2D blockOrientations = PointFArray2D_Construct(blocks->blockCount.width, blocks->blockCount.height);
     const int blockHeight = blocks->maxBlockSize; 
@@ -131,7 +131,7 @@ static int quantize(double angle, int resolution) {
     return result; 
 }
 
-void HillOrientation_DirectionsToAngles(const PointFArray2D directions, const BinaryMap *mask, UInt16Array2D *angles)
+static void HillOrientation_DirectionsToAngles(const PointFArray2D directions, const BinaryMap *mask, UInt16Array2D *angles)
 {
     for(int x = 0; x < directions.sizeX; x++)
     {
@@ -140,7 +140,7 @@ void HillOrientation_DirectionsToAngles(const PointFArray2D directions, const Bi
             if(!BinaryMap_GetBit(mask, x, y))
                 continue;
             double angle = Angle_AtanF(directions.data[x][y]);
-            //multiply by 2 to collapse opposite angles onto each other
+
             angles->data[x][y] = quantize(angle, 256); 
         }
     }
