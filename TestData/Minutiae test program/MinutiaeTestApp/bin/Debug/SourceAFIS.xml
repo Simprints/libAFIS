@@ -1,0 +1,556 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SourceAFIS</name>
+    </assembly>
+    <members>
+        <member name="T:SourceAFIS.Simple.AfisEngine">
+            <summary>
+            Methods and settings of SourceAFIS fingerprint matching engine.
+            </summary>
+            <remarks>
+            <para>
+            This class is an entry point to core SourceAFIS functionality.
+            After setting relevant properties (notably <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>), application
+            can call one of the three main methods (<see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>, <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/>, <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/>)
+            to perform template extraction and fingerprint matching.
+            </para>
+            <para>
+            <see cref="T:SourceAFIS.Simple.AfisEngine"/> objects are thread-safe, i.e. synchronized. <see cref="T:SourceAFIS.Simple.AfisEngine"/> is a lightweight object,
+            but application is encouraged to keep only one global AfisEngine instance anyway. Every
+            <see cref="T:SourceAFIS.Simple.AfisEngine"/> method utilizes multiple cores automatically. Applications
+            that wish to execute several methods of <see cref="T:SourceAFIS.Simple.AfisEngine"/> in parallel should
+            create multiple <see cref="T:SourceAFIS.Simple.AfisEngine"/> objects, perhaps one per thread.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:SourceAFIS.Simple.AfisEngine.#ctor">
+            <summary>
+            Create new SourceAFIS engine.
+            </summary>
+        </member>
+        <member name="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)">
+            <summary>
+            Extract fingerprint template(s) to be used during matching.
+            </summary>
+            <param name="person">Person object to use for template extraction.</param>
+            <remarks>
+            <para>
+            <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/> method takes <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> from every <see cref="T:SourceAFIS.Simple.Fingerprint"/>
+            in <paramref name="person"/> and constructs fingerprint template that it stores in
+            <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> property of the respective <see cref="T:SourceAFIS.Simple.Fingerprint"/>. This step must
+            be performed before the <see cref="T:SourceAFIS.Simple.Person"/> is used in <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> or <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/> method,
+            because matching is done on fingerprint templates, not on fingerprint images.
+            </para>
+            <para>
+            Fingerprint image can be discarded after extraction, but it is recommended
+            to keep it in case the <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> needs to be regenerated due to SourceAFIS
+            upgrade or other reason.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.Dpi"/>
+        </member>
+        <member name="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)">
+            <summary>
+            Compute similarity score between two <see cref="T:SourceAFIS.Simple.Person"/>s.
+            </summary>
+            <param name="probe">First of the two persons to compare.</param>
+            <param name="candidate">Second of the two persons to compare.</param>
+            <returns>Similarity score indicating similarity between the two persons or 0 if there is no match.</returns>
+            <remarks>
+            <para>
+            <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> method compares two <see cref="T:SourceAFIS.Simple.Person"/>s, <see cref="T:SourceAFIS.Simple.Fingerprint"/> by <see cref="T:SourceAFIS.Simple.Fingerprint"/>, and returns
+            floating-point similarity score that indicates degree of similarity between
+            the two <see cref="T:SourceAFIS.Simple.Person"/>s. If this score falls below <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>, <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> method returns zero.
+            </para>
+            <para>
+            <see cref="T:SourceAFIS.Simple.Person"/>s passed to this method must have valid <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            for every <see cref="T:SourceAFIS.Simple.Fingerprint"/>, i.e. they must have passed through <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/> method.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/>
+        </member>
+        <member name="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})">
+            <summary>
+            Compares one <see cref="T:SourceAFIS.Simple.Person"/> against a set of other <see cref="T:SourceAFIS.Simple.Person"/>s and returns best matches.
+            </summary>
+            <param name="probe">Person to look up in the collection.</param>
+            <param name="candidates">Collection of persons that will be searched.</param>
+            <returns>All matching <see cref="T:SourceAFIS.Simple.Person"/> objects in the collection or an empty collection if
+            there is no match. Results are sorted by score in descending order. If you need only one best match,
+            call <see cref="M:System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0})"/> method on the returned collection.</returns>
+            <remarks>
+            <para>
+            Compares probe <see cref="T:SourceAFIS.Simple.Person"/> to all candidate <see cref="T:SourceAFIS.Simple.Person"/>s and returns the most similar
+            candidates. Calling <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/> is conceptually identical to calling <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> in a loop
+            except that <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/> is significantly faster than loop of <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> calls.
+            If there is no candidate with score at or above <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>, <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/> returns
+            empty collection.
+            </para>
+            <para>
+            Most applications need only the best match, which can be obtained by calling
+            <see cref="M:System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0})"/> method on the returned collection.
+            Matching score for every returned <see cref="T:SourceAFIS.Simple.Person"/> can be obtained by calling
+            <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> on probe <see cref="T:SourceAFIS.Simple.Person"/> and the matching <see cref="T:SourceAFIS.Simple.Person"/>.
+            </para>
+            <para>
+            <see cref="T:SourceAFIS.Simple.Person"/>s passed to this method must have valid <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            for every <see cref="T:SourceAFIS.Simple.Fingerprint"/>, i.e. they must have passed through <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/> method.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.AfisEngine.Dpi">
+            <summary>
+            Get/set DPI for processed images.
+            </summary>
+            <value>
+            DPI of images submitted for template extraction. Default is 500.
+            </value>
+            <remarks>
+            <para>
+            DPI of common optical fingerprint readers is 500. For other types of readers
+            as well as for high-resolution readers, you might need to change this property
+            to reflect capabilities of your reader. This value is used only during template
+            extraction (<see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>). Matching is not affected, because extraction process rescales all
+            templates to 500dpi internally.
+            </para>
+            <para>
+            Setting DPI causes extractor to adjust its parameters to the DPI. It therefore
+            helps with accuracy. Correct DPI also allows matching of fingerprints coming from
+            different readers. When matching children's fingerprints, it is sometimes useful
+            to fool the extractor with lower DPI setting to deal with the tiny ridges on
+            fingers of children.
+            </para>
+            </remarks>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.AfisEngine.Threshold">
+            <summary>
+            Get/set similarity score threshold.
+            </summary>
+            <value>
+            Similarity score threshold for making match/non-match decisions.
+            Default value is rather arbitrarily set to 25.
+            </value>
+            <remarks>
+            <para>
+            Matching algorithm produces similarity score which is a measure of similarity
+            between two fingerprints. Applications however need clear match/non-match decisions.
+            <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/> is used to turn similarity score into match/non-match decision.
+            Similarity score at or above <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/> is considered match. Lower score is considered
+            non-match. This property is used by <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> and <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/> methods to make match decisions.
+            </para>
+            <para>
+            Appropriate <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/> is application-specific. Application developer must adjust this
+            property to reflect differences in fingerprint readers, population, and application requirements.
+            Start with default threshold. If there are too many false accepts (SourceAFIS
+            reports match for fingerprints from two different people), increase the <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>.
+            If there are too many false rejects (SourceAFIS reports non-match for two fingerprints
+            of the same person), decrease the <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>. Every application eventually arrives
+            at some reasonable balance between FAR (false accept ratio) and FRR (false reject ratio).
+            </para>
+            </remarks>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.AfisEngine.MinMatches">
+            <summary>
+            Get/set minimum number of fingerprints that must match in order for a whole person to match.
+            </summary>
+            <value>
+            Number of fingerprints that must match during multi-finger matching.
+            Default value is 1 (person matches if any of its fingerprints matches).
+            </value>
+            <remarks>
+            <para>
+            When there are multiple <see cref="T:SourceAFIS.Simple.Fingerprint"/>s per <see cref="T:SourceAFIS.Simple.Person"/>, SourceAFIS compares
+            every probe <see cref="T:SourceAFIS.Simple.Fingerprint"/> to every candidate <see cref="T:SourceAFIS.Simple.Fingerprint"/> and takes the
+            best match, the one with highest similarity score. This behavior
+            improves FRR (false reject rate), because low similarity scores caused
+            by damaged fingerprints are ignored. This happens when <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> is 1 (default).
+            </para>
+            <para>
+            When <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> is 2 or higher, SourceAFIS compares every probe <see cref="T:SourceAFIS.Simple.Fingerprint"/>
+            to every candidate <see cref="T:SourceAFIS.Simple.Fingerprint"/> and records score for every comparison. It then sorts
+            collected partial scores in descending order and picks score that is on position specified by
+            <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> property, e.g. 2nd score if <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> is 2, 3rd score
+            if <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> is 3, etc. When combined with <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>, this property
+            essentially specifies how many partial scores must be above <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/> in order for
+            the whole <see cref="T:SourceAFIS.Simple.Person"/> to match. As a special case, when there are too few partial scores
+            (less than value of <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/>), SourceAFIS picks the lowest score.
+            </para>
+            <para>
+            <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> is useful in some rare cases where there is significant risk that
+            some fingerprint might match randomly with high score due to a broken template or due to some
+            rarely occuring matcher flaw. In these cases, <see cref="P:SourceAFIS.Simple.AfisEngine.MinMatches"/> might improve FAR.
+            This is discouraged practice though. Application developers seeking ways to improve FAR
+            would do much better to increase <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>. <see cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/> can be
+            safely raised to levels where FAR is essentially zero as far as fingerprints are of good quality.
+            </para>
+            </remarks>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/>
+            <seealso cref="P:SourceAFIS.Simple.AfisEngine.Threshold"/>
+        </member>
+        <member name="T:SourceAFIS.Simple.Finger">
+            <summary>
+            Finger position on hand.
+            </summary>
+            <remarks>
+            <para>
+            Finger position is used to speed up matching by skipping fingerprint pairs
+            that cannot match due to incompatible position. SourceAFIS will return zero
+            similarity score for incompatible fingerprint pairs.
+            </para>
+            <para>
+            This feature is optional. It can be disabled by using finger position <see cref="F:SourceAFIS.Simple.Finger.Any"/>
+            which is default value of <see cref="P:SourceAFIS.Simple.Fingerprint.Finger"/> for new <see cref="T:SourceAFIS.Simple.Fingerprint"/> objects.
+            </para>
+            <para>
+            A compatible fingerprint pair consists of two fingerprints with the same
+            finger position, e.g. <see cref="F:SourceAFIS.Simple.Finger.RightThumb"/> matches only other <see cref="F:SourceAFIS.Simple.Finger.RightThumb"/>. Alternatively,
+            compatible fingerprint pair can be also formed if one of the fingerprints
+            has <see cref="F:SourceAFIS.Simple.Finger.Any"/> finger position, e.g. <see cref="F:SourceAFIS.Simple.Finger.Any"/> can be matched against all other finger
+            positions and all other finger positions can be matched against <see cref="F:SourceAFIS.Simple.Finger.Any"/>. Two
+            fingerprints with <see cref="F:SourceAFIS.Simple.Finger.Any"/> positions are compatible as well, of course.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Finger"/>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.Any">
+            <summary>
+            Unspecified finger position.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.RightThumb">
+            <summary>
+            Thumb finger on the right hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.LeftThumb">
+            <summary>
+            Thumb finger on the left hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.RightIndex">
+            <summary>
+            Index finger on the right hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.LeftIndex">
+            <summary>
+            Index finger on the left hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.RightMiddle">
+            <summary>
+            Middle finger on the right hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.LeftMiddle">
+            <summary>
+            Middle finger on the left hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.RightRing">
+            <summary>
+            Ring finger on the right hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.LeftRing">
+            <summary>
+            Ring finger on the left hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.RightLittle">
+            <summary>
+            Little finger on the right hand.
+            </summary>
+        </member>
+        <member name="F:SourceAFIS.Simple.Finger.LeftLittle">
+            <summary>
+            Little finger on the left hand.
+            </summary>
+        </member>
+        <member name="T:SourceAFIS.Simple.Fingerprint">
+            <summary>
+            Collection of fingerprint-related information.
+            </summary>
+            <remarks>
+            <para>
+            This class contains basic information (<see cref="P:SourceAFIS.Simple.Fingerprint.Image"/>, <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>) about the fingerprint that
+            is used by SourceAFIS to perform template extraction and fingerprint matching.
+            If you need to attach application-specific information to <see cref="T:SourceAFIS.Simple.Fingerprint"/> object,
+            inherit from this class and add fields as necessary. <see cref="T:SourceAFIS.Simple.Fingerprint"/> objects can be
+            grouped in <see cref="T:SourceAFIS.Simple.Person"/> objects.
+            </para>
+            <para>
+            This class is designed to be easy to serialize in order to be stored in binary format (BLOB)
+            in application database, binary or XML files, or sent over network. You can either serialize
+            the whole object or serialize individual properties. You can set some properties to <see langword="null"/>
+            to exclude them from serialization.
+            </para>
+            </remarks>
+            <seealso cref="T:SourceAFIS.Simple.Person"/>
+        </member>
+        <member name="M:SourceAFIS.Simple.Fingerprint.#ctor">
+            <summary>
+            Creates empty <see cref="T:SourceAFIS.Simple.Fingerprint"/> object.
+            </summary>
+        </member>
+        <member name="M:SourceAFIS.Simple.Fingerprint.Clone">
+            <summary>
+            Create deep copy of the <see cref="T:SourceAFIS.Simple.Fingerprint"/>.
+            </summary>
+            <returns>Deep copy of this <see cref="T:SourceAFIS.Simple.Fingerprint"/>.</returns>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.Image">
+            <summary>
+            Fingerprint image.
+            </summary>
+            <value>
+            Raw fingerprint image that was used to extract the <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> or other image
+            attached later after extraction. This property is <see langword="null"/> by default.
+            </value>
+            <remarks>
+            <para>
+            This is the fingerprint image. This property must be set before call to <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+            in order to generate valid <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>. Once the <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> is generated, <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> property has only
+            informational meaning and it can be set to <see langword="null"/> to save space. It is however recommended to
+            keep the original image just in case it is needed to regenerate the <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> in future.
+            </para>
+            <para>
+            The format of this image is a simple raw 2D array of <see langword="byte"/>s. Every byte
+            represents shade of gray from black (0) to white (255). When indexing the 2D array, Y axis
+            goes first, X axis goes second, e.g. <c>Image[y, x]</c>. To convert to/from <see cref="T:System.Drawing.Bitmap"/>
+            object, use <see cref="P:SourceAFIS.Simple.Fingerprint.AsBitmap"/> property. To convert to/from <see cref="T:System.Windows.Media.Imaging.BitmapSource"/>
+            object, use <see cref="P:SourceAFIS.Simple.Fingerprint.AsBitmapSource"/> property.
+            </para>
+            <para>
+            Accessors of this property do not clone the image. To avoid unwanted sharing of the <see langword="byte"/>
+            array, call <see cref="M:System.ICloneable.Clone"/> on the <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/>.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmap"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmapSource"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsImageData"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.AsImageData">
+            <summary>
+            Fingerprint image as raw image in byte array.
+            </summary>
+            <value>
+            Fingerprint image from <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> property converted to raw image
+            (one-dimensional byte array) or <see langword="null"/> if <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/>
+            is <see langword="null"/>.
+            </value>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Image"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmap"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmapSource"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.AsBitmapSource">
+            <summary>
+            Fingerprint image as <see cref="T:System.Windows.Media.Imaging.BitmapSource"/> object.
+            </summary>
+            <value>
+            Fingerprint image from <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> property converted to <see cref="T:System.Windows.Media.Imaging.BitmapSource"/>
+            object or <see langword="null"/> if <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> is <see langword="null"/>.
+            </value>
+            <remarks>
+            Use this property in WPF applications.
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Image"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsImageData"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmap"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.AsBitmap">
+            <summary>
+            Fingerprint image as <see cref="T:System.Drawing.Bitmap"/> object.
+            </summary>
+            <value>
+            Fingerprint image from <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> property converted to <see cref="T:System.Drawing.Bitmap"/>
+            object or <see langword="null"/> if <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> is <see langword="null"/>.
+            </value>
+            <remarks>
+            Use this property in WinForms applications.
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Image"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsImageData"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsBitmapSource"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.Template">
+            <summary>
+            Fingerprint template.
+            </summary>
+            <value>
+            Fingerprint template generated by <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/> or other template assigned
+            for example after deserialization. This property is <see langword="null"/> by default.
+            </value>
+            <remarks>
+            <para>
+            Fingerprint template is an abstract model of the fingerprint that is serialized
+            in a very compact binary format (up to a few KB). Templates are better than fingerprint images,
+            because they require less space and they are easier to match than images. To generate
+            <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>, pass <see cref="T:SourceAFIS.Simple.Fingerprint"/> object with valid <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> to <see cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>.
+            <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> is required by <see cref="M:SourceAFIS.Simple.AfisEngine.Verify(SourceAFIS.Simple.Person,SourceAFIS.Simple.Person)"/> and <see cref="M:SourceAFIS.Simple.AfisEngine.Identify(SourceAFIS.Simple.Person,System.Collections.Generic.IEnumerable{SourceAFIS.Simple.Person})"/>.
+            </para>
+            <para>
+            Format of the template may change in later versions of SourceAFIS.
+            Applications are recommended to keep the original <see cref="P:SourceAFIS.Simple.Fingerprint.Image"/> in order to be able
+            to regenerate the <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/>.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Image"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsIsoTemplate"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsXmlTemplate"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.AsIsoTemplate">
+            <summary>
+            Fingerprint template in standard ISO format.
+            </summary>
+            <value>
+            Value of <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> converted to standard ISO/IEC 19794-2 (2005) format.
+            This property is <see langword="null"/> if <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> is <see langword="null"/>.
+            </value>
+            <remarks>
+            <para>
+            Use this property for two-way exchange of fingerprint templates with other biometric
+            systems. For general use in SourceAFIS, use <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> property which
+            contains native template that is fine-tuned for best accuracy and performance in SourceAFIS.
+            </para>
+            <para>
+            SourceAFIS contains partial implementation of ISO/IEC 19794-2 (2005) standard.
+            Multi-fingerprint ISO templates must be split into individual fingerprints before
+            they are used in SourceAFIS. Value of <see cref="P:SourceAFIS.Simple.Fingerprint.Finger"/> property is not
+            automatically stored in the ISO template. It must be decoded separately.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsXmlTemplate"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.AsXmlTemplate">
+            <summary>
+            Fingerprint template in readable XML format.
+            </summary>
+            <value>
+            Value of <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> converted to SourceAFIS XML template format.
+            This property is <see langword="null"/> if <see cref="P:SourceAFIS.Simple.Fingerprint.Template"/> is <see langword="null"/>.
+            </value>
+            <remarks>
+            <para>
+            Use XML template format where clean data format is more important than compact and fast encoding.
+            XML templates are suitable for XML-based data exchange, encoding of multiple fingerprints along
+            with accompanying data into single XML file, and for debugging and logging purposes.
+            </para>
+            <para>
+            Value of <see cref="P:SourceAFIS.Simple.Fingerprint.Finger"/> property is not automatically stored in the XML template.
+            It must be decoded separately.
+            </para>
+            </remarks>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.Template"/>
+            <seealso cref="P:SourceAFIS.Simple.Fingerprint.AsIsoTemplate"/>
+            <seealso cref="M:SourceAFIS.Simple.AfisEngine.Extract(SourceAFIS.Simple.Person)"/>
+        </member>
+        <member name="P:SourceAFIS.Simple.Fingerprint.Finger">
+            <summary>
+            Position of the finger on hand.
+            </summary>
+            <value>
+            Finger (thumb to little) and hand (right or left) that was used to create this fingerprint.
+            Default value <see cref="F:SourceAFIS.Simple.Finger.Any"/> means unspecified finger position.
+            </value>
+            <remarks>
+            Finger position is used to speed up matching by skipping fingerprint pairs
+            with incompatible finger positions. Check <see cref="T:SourceAFIS.Simple.Finger"/> enumeration for information
+            on how to control this process. Default value <see cref="F:SourceAFIS.Simple.Finger.Any"/> disables this behavior.
+            </remarks>
+            <seealso cref="T:SourceAFIS.Simple.Finger"/>
+        </member>
+        <member name="T:SourceAFIS.Simple.Person">
+            <summary>
+            Collection of <see cref="T:SourceAFIS.Simple.Fingerprint"/>s belonging to one person.
+            </summary>
+            <remarks>
+            <para>
+            This class is primarily a way to group multiple <see cref="T:SourceAFIS.Simple.Fingerprint"/>s belonging to one person.
+            This is very convenient feature when there are multiple fingerprints per person, because
+            it is possible to match two <see cref="T:SourceAFIS.Simple.Person"/>s directly instead of iterating over their <see cref="T:SourceAFIS.Simple.Fingerprint"/>s.
+            </para>
+            <para>
+            <see cref="P:SourceAFIS.Simple.Person.Id"/> property is provided as a simple means to bind <see cref="T:SourceAFIS.Simple.Person"/> objects to application-specific
+            information. If you need more flexibility, inherit from <see cref="T:SourceAFIS.Simple.Person"/> class and add
+            application-specific fields as necessary.
+            </para>
+            <para>
+            This class is designed to be easy to serialize in order to be stored in binary format (BLOB)
+            in application database, binary or XML files, or sent over network. You can either serialize
+            the whole <see cref="T:SourceAFIS.Simple.Person"/> or serialize individual <see cref="T:SourceAFIS.Simple.Fingerprint"/>s.
+            </para>
+            </remarks>
+            <seealso cref="T:SourceAFIS.Simple.Fingerprint"/>
+        </member>
+        <member name="M:SourceAFIS.Simple.Person.#ctor">
+            <summary>
+            Creates an empty <see cref="T:SourceAFIS.Simple.Person"/> object.
+            </summary>
+        </member>
+        <member name="M:SourceAFIS.Simple.Person.#ctor(SourceAFIS.Simple.Fingerprint[])">
+            <summary>
+            Creates new <see cref="T:SourceAFIS.Simple.Person"/> object and initializes it with
+            a list of <see cref="T:SourceAFIS.Simple.Fingerprint"/>s.
+            </summary>
+            <param name="fingerprints"><see cref="T:SourceAFIS.Simple.Fingerprint"/> objects to add to the new <see cref="T:SourceAFIS.Simple.Person"/>.</param>
+        </member>
+        <member name="M:SourceAFIS.Simple.Person.Clone">
+            <summary>
+            Create deep copy of the <see cref="T:SourceAFIS.Simple.Person"/>.
+            </summary>
+            <returns>Deep copy of the <see cref="T:SourceAFIS.Simple.Person"/>.</returns>
+            <remarks>
+            This method also clones all <see cref="T:SourceAFIS.Simple.Fingerprint"/> objects contained
+            in this <see cref="T:SourceAFIS.Simple.Person"/>.
+            </remarks>
+        </member>
+        <member name="P:SourceAFIS.Simple.Person.Id">
+            <summary>
+            Application-assigned ID for the <see cref="T:SourceAFIS.Simple.Person"/>.
+            </summary>
+            <remarks>
+            <para>
+            SourceAFIS doesn't use this property. It is provided for applications as an easy means
+            to link <see cref="T:SourceAFIS.Simple.Person"/> objects back to application-specific data. Applications can store any
+            integer ID in this field, for example database table key or an array index.
+            </para>
+            <para>
+            Applications that need to attach more detailed information to the person should
+            inherit from <see cref="T:SourceAFIS.Simple.Person"/> class and add fields as necessary.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:SourceAFIS.Simple.Person.Fingerprints">
+            <summary>
+            List of <see cref="T:SourceAFIS.Simple.Fingerprint"/>s belonging to the <see cref="T:SourceAFIS.Simple.Person"/>.
+            </summary>
+            <remarks>
+            This collection is initially empty. Add <see cref="T:SourceAFIS.Simple.Fingerprint"/> objects
+            here. You can also assign the whole collection.
+            </remarks>
+            <seealso cref="T:SourceAFIS.Simple.Fingerprint"/>
+        </member>
+    </members>
+</doc>
