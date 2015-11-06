@@ -73,4 +73,5 @@ $ scan-build -V make libafis
 This will generate a html report for you after building libAFIS and open a web browser for you with the generated report open.
 
 #### Template Tests
+
 There is a 'MinutiaeTestApp' inside TestData to test the expoted templates with SourceAFIS
