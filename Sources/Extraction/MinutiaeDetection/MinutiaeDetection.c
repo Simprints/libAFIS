@@ -88,9 +88,7 @@ static void FreeActiveNeighbours(List *activeNeighbors)
     // Free up the active neighburs list to stop leaking memory...
     for(ListElement *element = activeNeighbors->head; element != NULL; element = element->next)
     {
-        Point *point;
-        List_Remove(activeNeighbors, element, (void **) &point);
-        free(point);
+        List_Remove(activeNeighbors, element, NULL);
     }
 }
 
@@ -115,7 +113,6 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
       *(Point *)neighbors.head->next->data : *(Point *)neighbors.head->data;
     prev = point;
-    FreeActiveNeighbours(&neighbors);
   }
   List_AddData(&outputPoints, CopyPoint(point));
   return outputPoints;

@@ -142,16 +142,8 @@ TEST(OrientedSmoother, VisualiseSmoother)
   BinaryMap_Or(&binarized, &binSmoothed); */
 
 
-  UInt8Array2D newV = UInt8Array2D_Construct(binarized.width, binarized.height); 
-  for (int i = 0; i < binarized.width; i++) {
-      for (int j = 0; j < binarized.height; j++) {
-        if (BinaryMap_GetBit(&binarized, i, j)) {
-          newV.data[i][j] = 255; 
-        } else {
-          newV.data[i][j] = 0; 
-        }
-      }
-  }
+  UInt8Array2D newV = UInt8Array2D_Construct(binarized.width, binarized.height);
+  BinaryMapToImage(&binarized, &newV);
 
   pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
 }
