@@ -24,7 +24,7 @@ static const Point neighbors[NUM_VECTORS] = {
     { -5, 0 }, { -5, 5 }, { 0, 5 }, { 5, 5 }
 };
 
-static bool IsInsideImageAndMask(int imageHeight, int imageWidth, BoolArray2D pixelMask, int x, int y)
+static bool IsInsideImageAndMask(int imageHeight, int imageWidth, int x, int y)
 {
     bool ok = x >= 0
         && y >= 0
@@ -53,7 +53,8 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
                 Point antiPoint = (Point) { .x = -neighbors[i].x, .y = -neighbors[i].y };
                 Point antiNeighbor = Calc_Add2Points(&antiPoint, &(Point) { .x = x, .y = y });
 
-                if(!IsInsideImageAndMask(imageHeight, imageWidth, pixelMask, neighbor.x, neighbor.y) || !IsInsideImageAndMask(imageHeight, imageWidth, pixelMask, antiNeighbor.x, antiNeighbor.y))
+                if (!IsInsideImageAndMask(imageHeight, imageWidth, neighbor.x, neighbor.y) 
+                 || !IsInsideImageAndMask(imageHeight, imageWidth, antiNeighbor.x, antiNeighbor.y))
                     continue;
 
                 float antiNeighborValue = input.data[antiNeighbor.x][antiNeighbor.y];
