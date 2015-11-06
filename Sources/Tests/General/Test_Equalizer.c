@@ -54,7 +54,7 @@ TEST(Equalizer, Equalizer_Equals_SourceAFIS_Output_3x3)
     float expected[][3] = {{-0.998047, 1.0, -0.998047}, {1.0, 0.21568623, 0.542484}, {-0.90648437, -0.84414065, -0.4077344}};
 
     const float EPSILON = 1e-6F;
-    char assertMessage[256];
+    char assertMessage[100];
     for (int i = 0; i < equalized.sizeX; i++) {
         for (int j = 0; j < equalized.sizeY; j++) {
              sprintf(assertMessage, "[%d][%d] expected:, %f, actual: %f", i, j, expected[i][j], equalized.data[i][j]);
