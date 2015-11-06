@@ -3,10 +3,8 @@
 #include "ThresholdBinarizer.h"
 
 
-BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArray2D *baseline, const BinaryMap *mask, const BlockMap *blocks)
+void ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArray2D *baseline, const BinaryMap *mask, const BlockMap *blocks, BinaryMap *binarized)
 {
-	BinaryMap binarized = BinaryMap_Construct(input->sizeX, input->sizeY);
-
 	for (int blockY = 0; blockY < blocks->allBlocks.height; blockY++)
 	{
 		for (int blockX = 0; blockX < blocks->allBlocks.width; blockX++)
@@ -14,13 +12,13 @@ BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArra
 			if (BinaryMap_GetBit(mask, blockX, blockY))
 			{
 				RectangleC rectangle = RectangleGrid_GetRectangleCFromCoordinates(&(blocks->blockAreas), blockX, blockY);
-				for (int y = rectangle.y; y < rectangle.height; y++)
+				for (int y = RectangleC_GetBottom(&rectangle); y < RectangleC_GetTop(&rectangle); y++)
 				{
-					for (int x = rectangle.x; x < rectangle.width; x++)
+					for (int x = RectangleC_GetLeft(&rectangle); x < RectangleC_GetRight(&rectangle); x++)
 					{
 						if (input->data[x][y] - baseline->data[x][y] > 0)
 						{
-							BinaryMap_SetBitOne(&binarized, x, y);
+							BinaryMap_SetBitOne(binarized, x, y);
 						}
 					}
 				}
@@ -28,6 +26,4 @@ BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArra
 			}
 		}
 	}
-
-    return binarized;
 }

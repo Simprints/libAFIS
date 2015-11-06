@@ -12,6 +12,7 @@ struct PointF {
     float x;
     float y;
 };
+
 #include "General/SizeF.h"
 
 PointF PointF_Construct(float xx, float yy);

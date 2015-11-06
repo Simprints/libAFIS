@@ -5,6 +5,10 @@
 #include "General/BlockMap.h"
 #include "General/BinaryMap.h"
 
-BinaryMap ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArray2D *baseline, const BinaryMap *mask, const BlockMap *blocks);
+/*********************************************************
+ * output - output should be the same dimensions as input 
+ *
+ *********************************************************/
+void ThresholdBinarizer_Binarize(const FloatArray2D *input, const FloatArray2D *baseline, const BinaryMap *mask, const BlockMap *blocks, BinaryMap *output);
 
 #endif
