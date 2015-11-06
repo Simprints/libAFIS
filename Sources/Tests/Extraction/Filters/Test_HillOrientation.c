@@ -148,18 +148,6 @@ TEST(HillOrientation, ComputeOrientations)
       {127, 255, 255, 0, 0, 0 , 255, 255, 255},
     };
 
-    /* uint8_t imgData[][9] = {
-      {127, 127, 127, 127, 127, 127 , 127, 127, 127},   
-      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
-      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
-      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
-      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
-      {0  ,   0,   0,   0,   0,   0 ,   0,   0,   0},
-      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
-      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
-      {255, 255, 255, 255, 255, 255 , 255, 255, 255},
-    };*/
-
     for (int i = 0; i < v.sizeX; i++) {
         for (int j = 0; j < v.sizeY; j++) {
             v.data[i][j] = imgData[i][j]; 
@@ -180,43 +168,15 @@ TEST(HillOrientation, ComputeOrientations)
     SegmentationMask sm = SegmentationMask_Construct(); 
     SegmentationMask_ComputeMask(&sm, &blocks, &histogram, &mask);   
 
-
     FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
     Equalizer eq = Equalizer_Construct();
     Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
     UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
-   for (int i = 0; i < histogram.sizeX; i++) {
-    for (int j = 0; j < histogram.sizeY; j++) {
-      for (int k = 0; k < histogram.sizeZ; k++) {
-        if (histogram.data[i][j][k]) {
-          printf("[%d][%d][%d] = %d ", i, j, k, histogram.data[i][j][k]);
-        }
-      }
-      printf("\n");
-    }
-   }
-   printf("Smooothed histogram\n");
-   for (int i = 0; i < smoothedHistogram.sizeX; i++) {
-    for (int j = 0; j < smoothedHistogram.sizeY; j++) {
-      for (int k = 0; k < smoothedHistogram.sizeZ; k++) {
-        if (smoothedHistogram.data[i][j][k]) {
-          printf("[%d][%d][%d] = %d ", i, j, k, smoothedHistogram.data[i][j][k]);
-        }
-      }
-      printf("\n");
-    }
-   }
 
-
-    for (int i = 0; i < equalized.sizeX; i++) {
-      for (int j = 0; j < equalized.sizeY; j++) {
-        printf("equalized[%d][%d] = %f\n", i, j, equalized.data[i][j]);
-      }
-    }
-
-    for (int i = 0; i < orientations.sizeX; i++) {
-      for (int j = 0; j < orientations.sizeY; j++) {
-        printf("orientation[%d][%d] = %d\n", i, j, orientations.data[i][j]);
-      }
-    }
+    TEST_ASSERT_EQUAL_INT_MESSAGE(128, orientations.data[0][0], "Failed at: 0,0");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[0][1], "Failed at: 0,1");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[0][2], "Failed at: 0,2");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(128, orientations.data[1][0], "Failed at: 1,0");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][1], "Failed at: 1,1");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][2], "Failed at: 1,2");
 }
