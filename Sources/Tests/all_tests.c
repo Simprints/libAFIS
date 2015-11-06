@@ -23,7 +23,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(Calc);
 
     printf("\nPgm tests\n");
-    RUN_TEST_GROUP(Pgm);    
+    RUN_TEST_GROUP(Pgm);
 
     printf("\nVoting filter tests\n");
     RUN_TEST_GROUP(VotingFilter);
@@ -35,13 +35,16 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(DataStructures);
 
     printf("\nEqualizer tests\n");
-    RUN_TEST_GROUP(Equalizer); 
+    RUN_TEST_GROUP(Equalizer);
 
     printf("\nEnd to End Image to Template tests\n");
     RUN_TEST_GROUP(EndToEnd); 
 
     printf("\nThinner tests\n");
     RUN_TEST_GROUP(Thinner);
+
+    printf("\nDot remover tests\n");
+    RUN_TEST_GROUP(DotRemover);
 
     printf("\nBestMatchSkipper tests\n");
     RUN_TEST_GROUP(BestMatchSkipper);

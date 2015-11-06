@@ -267,6 +267,12 @@
     <ClCompile Include="Tests\DataStructures\TestRunner_DataStructures.c">
       <Filter>Source Files\Tests\DataStructures\runners</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_Thinner.c">
+      <Filter>Source Files\Tests\Extraction\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_Thinner.c">
+      <Filter>Source Files\Tests\Extraction\Filters\runners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extraction\Model\DotRemover.h">

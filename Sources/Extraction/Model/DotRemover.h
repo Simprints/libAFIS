@@ -3,6 +3,6 @@
 
 #include "SkeletonBuilder.h"
 
-void DotRemover_Filter(SkeletonBuilder *skeleton);
+void DotRemover_Filter(List *minutiae);
 
 #endif
