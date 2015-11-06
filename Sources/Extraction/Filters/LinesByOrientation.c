@@ -11,7 +11,6 @@
 //    int32_t radius = 7;             /* Upper = 50 */
 //    float stepFactor = 1.5f;           /* Lower = 1.1, Upper = 4 */
 
-//TODO: Might need to have a different comparison here 
 static int point_compare(const Point *a, const Point *b) 
 {
     int xDiff = a->x - b->x;
@@ -35,6 +34,7 @@ static bool contains_point(Point *points, Point point, int numPoints)
 void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius, float stepFactor, PointArray2D *lines)
 {
     assert(lines != NULL);
+    assert(lines->size == angularResolution); 
 
     int tempSize = 100; 
     Point *temp = calloc(tempSize, sizeof(Point)); 
@@ -47,9 +47,7 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
 
         float angleByBucketCenter = Angle_ByBucketCenter(orientationIndex, 2 * angularResolution);
 
-        //printf("orientationIndex: %d, angleByBucketCenter: %f\n", orientationIndex, angleByBucketCenter);
         PointF direction = Angle_ToVector(angleByBucketCenter);
-        //printf("orientationIndex: %d, direction: (%f, %f)\n", orientationIndex, direction.x, direction.y);
 
         for (float r = radius; r >= 0.5f; r /= stepFactor) 
         {
@@ -57,23 +55,21 @@ void LinesByOrientation_ConstructLines(int32_t angularResolution, int32_t radius
 
             Point p = Point_Construct(lroundf(scaledPoint.x), lroundf(scaledPoint.y));
 
-            //printf("orientationIndex: %d, point: (%d, %d), radius: %f\n", orientationIndex, p.x, p.y, r);
-
             if(!contains_point(temp, p, numPoints)) 
             {
-                //Check our temp array is big enough 
                 if (numPoints + 2 >= tempSize) 
                 {
+                    // temp should be big enough to hold all the points, 
+                    // but if its not, we need to make it bigger
                     tempSize *= 2; 
-                    temp = (Point *) realloc(temp, tempSize * sizeof(Point)); //THIS IS REALLY BAD, BECAUSE REALLOC MIGHT RETURN NULL. FIX THIS BEFORE MERGING IN
+                    temp = (Point *) realloc(temp, tempSize * sizeof(Point)); 
+                    assert(temp != NULL); 
                 }
 
                 temp[numPoints++] = p; 
                 temp[numPoints++] = Point_Construct(-p.x, -p.y); 
             }
         }
-
-        //printf("FINISHED\n");
         
         qsort(temp, numPoints, sizeof(Point), (int (*) (const void *, const void *)) point_compare);
 
