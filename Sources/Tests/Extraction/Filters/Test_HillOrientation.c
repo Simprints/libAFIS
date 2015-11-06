@@ -51,6 +51,12 @@ TEST(HillOrientation, VisualiseOrientations)
   UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
   HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
+  Int16Array3D_Destruct(&histogram); 
+  Int16Array3D_Destruct(&smoothedHistogram); 
+  UInt8Array2D_Destruct(&v); 
+  BinaryMap_Destruct(&mask); 
+
+
   print_orientations(orientations);
   UInt8Array2D outV = UInt8Array2D_Construct(imgSize.width, imgSize.height);
   for ( int i=0; i < orientations.sizeX; ++i ) {
@@ -103,6 +109,8 @@ TEST(HillOrientation, VisualiseOrientations)
     }
   }
   pgm_write("../TestImages/Person1/output-Hamster-1-0.pgm", &outV);
+
+  UInt8Array2D_Destruct(&outV); 
 }
 
 TEST(HillOrientation, VisualisePixelMask)
