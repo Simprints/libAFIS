@@ -49,8 +49,8 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
     count = fwrite(version, sizeof(version), 1, output);
     assert(count == 1);
 
-    // 4B total length (including header, will be updated later)
-    int32_t totalLength = 0;
+    // 4B total length (28 bytes for the header, 6 bytes for each minutia and 2 bytes footer padding)
+    int32_t totalLength =  30 + (List_GetCount(&template->minutiae) * 6);
     count = fwrite(&totalLength, sizeof(totalLength), 1, output);
     assert(count == 1);
 
@@ -180,13 +180,13 @@ void TemplateIO_ISO19794_2_2005_Import(const char *inputFileName, Template *temp
     assert(count == 1);
     assert(strcmp(" 20", version) == 0);
 
-    // 4B total length (including header, will be updated later)
-    int32_t totalLength = 0;
+    // 4B total length
+    int32_t totalLength;
     count = fread(&totalLength, sizeof(int32_t), 1, input);
     assert(count == 1);
 
     // 2B rubbish (zeroed)
-    int16_t twoByteRubbish = 0;
+    int16_t twoByteRubbish;
     count = fread(&twoByteRubbish, sizeof(twoByteRubbish), 1, input);
     assert(count == 1);
 
@@ -212,12 +212,11 @@ void TemplateIO_ISO19794_2_2005_Import(const char *inputFileName, Template *temp
     assert(count == 1);
 
     // 1B rubbish (number of fingerprints, set to 1)
-    int8_t oneByteRubbish = 1;
+    int8_t oneByteRubbish;
     count = fread(&oneByteRubbish, sizeof(oneByteRubbish), 1, input);
     assert(count == 1);
 
     // 1B rubbish (zeroed)
-    oneByteRubbish = 0;
     count = fread(&oneByteRubbish, sizeof(oneByteRubbish), 1, input);
     assert(count == 1);
 
@@ -240,7 +239,7 @@ void TemplateIO_ISO19794_2_2005_Import(const char *inputFileName, Template *temp
     assert(count == 1);
     
     // N*6B minutiae
-    for (int ii=0; ii<minutiaCount; ++ii)
+    for (int ii = 0; ii < minutiaCount; ++ii)
     {
         TemplateMinutia *templateMinutia = malloc(sizeof(TemplateMinutia));
         
@@ -297,4 +296,7 @@ void TemplateIO_ISO19794_2_2005_Import(const char *inputFileName, Template *temp
 
     // Close the binary file...
     fclose(input);
+    
+    // Confirm total length...
+    assert(totalLength == (30 + (minutiaCount * 6)));
 }
