@@ -7,9 +7,9 @@
 #include "LinesByOrientation.h"
 #include <math.h> 
 
-//    int32_t angularResolution = 32;  /* Lower = 4, Upper = 128 */
-//    int32_t radius = 7;             /* Upper = 50 */
-//    float stepFactor = 1.5f;           /* Lower = 1.1, Upper = 4 */
+//    default angularResolution = 32;  Lower = 4, Upper = 128 */
+//    default radius = 7;              Upper = 50 */
+//    default stepFactor = 1.5f;       Lower = 1.1, Upper = 4 */
 
 static int point_compare(const Point *a, const Point *b) 
 {
