@@ -123,11 +123,6 @@ BoolArray2D HillOrientation_BlockMapToPixelMask(const Size imageDimensions, cons
     return pixelMask;
 }
 
-PointFArray2D HillOrientation_Smooth(PointFArray2D directions, BinaryMap * mask)
-{
-    return (PointFArray2D) { NULL };
-}
-
 static int quantize(double angle, int resolution) {
     int result = (int)(Angle_ToFraction(angle) * resolution); 
 
