@@ -1,6 +1,7 @@
 #include "Templates/Template.h"
 #include "General/List.h"
-#include <malloc.h>
+
+#include <stdlib.h>
 #include <assert.h>
 
 void Template_AddMinutia(Template *template, TemplateMinutia *minutia)
