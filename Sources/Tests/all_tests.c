@@ -36,6 +36,9 @@ static void RunAllTests(void)
 
     printf("\nThinner tests\n");
     RUN_TEST_GROUP(Thinner);
+
+    printf("\nBestMatchSkipper tests\n");
+    RUN_TEST_GROUP(BestMatchSkipper);
 }
 
 int main(int argc, const char * argv[])
