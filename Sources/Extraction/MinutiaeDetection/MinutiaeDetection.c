@@ -115,7 +115,6 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
       *(Point *)neighbors.head->next->data : *(Point *)neighbors.head->data;
     prev = point;
-    FreeActiveNeighbours(&neighbors);
   }
   List_AddData(&outputPoints, CopyPoint(point));
   return outputPoints;
