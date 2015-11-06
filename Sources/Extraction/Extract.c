@@ -42,10 +42,10 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBi
     UInt16Array2D orientation = HillOrientation_Detect(equalized, size, &mask, &blocks);
     SmootherConfig ridgeSmoother = { .radius = 7, .angularResolution = 32, .stepFactor = 1.59f };
     FloatArray2D smoothed = FloatArray2D_Construct(size.width, size.height);
-    OrientedSmoother_Smooth(ridgeSmoother, &equalized, &orientation, &mask, &blocks, 0, &smoothed);
+    OrientedSmoother_Smooth(ridgeSmoother, &equalized, &orientation, &mask, &blocks, 128, &smoothed);
     SmootherConfig orthogonalSmoother = { .radius = 4, .angularResolution = 11, .stepFactor = 1.11f };
     FloatArray2D orthogonal = FloatArray2D_Construct(size.width, size.height);
-    OrientedSmoother_Smooth(orthogonalSmoother, &smoothed, &orientation, &mask, &blocks, 128, &orthogonal);
+    OrientedSmoother_Smooth(orthogonalSmoother, &smoothed, &orientation, &mask, &blocks, 0, &orthogonal);
 
     // Binarisation
     if (perfdata) gettimeofday(&perfdata->start_binarisation, 0);
