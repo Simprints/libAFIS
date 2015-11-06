@@ -28,6 +28,17 @@ static BinaryMap MakeBinaryMap(int width, int height, int image[height][width]){
   return BinarizedThinnedImage;
 }
 
+static Minutia * GetMinutiaAtPoint(List minutiae, int x, int y) {
+  Minutia * minutia;
+
+  for ( ListElement * p = minutiae.head; p; p = p->next ) {
+    minutia = (Minutia *)p->data;
+    if ( minutia->position.x == x && minutia->position.y == y)
+      return minutia;
+  }
+  return minutia;
+}
+
 TEST(MinutiaeDetection, CanDetectARidgeEnding)
 {
   int data[4][4] = {
@@ -38,8 +49,9 @@ TEST(MinutiaeDetection, CanDetectARidgeEnding)
   };
 
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(4, 4, data);
+  List result = List_Construct();
 
-  List result = FindMinutiae(&BinarizedThinnedImage);
+  result = FindMinutiae(&BinarizedThinnedImage, result);
 
   TEST_ASSERT_EQUAL_INT(2, List_GetCount(&result));
 
@@ -65,8 +77,9 @@ TEST(MinutiaeDetection, CanDetectABifurcation)
   };
 
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(4, 4, data);
+  List result = List_Construct();
 
-  List result = FindMinutiae(&BinarizedThinnedImage);
+  result = FindMinutiae(&BinarizedThinnedImage, result);
 
   Minutia * minutia;
   for ( ListElement * p = result.head; p != NULL; p = p->next ) {
@@ -91,8 +104,9 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
   };
 
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(5, 5, data);
+  List minutiae = List_Construct();
 
-  List minutiae = FindMinutiae(&BinarizedThinnedImage);
+  minutiae = FindMinutiae(&BinarizedThinnedImage, minutiae);
 
   TEST_ASSERT_EQUAL_INT(2, List_GetCount(&minutiae));
 
@@ -103,4 +117,43 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
 
   TEST_ASSERT_EQUAL_INT(1, firstMinutiaRidgeCount);
   TEST_ASSERT_EQUAL_INT(1, secondMinutiaRidgeCount);
+}
+
+TEST(MinutiaeDetection, CanCountBifurcationRidges)
+{
+  int data[6][5] = {
+    { 0, 0, 0, 0, 0 },
+    { 1, 1, 0, 0, 0 },
+    { 0, 0, 1, 0, 0 },
+    { 1, 1, 0, 1, 0 },
+    { 0, 0, 0, 1, 0 },
+    { 0, 0, 0, 0, 0 }
+  };
+
+  BinaryMap BinarizedThinnedImage = MakeBinaryMap(5, 6, data);
+  List minutiae = List_Construct();
+
+  minutiae = FindMinutiae(&BinarizedThinnedImage, minutiae);
+
+  TEST_ASSERT_EQUAL_INT(4, List_GetCount(&minutiae));
+
+  Minutia * minutia02 = GetMinutiaAtPoint(minutiae, 0, 2);
+  Minutia * minutia04 = GetMinutiaAtPoint(minutiae, 0, 4);
+  Minutia * minutia23 = GetMinutiaAtPoint(minutiae, 2, 3);
+  Minutia * minutia31 = GetMinutiaAtPoint(minutiae, 3, 1);
+
+  TEST_ASSERT_EQUAL_INT(RidgeEnd, minutia02->minutiaType);
+  TEST_ASSERT_EQUAL_INT(1, List_GetCount(&minutia02->ridges));
+  Ridge * ridge = (Ridge *)minutia02->ridges.head->data;
+  TEST_ASSERT_EQUAL(ridge->startMinutia, minutia02);
+  TEST_ASSERT_EQUAL(ridge->endMinutia, minutia23);
+
+  TEST_ASSERT_EQUAL_INT(RidgeEnd, minutia04->minutiaType);
+  TEST_ASSERT_EQUAL_INT(1, List_GetCount(&minutia04->ridges));
+
+  TEST_ASSERT_EQUAL_INT(Bifurcation, minutia23->minutiaType);
+  TEST_ASSERT_EQUAL_INT(3, List_GetCount(&minutia23->ridges));
+
+  TEST_ASSERT_EQUAL_INT(RidgeEnd, minutia31->minutiaType);
+  TEST_ASSERT_EQUAL_INT(1, List_GetCount(&minutia31->ridges));
 }

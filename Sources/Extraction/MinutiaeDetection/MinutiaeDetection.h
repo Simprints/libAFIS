@@ -4,6 +4,6 @@
 #include "General/BinaryMap.h"
 #include "General/List.h"
 
-List FindMinutiae(BinaryMap* image);
+List FindMinutiae(BinaryMap* image, List outputMinutiae);
 
 #endif
