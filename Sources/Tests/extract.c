@@ -30,8 +30,9 @@ int main(int argc, char* argv[])
 
         if (image.sizeX == 1 && image.sizeY == 1) continue;
 
-        struct perfdata perfdata;
-        Extract(&image, &perfdata);
+        perfdata perfdata;
+        Template template;
+        Extract(&image, &template, &perfdata);
 
         printf("Histogram generation: %f\n", diff(perfdata.start_segmentation, perfdata.start_histogram));
         printf("        Segmentation: %f\n", diff(perfdata.start_equalization, perfdata.start_segmentation));

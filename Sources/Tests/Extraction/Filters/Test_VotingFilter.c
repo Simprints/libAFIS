@@ -45,7 +45,7 @@ TEST(VotingFilter, VotingFilter_regression_tests_against_sourceAfis)
 
         sprintf(inputFile, "%s.input.dat", regressionFiles[i]);
 
-        printf("File = %s\r\n", inputFile);
+//         printf("File = %s\r\n", inputFile);
         sprintf(outputFile, "%s.result.dat", regressionFiles[i]);
         sprintf(paramRadius, "%s.Radius.dat", regressionFiles[i]);
         sprintf(paramMajority, "%s.Majority.dat", regressionFiles[i]);

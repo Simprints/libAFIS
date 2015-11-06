@@ -1,7 +1,7 @@
 #ifdef _MSC_VER
-	#include <io.h>
+    #include <io.h>
 #else
-	#include <unistd.h>
+    #include <unistd.h>
 #endif
 #include "unity_fixture.h"
 
@@ -9,12 +9,15 @@ static void RunAllTests(void)
 {
     printf("\nPoint tests\n");
     RUN_TEST_GROUP(Point);
-
+    
     printf("\nArray tests\n");
     RUN_TEST_GROUP(Array);
-
+    
     printf("\nBinaryMap tests\n");
     RUN_TEST_GROUP(BinaryMap);
+    
+    printf("\nList tests\n");
+    RUN_TEST_GROUP(List);
 
     printf("\nCalc tests\n");
     RUN_TEST_GROUP(Calc);
@@ -34,6 +37,9 @@ static void RunAllTests(void)
     printf("\nEqualizer tests\n");
     RUN_TEST_GROUP(Equalizer);
 
+    printf("\nEnd to End Image to Template tests\n");
+    RUN_TEST_GROUP(EndToEnd); 
+
     printf("\nThinner tests\n");
     RUN_TEST_GROUP(Thinner);
 
@@ -42,6 +48,9 @@ static void RunAllTests(void)
 
     printf("\nBestMatchSkipper tests\n");
     RUN_TEST_GROUP(BestMatchSkipper);
+
+    printf("\nTemplate tests\n");
+    RUN_TEST_GROUP(Templates);
 }
 
 int main(int argc, const char * argv[])
