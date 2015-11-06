@@ -34,6 +34,7 @@ struct BlockMap
     RectangleGrid blockAreas;
     PointGrid blockCenters;
     RectangleGrid cornerAreas;
+    int maxBlockSize; 
 };
 
 BlockMap BlockMap_Construct(const Size *pixelSize, int maxBlockSize);

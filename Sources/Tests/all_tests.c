@@ -7,6 +7,12 @@
 
 static void RunAllTests(void)
 {
+    printf("\nOrientation tests\n");
+    RUN_TEST_GROUP(HillOrientation);
+
+    printf("\nOriented smoother tests\n");
+    RUN_TEST_GROUP(OrientedSmoother); 
+    
     printf("\nPoint tests\n");
     RUN_TEST_GROUP(Point);
 
@@ -28,6 +34,9 @@ static void RunAllTests(void)
     printf("\nLocal histogram tests\n");
     RUN_TEST_GROUP(LocalHistogram);
 
+    printf("\nLines by orientation tests\n");
+    RUN_TEST_GROUP(LinesByOrientation);
+    
     printf("\nEnsure we an load serialised binary data\n");
     RUN_TEST_GROUP(DataStructures);
 
