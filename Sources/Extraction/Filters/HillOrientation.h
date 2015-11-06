@@ -10,8 +10,12 @@
 #include "General/BinaryMap.h"
 #include "General/List.h"
 
-UInt16Array2D HillOrientation_Detect(FloatArray2D image, Size imageDimensions, BinaryMap * blockMask, BlockMap * blocks);
-BoolArray2D HillOrientation_BlockMapToPixelMask(Size imageDimensions, BinaryMap * blockMask, BlockMap * blocks);
+/*********************************************************************************
+ * output - preallocated array - 1st dimension should be equal to number of block rows 
+                                 2nd dimension should be equal to number of block columns
+***********************************************************************************/
+void HillOrientation_Detect(const FloatArray2D image, const Size imageDimensions, const BinaryMap * blockMask, const BlockMap * blocks, UInt16Array2D *output);
+BoolArray2D HillOrientation_BlockMapToPixelMask(const Size imageDimensions, const BinaryMap * blockMask, const BlockMap * blocks);
 
 
 #endif

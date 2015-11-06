@@ -76,7 +76,7 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
     return directions;
 }
 
-PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations, BinaryMap * blockMask, BlockMap * blocks)
+PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations, const BinaryMap * blockMask, const BlockMap * blocks)
 {
     const PointFArray2D blockOrientations = PointFArray2D_Construct(blocks->blockCount.width, blocks->blockCount.height);
     const int blockHeight = blocks->maxBlockSize; 
@@ -107,7 +107,7 @@ PointFArray2D HillOrientation_SmoothDirections(PointFArray2D directions, BinaryM
     return  (PointFArray2D) { NULL };
 }
 
-BoolArray2D HillOrientation_BlockMapToPixelMask(Size imageDimensions, BinaryMap * blockMask, BlockMap * blocks) {
+BoolArray2D HillOrientation_BlockMapToPixelMask(const Size imageDimensions, const BinaryMap * blockMask, const BlockMap * blocks) {
     BoolArray2D pixelMask = BoolArray2D_Construct(imageDimensions.width, imageDimensions.height);
 
     Point block; 
@@ -143,10 +143,8 @@ static int quantize(double angle, int resolution) {
     return result; 
 }
 
-UInt16Array2D HillOrientation_DirectionsToAngles(PointFArray2D directions, BinaryMap *mask)
+void HillOrientation_DirectionsToAngles(const PointFArray2D directions, const BinaryMap *mask, UInt16Array2D *angles)
 {
-    UInt16Array2D angles = UInt16Array2D_Construct(mask->width, mask->height);
-
     for(int x = 0; x < directions.sizeX; x++)
     {
         for(int y = 0; y < directions.sizeY; y++)
@@ -155,14 +153,12 @@ UInt16Array2D HillOrientation_DirectionsToAngles(PointFArray2D directions, Binar
                 continue;
             double angle = Angle_AtanF(directions.data[x][y]);
             //multiply by 2 to collapse opposite angles onto each other
-            angles.data[x][y] = quantize(angle, 256); 
+            angles->data[x][y] = quantize(angle, 256); 
         }
     }
-
-    return angles;
 }
 
-UInt16Array2D HillOrientation_Detect(FloatArray2D image, Size imageDimensions, BinaryMap * blockMask, BlockMap * blocks)
+void HillOrientation_Detect(const FloatArray2D image, const Size imageDimensions, const BinaryMap * blockMask, const BlockMap * blocks, UInt16Array2D *output)
 {
     BoolArray2D pixelMask = HillOrientation_BlockMapToPixelMask(imageDimensions, blockMask, blocks);
 
@@ -170,11 +166,9 @@ UInt16Array2D HillOrientation_Detect(FloatArray2D image, Size imageDimensions, B
 
     PointFArray2D blockDirections = HillOrientation_SumBlocks(&pixelDirections, blockMask, blocks);
 
-    UInt16Array2D angles = HillOrientation_DirectionsToAngles(blockDirections, blockMask);
+    HillOrientation_DirectionsToAngles(blockDirections, blockMask, output);
 
     PointFArray2D_Destruct(&pixelDirections);
     BoolArray2D_Destruct(&pixelMask); 
     PointFArray2D_Destruct(&blockDirections); 
-
-    return angles;
 }

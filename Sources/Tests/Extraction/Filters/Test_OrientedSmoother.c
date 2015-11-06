@@ -56,7 +56,9 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
     FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
     Equalizer eq = Equalizer_Construct();
     Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
-    UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+    
+    UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+    HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
     SmootherConfig orthogonalConfig = {.stepFactor = 1.11, .angularResolution = 11, .radius = 4}; 
     FloatArray2D orthogonalImage = FloatArray2D_Construct(equalized.sizeX, equalized.sizeY);
@@ -104,7 +106,8 @@ TEST(OrientedSmoother, VisualiseSmoother)
   Equalizer eq = Equalizer_Construct();
   Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
 
-  UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+  UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+  HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
   //StepFactor = 1.59
   SmootherConfig ridgeConfig = {.stepFactor = 1.59, .angularResolution = 32, .radius = 7};

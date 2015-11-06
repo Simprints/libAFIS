@@ -44,12 +44,12 @@ TEST(HillOrientation, VisualiseOrientations)
   SegmentationMask sm = SegmentationMask_Construct();
   SegmentationMask_ComputeMask(&sm, &blocks, &histogram, &mask);
 
-
   FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY);
   Equalizer eq = Equalizer_Construct();
   Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
 
-  UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+  UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+  HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
   print_orientations(orientations);
   UInt8Array2D outV = UInt8Array2D_Construct(imgSize.width, imgSize.height);
@@ -171,7 +171,9 @@ TEST(HillOrientation, ComputeOrientations)
     FloatArray2D equalized = FloatArray2D_Construct(v.sizeX, v.sizeY); 
     Equalizer eq = Equalizer_Construct();
     Equalizer_Equalize(&eq, &blocks, &v, &smoothedHistogram, &mask, &equalized);
-    UInt16Array2D orientations = HillOrientation_Detect(equalized, imgSize, &mask, &blocks);
+
+    UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
+    HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
     TEST_ASSERT_EQUAL_INT_MESSAGE(128, orientations.data[0][0], "Failed at: 0,0");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[0][1], "Failed at: 0,1");
