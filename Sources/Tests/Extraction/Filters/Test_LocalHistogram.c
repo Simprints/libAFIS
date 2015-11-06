@@ -40,6 +40,7 @@ TEST(LocalHistogram, LocalHistogram_Analyze_same_values_go_into_same_bucket)
     TEST_ASSERT_EQUAL_INT(2, histogram.data[0][0][3]);
 
     UInt8Array2D_Destruct(&image);
+    BlockMap_Destruct(&blocks);
     Int16Array3D_Destruct(&histogram);
 }
 
@@ -61,6 +62,7 @@ TEST(LocalHistogram, LocalHistogram_Analyze_different_values_go_into_different_b
     TEST_ASSERT_EQUAL_INT(1, histogram.data[0][0][4]);
 
     UInt8Array2D_Destruct(&image);
+    BlockMap_Destruct(&blocks);
     Int16Array3D_Destruct(&histogram);
 }
 
@@ -82,6 +84,7 @@ TEST(LocalHistogram, LocalHistogram_Analyze_multiple_blocks)
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][0][1]);
     TEST_ASSERT_EQUAL_INT(0, histogram.data[1][1][1]);
 
+    BlockMap_Destruct(&blocks);
     UInt8Array2D_Destruct(&image);
     Int16Array3D_Destruct(&histogram);
 }

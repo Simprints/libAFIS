@@ -51,6 +51,9 @@ TEST(BinaryMap, BinaryMap_And)
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,0,2), "Failed at: 0,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,1,2), "Failed at: 1,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
+
+    BinaryMap_Destruct(&source);
+    BinaryMap_Destruct(&target);
 }
 
 TEST(BinaryMap, BinaryMap_Or)
@@ -91,6 +94,9 @@ TEST(BinaryMap, BinaryMap_Or)
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,2), "Failed at: 0,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,2), "Failed at: 1,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
+
+    BinaryMap_Destruct(&source);
+    BinaryMap_Destruct(&target);
 }
 
 TEST(BinaryMap, BinaryMap_AndNot)
@@ -130,6 +136,9 @@ TEST(BinaryMap, BinaryMap_AndNot)
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,2), "Failed at: 0,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,2), "Failed at: 1,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
+
+    BinaryMap_Destruct(&source);
+    BinaryMap_Destruct(&target);
 }
 
 TEST(BinaryMap, BinaryMap_AndArea)
@@ -174,4 +183,7 @@ TEST(BinaryMap, BinaryMap_AndArea)
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,0,2), "Failed at: 0,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,1,2), "Failed at: 1,2");
     TEST_ASSERT_EQUAL_INT_MESSAGE(1, BinaryMap_GetBit(&source,2,2), "Failed at: 2,2");
+
+    BinaryMap_Destruct(&source);
+    BinaryMap_Destruct(&target);
 }
