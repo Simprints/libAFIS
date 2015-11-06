@@ -36,6 +36,8 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
     // Open a binary file to output the template to...
     FILE *output = fopen(outputFileName, "wb");
 
+    printf("\nWriting header...");
+
     // 4B magic "FMR\0"
     char magic[] = {'F', 'M', 'R', '\0'};
     int count = fwrite(magic, sizeof(magic), 1, output);
@@ -101,6 +103,58 @@ void TemplateIO_ISO19794_2_2005_Export(Template *template, const char *outputFil
     // 1B minutia count
     int32_t minutiaCount = List_GetCount(&template->minutiae);
     count = fwrite(&minutiaCount, sizeof(int8_t), 1, output);
+    assert(count == 1);
+
+    printf("\nWriting %d minutiae...", minutiaCount);
+
+    for (ListElement *element = template->minutiae.head; element != NULL; element = element->next)
+    {
+        // Get the minutia from the list element...
+        TemplateMinutia *minutia = element->data;
+
+        // 2B minutia position X in pixels
+        //      2b (upper) minutia type (01 ending, 10 bifurcation, 00 other (considered ending))ore
+        int x = minutia->position.x;
+        printf("minutia->position.x - %d", minutia->position.x);
+        assert(x <= 0x3fff); // ::TODO:: Query this...?
+
+        int type;
+        switch (minutia->type)
+        {
+            case ENDING:
+                type = 0x4000;
+                break;
+            case BIFURCATION:
+                type = 0x8000;
+                break;
+            case OTHER:
+                type = 0;
+                break;
+            default:
+                assert(false);
+        }
+        uint16_t combined = (x | type);
+        count = fwrite(&combined, sizeof(uint16_t), 1, output);
+        assert(count == 1);
+
+        //      2B minutia position Y in pixels (upper 2b ignored, zeroed)
+        int y = imageSizeY - minutia->position.y - 1;
+        assert(y <= 0x3fff);
+        count = fwrite(&y, sizeof(int16_t), 1, output);
+        assert(count == 1);
+
+        //      1B direction, compatible with SourceAFIS angles
+        count = fwrite(&minutia->direction, sizeof(uint8_t), 1, output);
+        assert(count == 1);
+
+        //      1B quality (ignored, zeroed)
+        count = fwrite(&oneByteRubbish, sizeof(oneByteRubbish), 1, output);
+        assert(count == 1);
+    }
+
+    // 2B rubbish (extra data length, zeroed)
+    // N*1B rubbish (extra data)
+    count = fwrite(&twoByteRubbish, sizeof(twoByteRubbish), 1, output);
     assert(count == 1);
 
     // Flush and close the binary file...
