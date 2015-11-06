@@ -195,7 +195,7 @@ static void SaveLine(const BinaryMap *me, UInt32Array1D *vector, const Point *at
     me->map.data[at->y][lastX >> me->wordShift] = (me->map.data[at->y][lastX >> me->wordShift] & ~endMask) | (vector->data[words - 1] & endMask);
 }
 
-void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
+void BinaryMap_And(const BinaryMap *me, const BinaryMap* source)
 {
     Size area = BinaryMap_GetSize(source);
     int vectorSize = (area.width >> me->wordShift) + 2;
@@ -221,7 +221,7 @@ void BinaryMap_And(BinaryMap *me, const BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
-void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
+void BinaryMap_AndArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
 {
     int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
     int vectorSize = (area->width >> me->wordShift) + 2;
@@ -252,6 +252,9 @@ void BinaryMap_AndArea(BinaryMap *me, const BinaryMap *source, const RectangleC 
         }
         SaveLine(me, &vector, &atOffset, area->width);
     }
+
+    UInt32Array1D_Destruct(&vector);
+    UInt32Array1D_Destruct(&srcVector);
 }
 
 void BinaryMap_Or(const BinaryMap *me, const BinaryMap* source) 
@@ -320,7 +323,7 @@ uint32_t BinaryMap_GetNeighborhood(const BinaryMap *me, int32_t x, int32_t y)
 	}
 }
 
-void BinaryMap_CopyTo(const BinaryMap *me, BinaryMap *source)
+void BinaryMap_CopyTo(const BinaryMap *me, const BinaryMap *source)
 {
     RectangleC defaultArea = RectangleC_ConstructFrom2Ints(me->width, me->height);
     Point defaultPoint = Point_Construct(0, 0);
@@ -349,7 +352,7 @@ void BinaryMap_CopyToArea(const BinaryMap *me, const BinaryMap *source, const Re
     UInt32Array1D_Destruct(&vector);
 }
 
-void BinaryMap_AndNot(const BinaryMap *me, BinaryMap* source)
+void BinaryMap_AndNot(const BinaryMap *me, const BinaryMap* source)
 {
     Size area = BinaryMap_GetSize(source);
     int vectorSize = (area.width >> me->wordShift) + 2;
@@ -377,7 +380,7 @@ void BinaryMap_AndNot(const BinaryMap *me, BinaryMap* source)
     UInt32Array1D_Destruct(&srcVector);
 }
 
-void BinaryMap_AndNotToArea(const BinaryMap *me, BinaryMap *source, const RectangleC *area, const Point *at)
+void BinaryMap_AndNotToArea(const BinaryMap *me, const BinaryMap *source, const RectangleC *area, const Point *at)
 {
 	int shift = (int)((uint32_t)area->x & me->wordMask) - (int)((uint32_t)at->x & me->wordMask);
 	int vectorSize = (area->width >> me->wordShift) + 2;

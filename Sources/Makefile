@@ -47,18 +47,21 @@ UTEST_EXE = all_tests
 LIBAFIS_SRCS = General/*.c \
                Extraction/Filters/*.c \
                Extraction/Model/*.c \
-               Extraction/*.c
-LIBAFIS_SRCS_EXCLUDE = 
+               Extraction/*.c \
+               Matcher/*.c \
+               Matcher/Minutia/*.c
+
+LIBAFIS_SRCS_EXCLUDE =
 
 UTILS_SRCS =  IO/*.c
-UTILS_SRCS_EXCLUDE = 
+UTILS_SRCS_EXCLUDE =
 
 UTEST_SRCS =  General/*.c  General/runners/*.c \
               Extraction/Filters/*.c Extraction/Filters/runners/*.c \
               Extraction/Model/*.c Extraction/Model/runners/*.c \
-              DataStructures/*.c
-              
-UTEST_SRCS_EXCLUDE = 
+              DataStructures/*.c Matcher/*.c Matcher/runners/*.c
+							
+UTEST_SRCS_EXCLUDE =
 UTEST_SRCS += $(UTEST_EXE).c
 
 UNITY_SRCS = $(addprefix  $(UNITY_DIR)/, unity.c unity_fixture.c)
@@ -115,7 +118,7 @@ $(UTEST_EXE): $(UTEST_OBJS) $(UNITY_OBJS) $(UTILS_OBJS) $(LIBAFIS_OBJS)
 
 runUnitTest: $(UTEST_EXE)
 	$(BUILD_DIR)/all_tests ../TestData/
-	 
+
 archive: $(LIBAFIS_OBJS) runUnitTest
 	find . ! -path "*/Utils/*" ! -path "*/Tests/*" -type f -name *.h -exec $(ZIP) -cvf $(BUILD_DIR)/libAFIS-$(BUILD_NUMBER).tar {} \+ ; \
 	cd $(BUILD_DIR); \
