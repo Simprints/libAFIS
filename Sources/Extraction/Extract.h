@@ -1,8 +1,9 @@
 #include <sys/time.h>
 #include "General/Array.h"
+#include "General/BinaryMap.h"
 #include "Templates/Template.h"
 
-typedef struct perfdata {
+struct perfdata {
     struct timeval start;
     struct timeval start_histogram;
     struct timeval start_segmentation;
@@ -16,4 +17,4 @@ typedef struct perfdata {
     struct timeval end;
 } perfdata;
 
-void Extract(UInt8Array2D *, Template *, perfdata *);
+void Extract(UInt8Array2D *image, Template *template, struct perfdata *perfdata, UInt8Array2D *binarized, UInt8Array2D *thinned);

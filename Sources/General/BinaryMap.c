@@ -416,3 +416,16 @@ void BinaryMap_AndNotToArea(const BinaryMap *me, const BinaryMap *source, const 
 	UInt32Array1D_Destruct(&vector);
 	UInt32Array1D_Destruct(&srcVector);
 }
+
+void BinaryMapToImage(const BinaryMap *me, UInt8Array2D *image)
+{
+    for (int i = 0; i < me->width; i++) {
+        for (int j = 0; j < me->height; j++) {
+            if (BinaryMap_GetBit(me, i, j)) {
+                image->data[i][j] = 255;
+            } else {
+                image->data[i][j] = 0;
+            }
+        }
+    }
+}

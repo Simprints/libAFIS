@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 #include "Extraction/Extract.h"
+#include "General/Array.h"
+#include "General/BinaryMap.h"
 #include "General/pgm.h"
+#include "Templates/Template.h"
 
 double diff(struct timeval x, struct timeval y)
 {
@@ -30,19 +34,34 @@ int main(int argc, char* argv[])
 
         if (image.sizeX == 1 && image.sizeY == 1) continue;
 
-        perfdata perfdata;
         Template template;
-        Extract(&image, &template, &perfdata);
+        struct perfdata perfdata;
+        UInt8Array2D binarizedImage = UInt8Array2D_Construct(image.sizeX, image.sizeY);
+        UInt8Array2D thinnedImage = UInt8Array2D_Construct(image.sizeX, image.sizeY);
+        Extract(&image, &template, &perfdata, &binarizedImage, &thinnedImage);
 
-        printf("Histogram generation: %f\n", diff(perfdata.start_segmentation, perfdata.start_histogram));
-        printf("        Segmentation: %f\n", diff(perfdata.start_equalization, perfdata.start_segmentation));
-        printf("        Equalization: %f\n", diff(perfdata.start_orientation, perfdata.start_equalization));
-        printf("         Orientation: %f\n", diff(perfdata.start_binarisation, perfdata.start_orientation));
-        printf("        Binarisation: %f\n", diff(perfdata.start_thinning, perfdata.start_binarisation));
-        printf("      Ridge thinning: %f\n", diff(perfdata.start_detection, perfdata.start_thinning));
-        printf("  Minutiae detection: %f\n", diff(perfdata.start_filtering, perfdata.start_detection));
-        printf("  Minutiae filtering: %f\n", diff(perfdata.end, perfdata.start_filtering));
-        printf("               TOTAL: %f\n", diff(perfdata.end, perfdata.start));
+        printf(" Histogram generation: %f\n", diff(perfdata.start_segmentation, perfdata.start_histogram));
+        printf("         Segmentation: %f\n", diff(perfdata.start_equalization, perfdata.start_segmentation));
+        printf("         Equalization: %f\n", diff(perfdata.start_orientation, perfdata.start_equalization));
+        printf("          Orientation: %f\n", diff(perfdata.start_binarisation, perfdata.start_orientation));
+        printf("         Binarisation: %f\n", diff(perfdata.start_thinning, perfdata.start_binarisation));
+        printf("       Ridge thinning: %f\n", diff(perfdata.start_detection, perfdata.start_thinning));
+        printf("   Minutiae detection: %f\n", diff(perfdata.start_filtering, perfdata.start_detection));
+        printf("   Minutiae filtering: %f\n", diff(perfdata.end, perfdata.start_filtering));
+        printf("Template construction: %f\n", diff(perfdata.end, perfdata.start_template));
+        printf("                TOTAL: %f\n", diff(perfdata.end, perfdata.start));
+
+        int filenameLen = strlen(filename);
+
+        char binarizedFilename[filenameLen + 11];
+        strcpy(binarizedFilename, filename);
+        strcpy(binarizedFilename + filenameLen - 4, ".binarized.pgm");
+        pgm_write(binarizedFilename, &binarizedImage);
+
+        char thinnedFilename[filenameLen + 9];
+        strcpy(thinnedFilename, filename);
+        strcpy(thinnedFilename + filenameLen - 4, ".thinned.pgm");
+        pgm_write(thinnedFilename, &thinnedImage);
     }
 
     return 0;

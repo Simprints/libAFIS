@@ -90,14 +90,14 @@ static void ImageToTemplate(const char *inputFileName, const char *expectedFileN
     TEST_ASSERT_TRUE_MESSAGE(image.sizeX > 1, "Image Size X < 1");
     TEST_ASSERT_TRUE_MESSAGE(image.sizeY > 1, "Image Size Y < 1");
 
-    perfdata perfdata;
+    struct perfdata perfdata;
 
     Template template = Template_Constuct();    
     Template expectedTemplate = Template_Constuct();
 
     printf("%s %s\r\n", inputFileName, expectedFileName);
 
-    Extract(&image, &template, &perfdata);
+    Extract(&image, &template, &perfdata, NULL, NULL);
 
     ReadTemplate(expectedFileName, &expectedTemplate);
     
