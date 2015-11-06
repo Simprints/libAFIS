@@ -74,8 +74,8 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
 
     const float EPSILON = 1e-6F; 
     char assertMessage[100];
-    for (int i = 0; i < equalized.sizeX; i++) {
-        for (int j = 0; j < equalized.sizeY; j++) {
+    for (int i = 0; i < orthogonalImage.sizeX; i++) {
+        for (int j = 0; j < orthogonalImage.sizeY; j++) {
              sprintf(assertMessage, "[%d][%d] expected:, %f, actual: %f", i, j, expected[i][j], orthogonalImage.data[i][j]);
              TEST_ASSERT_MESSAGE(fabs(expected[i][j] - orthogonalImage.data[i][j]) < EPSILON, assertMessage);
         }
