@@ -1,6 +1,6 @@
 ## libAFIS -- Rewriting SourceAFIS in C
 
-[![Slack Status](https://slack.simprints.com/badge.svg)](https://simprints.com)
+[![Slack Status](https://slack.simprints.com/badge.svg)](https://simprints-slackin.herokuapp.com/)
 [![Build Status](https://drone.io/github.com/SimPrints/libAFIS/status.png)](https://drone.io/github.com/SimPrints/libAFIS/latest)
 
 ### Directory structure
