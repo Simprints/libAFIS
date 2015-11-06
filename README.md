@@ -30,9 +30,10 @@ Object files are created in the `Build/` directory. The library sources are comp
 - You will have to add additional include directories to `\Sources` & `\Sources\Utils\Unity`
 - You may have to comment out the contents of file: `\Sources\Utils\Misc\binarise.c`
 
-### Unit tests
+### Tests
+#### Unit Tests
 
-#### Building
+##### Building
 
 ~~~
 $ cd Sources
@@ -41,9 +42,11 @@ $ make utest
 
 The result is an executable called `all_tests` in the `Build/` directory.
 
-#### Running
+##### Running
 
 ~~~
 $ Sources/Build/all_tests ../TestData
 ~~~
 
+#### Template Tests
+There is a 'MinutiaeTestApp' inside TestData to test the expoted templates with SourceAFIS
