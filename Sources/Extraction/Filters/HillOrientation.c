@@ -34,7 +34,6 @@ static bool IsInsideImageAndMask(int imageHeight, int imageWidth, int x, int y)
     return ok;
 }
 
-
 PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int imageHeight, int imageWidth, BoolArray2D pixelMask)
 {
     Size imageDimensions = { .height = imageHeight, .width = imageWidth };
@@ -70,7 +69,6 @@ PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, int image
                     directions.data[x][y] = Calc_Add2PointsF(&directions.data[x][y], &contribution);
                 }
             }
-
         }
     }
 
@@ -100,12 +98,6 @@ PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations,
         }
     }
     return blockOrientations;
-}
-
-PointFArray2D HillOrientation_SmoothDirections(PointFArray2D directions, BinaryMap blockMask)
-{
-    // PointFArray2D smoothedDirections = PointFArray2D_Construct()
-    return  (PointFArray2D) { NULL };
 }
 
 BoolArray2D HillOrientation_BlockMapToPixelMask(const Size imageDimensions, const BinaryMap * blockMask, const BlockMap * blocks) {
