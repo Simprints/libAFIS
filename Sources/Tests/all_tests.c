@@ -45,7 +45,7 @@ static void RunAllTests(void)
 
     printf("\nThinner tests\n");
     RUN_TEST_GROUP(Thinner);
-
+    
     printf("\nDot remover tests\n");
     RUN_TEST_GROUP(DotRemover);
 
