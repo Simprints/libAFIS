@@ -88,9 +88,7 @@ static void FreeActiveNeighbours(List *activeNeighbors)
     // Free up the active neighburs list to stop leaking memory...
     for(ListElement *element = activeNeighbors->head; element != NULL; element = element->next)
     {
-        Point *point;
-        List_Remove(activeNeighbors, element, (void **) &point);
-        free(point);
+        List_Remove(activeNeighbors, element, NULL);
     }
 }
 
