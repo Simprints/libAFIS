@@ -321,6 +321,7 @@ void PointArray2D_Destruct(PointArray2D *me)
         if (me->data[row]) {
             PointArray1D_Destruct(me->data[row]);
             free(me->data[row]);
+            me->data[row] = NULL;
         }
     }
     free(me->data);
