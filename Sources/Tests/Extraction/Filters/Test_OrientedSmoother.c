@@ -149,5 +149,5 @@ TEST(OrientedSmoother, VisualiseSmoother)
       }
   }
 
-  pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0-2.pgm", &newV);
+  pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
 }
