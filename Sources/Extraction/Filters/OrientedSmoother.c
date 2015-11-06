@@ -28,7 +28,6 @@ void OrientedSmoother_Smooth
         {
             if (BinaryMap_GetBit(mask, block.x, block.y)) 
             {
-
                 //Add angles
                 uint8_t orientationAngle = orientation->data[block.x][block.y]; 
                 uint8_t offsetOrientation = orientationAngle + angleOffset; 
@@ -68,8 +67,6 @@ void OrientedSmoother_Smooth
             }
         }
     }
-
-
+    
     PointArray2D_Destruct(&lines); 
-
 }
