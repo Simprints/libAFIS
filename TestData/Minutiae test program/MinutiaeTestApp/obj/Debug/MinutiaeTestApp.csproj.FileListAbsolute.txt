@@ -1,0 +1,14 @@
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\bin\Debug\SourceAFIS.xml
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\obj\Debug\MinutiaeTestApp.csprojResolveAssemblyReference.cache
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\obj\Debug\ConsoleApplication1.exe
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\bin\Debug\ConsoleApplication1.exe
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\bin\Debug\SourceAFIS.xml
+C:\Users\Tristramnorman\Documents\GitHub\libAFIS\TestData\Minutiae test program\MinutiaeTestApp\obj\Debug\MinutiaeTestApp.csprojResolveAssemblyReference.cache
