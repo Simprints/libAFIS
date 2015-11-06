@@ -39,7 +39,8 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBi
 
     // Orientation
     if (perfdata) gettimeofday(&perfdata->start_orientation, 0);
-    UInt16Array2D orientation = HillOrientation_Detect(equalized, size, &mask, &blocks);
+    UInt16Array2D orientation = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height);
+    HillOrientation_Detect(equalized, size, &mask, &blocks, &orientation);
     SmootherConfig ridgeSmoother = { .radius = 7, .angularResolution = 32, .stepFactor = 1.59f };
     FloatArray2D smoothed = FloatArray2D_Construct(size.width, size.height);
     OrientedSmoother_Smooth(ridgeSmoother, &equalized, &orientation, &mask, &blocks, 128, &smoothed);
@@ -49,7 +50,8 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBi
 
     // Binarisation
     if (perfdata) gettimeofday(&perfdata->start_binarisation, 0);
-    BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothed, &orthogonal, &mask, &blocks);
+    BinaryMap binarized = BinaryMap_Construct(size.width, size.height);
+    ThresholdBinarizer_Binarize(&smoothed, &orthogonal, &mask, &blocks, &binarized);
     if (outBinarized) BinaryMapToImage(&binarized, outBinarized);
 
     // Ridge thinning
