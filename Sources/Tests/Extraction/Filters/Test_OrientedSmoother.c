@@ -123,7 +123,8 @@ TEST(OrientedSmoother, VisualiseSmoother)
   OrientedSmoother_Smooth(orthogonalConfig, &smoothedImage, &orientations, &mask, &blocks, 0, &orthogonalImage); 
 
   //TODO: YOU COULD PROBABLY REMOVE THIS
-  BinaryMap binarized = ThresholdBinarizer_Binarize(&smoothedImage, &orthogonalImage, &mask, &blocks); 
+  BinaryMap binarized = BinaryMap_Construct(smoothedImage.sizeX, smoothedImage.sizeY); 
+  ThresholdBinarizer_Binarize(&smoothedImage, &orthogonalImage, &mask, &blocks, &binarized); 
 
   /*VotingFilter binarySmoother = VotingFilter_Construct();
   binarySmoother.radius = 2;
