@@ -4,5 +4,6 @@
 #include "Templates/Template.h"
 
 void TemplateIO_ISO19794_2_2005_Export(Template *, const char *);
+void TemplateIO_ISO19794_2_2005_Import(const char *, Template *);
 
 #endif //LIBAFIS_TEMPLATEIO_H
