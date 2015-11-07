@@ -196,4 +196,5 @@ TEST(HillOrientation, ComputeOrientations)
     Int16Array3D_Destruct(&histogram);
     Int16Array3D_Destruct(&smoothedHistogram);
     UInt16Array2D_Destruct(&orientations);
+    Equalizer_Destruct(&eq);
 }
