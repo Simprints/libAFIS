@@ -82,6 +82,16 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
              TEST_ASSERT_MESSAGE(fabs(expected[i][j] - orthogonalImage.data[i][j]) < EPSILON, assertMessage);
         }
     }
+
+    //
+    UInt8Array2D_Destruct(&v);
+    BlockMap_Destruct(&blocks);
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothedHistogram);
+    BinaryMap_Destruct(&mask);
+    FloatArray2D_Destruct(&equalized);
+    UInt16Array2D_Destruct(&orientations);
+    FloatArray2D_Destruct(&orthogonalImage);
 }
 
 TEST(OrientedSmoother, VisualiseSmoother)
