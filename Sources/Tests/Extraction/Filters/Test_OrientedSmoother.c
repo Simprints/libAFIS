@@ -92,6 +92,7 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
     FloatArray2D_Destruct(&equalized);
     UInt16Array2D_Destruct(&orientations);
     FloatArray2D_Destruct(&orthogonalImage);
+    Equalizer_Destruct(&eq);
 }
 
 TEST(OrientedSmoother, VisualiseSmoother)
@@ -171,4 +172,5 @@ TEST(OrientedSmoother, VisualiseSmoother)
   FloatArray2D_Destruct(&orthogonalImage);
   BinaryMap_Destruct(&binarized);
   UInt8Array2D_Destruct(&newV);
+  Equalizer_Destruct(&eq);
 }
