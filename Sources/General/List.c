@@ -24,6 +24,17 @@ void List_Destruct(List* me) {
   };
 }
 
+void List_Destroy(List* me, void (*fr)(void* f)) {
+  ListElement* temp = me->head;
+  ListElement* cur = me->head;
+  while (cur != NULL) {
+    temp = cur;
+    fr(temp->data);
+    cur = cur->next;
+    free(temp);
+  };    
+}
+
 int32_t List_GetCount(List *me)
 {
     return me->count;

@@ -83,16 +83,6 @@ static List GetActiveNeighbours(Point position, BinaryMap * image)
   return neighbors;
 }
 
-static void FreeActiveNeighbours(List *activeNeighbours) 
-{
-  ListElement* cur = activeNeighbours->head;
-  while (cur != NULL) {
-    ListElement* del = cur;
-    cur = cur->next;
-    List_Remove(activeNeighbours,del, NULL);
-  };
-}
-
 static Point * CopyPoint(Point p) {
   Point * pointCopy = calloc(1, sizeof(*pointCopy));
   *pointCopy = p;
@@ -114,6 +104,7 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
       *(Point *)neighbors.head->next->data : *(Point *)neighbors.head->data;
     prev = point;
+    List_Destroy(&neighbors,&free);
   }
   List_AddData(&outputPoints, CopyPoint(point));
   return outputPoints;
@@ -149,9 +140,10 @@ static void TraceRidges(List minutiae, BinaryMap * image)
       ridge.endMinutia = GetMinutiaAtPosition(*(Point *)(points.tail->data), minutiae);
 
       List_AddData(&minutia->ridges, CopyRidge(ridge));
+      List_Destroy(&points,&free);
     }
     
-    FreeActiveNeighbours(&activeNeighbors);
+    List_Destroy(&activeNeighbors,&free);
   }
 }
 
