@@ -71,7 +71,7 @@ static List GetActiveNeighbours(Point position, BinaryMap * image)
       {
         if(BinaryMap_GetBit(image, position.x + i, position.y + j))
         {
-          Point * location = calloc(1, sizeof(*location));
+          Point * location = malloc(sizeof(Point));
           location->x = position.x + i;
           location->y = position.y + j;
 
