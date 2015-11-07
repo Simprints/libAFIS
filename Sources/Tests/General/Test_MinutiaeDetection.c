@@ -96,7 +96,7 @@ TEST(MinutiaeDetection, CanDetectABifurcation)
   TEST_ASSERT_EQUAL_INT(2, minutia->position.y);
 
   BinaryMap_Destruct(&BinarizedThinnedImage);
-  List_Destruct(&result);  
+  List_Destruct(&result);
 }
 
 TEST(MinutiaeDetection, CanCountMinutiaeRidges)
@@ -124,8 +124,8 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
   TEST_ASSERT_EQUAL_INT(1, firstMinutiaRidgeCount);
   TEST_ASSERT_EQUAL_INT(1, secondMinutiaRidgeCount);
 
-  BinaryMap_Destruct(&BinarizedThinnedImage);
   List_Destruct(&minutiae);
+  BinaryMap_Destruct(&BinarizedThinnedImage);
 }
 
 TEST(MinutiaeDetection, CanCountBifurcationRidges)
