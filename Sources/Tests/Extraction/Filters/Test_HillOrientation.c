@@ -17,15 +17,6 @@ TEST_TEAR_DOWN(HillOrientation)
 {
 }
 
-static void print_orientations(UInt16Array2D orientations) {
-  for ( int i=0; i < orientations.sizeX; ++i ) {
-    for ( int j=0; j < orientations.sizeY; ++j ) {
-      printf("%d ", orientations.data[i][j]);
-    }
-    printf("\n");
-  }
-}
-
 TEST(HillOrientation, VisualiseOrientations)
 {
   UInt8Array2D v = pgm_read("../TestImages/Person1/Bas1440999265-Hamster-1-0.png.pgm");
@@ -51,7 +42,6 @@ TEST(HillOrientation, VisualiseOrientations)
   UInt16Array2D orientations = UInt16Array2D_Construct(blocks.blockCount.width, blocks.blockCount.height); 
   HillOrientation_Detect(equalized, imgSize, &mask, &blocks, &orientations);
 
-  print_orientations(orientations);
   UInt8Array2D outV = UInt8Array2D_Construct(imgSize.width, imgSize.height);
   for ( int i=0; i < orientations.sizeX; ++i ) {
     for ( int j=0; j < orientations.sizeY; ++j ) {
@@ -103,6 +93,15 @@ TEST(HillOrientation, VisualiseOrientations)
     }
   }
   pgm_write("../TestImages/Person1/output-Hamster-1-0.pgm", &outV);
+
+  UInt8Array2D_Destruct(&v);
+  BlockMap_Destruct(&blocks);
+  Int16Array3D_Destruct(&histogram);
+  Int16Array3D_Destruct(&smoothedHistogram);
+  BinaryMap_Destruct(&mask);
+  FloatArray2D_Destruct(&equalized);
+  UInt16Array2D_Destruct(&orientations);
+  UInt8Array2D_Destruct(&outV);
 }
 
 TEST(HillOrientation, VisualisePixelMask)
@@ -132,6 +131,14 @@ TEST(HillOrientation, VisualisePixelMask)
     }
   }
   pgm_write("../TestImages/Person1/output-Hamster-0.1-pixelmask.pgm", &outV);
+
+  UInt8Array2D_Destruct(&v);
+  BlockMap_Destruct(&blocks);
+  Int16Array3D_Destruct(&histogram);
+  Int16Array3D_Destruct(&smoothedHistogram);
+  BinaryMap_Destruct(&mask);
+  BoolArray2D_Destruct(&pixelMask);
+  UInt8Array2D_Destruct(&outV);;
 }
 
 TEST(HillOrientation, ComputeOrientations) 
@@ -181,4 +188,12 @@ TEST(HillOrientation, ComputeOrientations)
     TEST_ASSERT_EQUAL_INT_MESSAGE(128, orientations.data[1][0], "Failed at: 1,0");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][1], "Failed at: 1,1");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][2], "Failed at: 1,2");
+
+    // TODO free all the things
+    BlockMap_Destruct(&blocks);
+    FloatArray2D_Destruct(&equalized);
+    BinaryMap_Destruct(&mask);
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothedHistogram);
+    UInt16Array2D_Destruct(&orientations);
 }
