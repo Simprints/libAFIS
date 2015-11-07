@@ -83,13 +83,14 @@ static List GetActiveNeighburs(Point position, BinaryMap * image)
   return neighbors;
 }
 
-static void FreeActiveNeighbours(List *activeNeighbors) 
+static void FreeActiveNeighbours(List *activeNeighbours) 
 {
-    // Free up the active neighburs list to stop leaking memory...
-    for(ListElement *element = activeNeighbors->head; element != NULL; element = element->next)
-    {
-        List_Remove(activeNeighbors, element, NULL);
-    }
+  ListElement* cur = activeNeighbours->head;
+  while (cur != NULL) {
+    ListElement* del = cur;
+    cur = cur->next;
+    List_Remove(activeNeighbours,del, NULL);
+  };
 }
 
 static Point * CopyPoint(Point p) {
