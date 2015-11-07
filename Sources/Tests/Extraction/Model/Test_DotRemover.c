@@ -46,5 +46,6 @@ TEST(DotRemover, DotRemover_Filter_correct_minutia_is_removed)
 
     TEST_ASSERT_EQUAL_INT(1, remainingMinutia->position.x);
 
+    List_Destruct(&ridges);
     List_Destruct(&minutiae);
 }
