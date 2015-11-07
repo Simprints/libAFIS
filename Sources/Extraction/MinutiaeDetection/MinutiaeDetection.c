@@ -56,7 +56,7 @@ static List GetPointsWithNNeighbors(int n, BinaryMap * image, List minutiae)
   return minutiae;
 }
 
-static List GetActiveNeighburs(Point position, BinaryMap * image)
+static List GetActiveNeighbours(Point position, BinaryMap * image)
 {
   List neighbors = List_Construct();
 
@@ -109,7 +109,7 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
   List_AddData(&outputPoints, CopyPoint(prev));
   while ( minutiaeLocations.data[point.x][point.y] == None ) {
     List_AddData(&outputPoints, CopyPoint(point));
-    List neighbors = GetActiveNeighburs(point, image);
+    List neighbors = GetActiveNeighbours(point, image);
     assert(List_GetCount(&neighbors) == 2);
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
       *(Point *)neighbors.head->next->data : *(Point *)neighbors.head->data;
@@ -135,7 +135,7 @@ static void TraceRidges(List minutiae, BinaryMap * image)
   for ( ListElement * p = minutiae.head; p != NULL; p = p->next )
   {
     Minutia * minutia = (Minutia *)p->data;
-    List activeNeighbors = GetActiveNeighburs(minutia->position, image);
+    List activeNeighbors = GetActiveNeighbours(minutia->position, image);
     minutia->ridges = List_Construct();
 
     for ( ListElement * p2 = activeNeighbors.head; p2 != NULL; p2 = p2->next )

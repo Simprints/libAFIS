@@ -14,6 +14,16 @@ List List_Construct(void)
     return list;
 }
 
+void List_Destruct(List* me) {
+  ListElement* temp = me->head;
+  ListElement* cur = me->head;
+  while (cur != NULL) {
+    temp = cur;
+    cur = cur->next;
+    free(temp);
+  };
+}
+
 int32_t List_GetCount(List *me)
 {
     return me->count;

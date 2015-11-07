@@ -45,4 +45,6 @@ TEST(DotRemover, DotRemover_Filter_correct_minutia_is_removed)
     Minutia *remainingMinutia = (Minutia *) minutiae.head->data;
 
     TEST_ASSERT_EQUAL_INT(1, remainingMinutia->position.x);
+
+    List_Destruct(&minutiae);
 }

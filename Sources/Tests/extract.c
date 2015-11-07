@@ -59,6 +59,10 @@ int main(int argc, char* argv[])
         strcpy(thinnedFilename, filename);
         strcpy(thinnedFilename + filenameLen - 4, ".thinned.pgm");
         pgm_write(thinnedFilename, &thinnedImage);
+
+        UInt8Array2D_Destruct(&image);
+        UInt8Array2D_Destruct(&binarizedImage);
+        UInt8Array2D_Destruct(&thinnedImage);
     }
 
     return 0;

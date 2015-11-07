@@ -65,6 +65,9 @@ TEST(MinutiaeDetection, CanDetectARidgeEnding)
   TEST_ASSERT_EQUAL_INT(RidgeEnd, firstMinutia->minutiaType);
   TEST_ASSERT_EQUAL_INT(2, secondMinutia->position.x);
   TEST_ASSERT_EQUAL_INT(1, secondMinutia->position.y);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&result);
 }
 
 TEST(MinutiaeDetection, CanDetectABifurcation)
@@ -91,6 +94,9 @@ TEST(MinutiaeDetection, CanDetectABifurcation)
   TEST_ASSERT_EQUAL_INT(Bifurcation, minutia->minutiaType);
   TEST_ASSERT_EQUAL_INT(2, minutia->position.x);
   TEST_ASSERT_EQUAL_INT(2, minutia->position.y);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&result);  
 }
 
 TEST(MinutiaeDetection, CanCountMinutiaeRidges)
@@ -117,6 +123,9 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
 
   TEST_ASSERT_EQUAL_INT(1, firstMinutiaRidgeCount);
   TEST_ASSERT_EQUAL_INT(1, secondMinutiaRidgeCount);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&minutiae);
 }
 
 TEST(MinutiaeDetection, CanCountBifurcationRidges)
@@ -156,4 +165,7 @@ TEST(MinutiaeDetection, CanCountBifurcationRidges)
 
   TEST_ASSERT_EQUAL_INT(RidgeEnd, minutia31->minutiaType);
   TEST_ASSERT_EQUAL_INT(1, List_GetCount(&minutia31->ridges));
+
+  List_Destruct(&minutiae);
+  BinaryMap_Destruct(&BinarizedThinnedImage);
 }
