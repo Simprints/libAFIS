@@ -156,4 +156,19 @@ TEST(OrientedSmoother, VisualiseSmoother)
   BinaryMapToImage(&binarized, &newV);
 
   pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
+
+  UInt8Array2D_Destruct(&v);
+  BlockMap_Destruct(&blocks);
+
+  Int16Array3D_Destruct(&histogram);
+  Int16Array3D_Destruct(&smoothedHistogram);
+
+  BinaryMap_Destruct(&mask);
+  FloatArray2D_Destruct(&equalized);
+  UInt16Array2D_Destruct(&orientations);
+  FloatArray2D_Destruct(&smoothedImage);
+
+  FloatArray2D_Destruct(&orthogonalImage);
+  BinaryMap_Destruct(&binarized);
+  UInt8Array2D_Destruct(&newV);
 }
