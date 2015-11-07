@@ -123,8 +123,8 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
   TEST_ASSERT_EQUAL_INT(1, firstMinutiaRidgeCount);
   TEST_ASSERT_EQUAL_INT(1, secondMinutiaRidgeCount);
 
-  List_Destruct(&minutiae);
   BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&minutiae);
 }
 
 TEST(MinutiaeDetection, CanCountBifurcationRidges)

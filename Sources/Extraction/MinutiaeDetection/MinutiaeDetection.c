@@ -45,9 +45,11 @@ static void GetPointsWithNNeighbors(int n, BinaryMap * image, List* minutiae)
   for ( int i=0; i < image->width; ++i ) {
     for ( int j=0; j < image->height; ++j ) {
       if ( CountNeighbors(i, j, image) == n && BinaryMap_GetBit(image, i, j) == 1) {
-        Minutia * minutia = calloc(1, sizeof(*minutia));
+        Minutia * minutia = malloc(sizeof(Minutia));
         minutia->minutiaType = GetMinutiaType(n);
         minutia->position = (Point) { .x = i, .y = j };
+        minutia->ridges = List_Construct();
+        
         List_AddData(minutiae, minutia);
         minutiaeLocations.data[i][j] = minutia->minutiaType;
       }
@@ -94,10 +96,10 @@ static Ridge * CopyRidge(Ridge r) {
   return ridgeCopy;
 }
 
-static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPoints) {
-  List_AddData(&outputPoints, CopyPoint(prev));
+static void TraceRidge(Point point, Point prev, BinaryMap * image, List* outputPoints) {
+  List_AddData(outputPoints, CopyPoint(prev));
   while ( minutiaeLocations.data[point.x][point.y] == None ) {
-    List_AddData(&outputPoints, CopyPoint(point));
+    List_AddData(outputPoints, CopyPoint(point));
     List neighbors = GetActiveNeighbours(point, image);
     assert(List_GetCount(&neighbors) == 2);
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
@@ -105,8 +107,7 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
     prev = point;
     List_Destroy(&neighbors,&free);
   }
-  List_AddData(&outputPoints, CopyPoint(point));
-  return outputPoints;
+  List_AddData(outputPoints, CopyPoint(point));
 }
 
 static Minutia * GetMinutiaAtPosition(Point position, List* minutiae)
@@ -131,7 +132,7 @@ static void TraceRidges(List* minutiae, BinaryMap * image)
     for ( ListElement * p2 = activeNeighbors.head; p2 != NULL; p2 = p2->next )
     {
       List points = List_Construct();
-      points = TraceRidge(*(Point *)p2->data, minutia->position, image, points);
+      TraceRidge(*(Point *)p2->data, minutia->position, image, &points);
 
       Ridge ridge = Ridge_Construct();
       ridge.startMinutia = minutia;
