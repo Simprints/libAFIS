@@ -102,6 +102,7 @@ TEST(HillOrientation, VisualiseOrientations)
   FloatArray2D_Destruct(&equalized);
   UInt16Array2D_Destruct(&orientations);
   UInt8Array2D_Destruct(&outV);
+  Equalizer_Destruct(&eq);
 }
 
 TEST(HillOrientation, VisualisePixelMask)
@@ -189,7 +190,7 @@ TEST(HillOrientation, ComputeOrientations)
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][1], "Failed at: 1,1");
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, orientations.data[1][2], "Failed at: 1,2");
 
-    // TODO free all the things
+    UInt8Array2D_Destruct(&v);
     BlockMap_Destruct(&blocks);
     FloatArray2D_Destruct(&equalized);
     BinaryMap_Destruct(&mask);
