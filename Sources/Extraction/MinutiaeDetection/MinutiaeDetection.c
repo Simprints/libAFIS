@@ -109,9 +109,9 @@ static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPo
   return outputPoints;
 }
 
-static Minutia * GetMinutiaAtPosition(Point position, List minutiae)
+static Minutia * GetMinutiaAtPosition(Point position, List* minutiae)
 {
-  for ( ListElement * p = minutiae.head; p != NULL; p = p->next )
+  for ( ListElement * p = minutiae->head; p != NULL; p = p->next )
   {
     Minutia * minutia = (Minutia *)p->data;
     if(minutia->position.x == position.x && minutia->position.y == position.y)
@@ -120,9 +120,9 @@ static Minutia * GetMinutiaAtPosition(Point position, List minutiae)
   return NULL;
 }
 
-static void TraceRidges(List minutiae, BinaryMap * image)
+static void TraceRidges(List* minutiae, BinaryMap * image)
 {
-  for ( ListElement * p = minutiae.head; p != NULL; p = p->next )
+  for ( ListElement * p = minutiae->head; p != NULL; p = p->next )
   {
     Minutia * minutia = (Minutia *)p->data;
     List activeNeighbors = GetActiveNeighbours(minutia->position, image);
@@ -146,15 +146,14 @@ static void TraceRidges(List minutiae, BinaryMap * image)
   }
 }
 
-List FindMinutiae(BinaryMap* image, List minutiae)
+void FindMinutiae(BinaryMap* image, List* minutiae)
 {
   minutiaeLocations = UInt8Array2D_Construct(image->width, image->height);
 
-  GetPointsWithNNeighbors(1, image, &minutiae);
-  GetPointsWithNNeighbors(3, image, &minutiae);
+  GetPointsWithNNeighbors(1, image, minutiae);
+  GetPointsWithNNeighbors(3, image, minutiae);
 
   TraceRidges(minutiae, image);
 
   UInt8Array2D_Destruct(&minutiaeLocations);
-  return minutiae;
 }
