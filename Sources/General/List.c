@@ -15,24 +15,24 @@ List List_Construct(void)
 }
 
 void List_Destruct(List* me) {
-  ListElement* temp = me->head;
-  ListElement* cur = me->head;
-  while (cur != NULL) {
-    temp = cur;
-    cur = cur->next;
-    free(temp);
-  };
+    ListElement* temp = me->head;
+    ListElement* cur = me->head;
+    while (cur != NULL) {
+        temp = cur;
+        cur = cur->next;
+        free(temp);
+    };
 }
 
 void List_Destroy(List* me, void (*fr)(void* f)) {
-  ListElement* temp = me->head;
-  ListElement* cur = me->head;
-  while (cur != NULL) {
-    temp = cur;
-    fr(temp->data);
-    cur = cur->next;
-    free(temp);
-  };    
+    ListElement* temp = me->head;
+    ListElement* cur = me->head;
+    while (cur != NULL) {
+        temp = cur;
+        fr(temp->data);
+        cur = cur->next;
+        free(temp);
+    };    
 }
 
 int32_t List_GetCount(List *me)
