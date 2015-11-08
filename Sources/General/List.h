@@ -19,6 +19,12 @@ typedef struct List
 } List;
 
 List List_Construct(void);
+
+// Note that this only destructs the list structure - NOT the data contained within
+void List_Destruct(List* me);
+
+// Destroy the elements and the list using the supplied free function
+void List_Destroy(List* me, void (*fr)(void* f));
 int32_t List_GetCount(List *me);
 int32_t List_Remove(List *me, ListElement *item, void **data);
 
