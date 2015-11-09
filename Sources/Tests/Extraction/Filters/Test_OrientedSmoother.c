@@ -82,6 +82,17 @@ TEST(OrientedSmoother, CalculationsMatchSourceAFISOn7x9) {
              TEST_ASSERT_MESSAGE(fabs(expected[i][j] - orthogonalImage.data[i][j]) < EPSILON, assertMessage);
         }
     }
+
+    //
+    UInt8Array2D_Destruct(&v);
+    BlockMap_Destruct(&blocks);
+    Int16Array3D_Destruct(&histogram);
+    Int16Array3D_Destruct(&smoothedHistogram);
+    BinaryMap_Destruct(&mask);
+    FloatArray2D_Destruct(&equalized);
+    UInt16Array2D_Destruct(&orientations);
+    FloatArray2D_Destruct(&orthogonalImage);
+    Equalizer_Destruct(&eq);
 }
 
 TEST(OrientedSmoother, VisualiseSmoother)
@@ -142,16 +153,24 @@ TEST(OrientedSmoother, VisualiseSmoother)
   BinaryMap_Or(&binarized, &binSmoothed); */
 
 
-  UInt8Array2D newV = UInt8Array2D_Construct(binarized.width, binarized.height); 
-  for (int i = 0; i < binarized.width; i++) {
-      for (int j = 0; j < binarized.height; j++) {
-        if (BinaryMap_GetBit(&binarized, i, j)) {
-          newV.data[i][j] = 255; 
-        } else {
-          newV.data[i][j] = 0; 
-        }
-      }
-  }
+  UInt8Array2D newV = UInt8Array2D_Construct(binarized.width, binarized.height);
+  BinaryMapToImage(&binarized, &newV);
 
   pgm_write("../TestImages/Person1/output-binarised-Hamster-1.0.pgm", &newV);
+
+  UInt8Array2D_Destruct(&v);
+  BlockMap_Destruct(&blocks);
+
+  Int16Array3D_Destruct(&histogram);
+  Int16Array3D_Destruct(&smoothedHistogram);
+
+  BinaryMap_Destruct(&mask);
+  FloatArray2D_Destruct(&equalized);
+  UInt16Array2D_Destruct(&orientations);
+  FloatArray2D_Destruct(&smoothedImage);
+
+  FloatArray2D_Destruct(&orthogonalImage);
+  BinaryMap_Destruct(&binarized);
+  UInt8Array2D_Destruct(&newV);
+  Equalizer_Destruct(&eq);
 }

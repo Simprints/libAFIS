@@ -1,5 +1,6 @@
 #include <sys/time.h>
 #include "General/Array.h"
+#include "General/BinaryMap.h"
 
 struct perfdata {
     struct timeval start;
@@ -14,4 +15,4 @@ struct perfdata {
     struct timeval end;
 };
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata);
+void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *binarized, UInt8Array2D *thinned);

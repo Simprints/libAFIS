@@ -7,7 +7,7 @@ typedef struct Minutia Minutia;
 #include "General/List.h"
 #include "Extraction/Model/Ridge.h"
 
-typedef enum { RidgeEnd, Bifurcation } MinutiaType;
+typedef enum { None, RidgeEnd, Bifurcation } MinutiaType;
 
 struct Minutia
 {
