@@ -50,8 +50,7 @@ TEST(MinutiaeDetection, CanDetectARidgeEnding)
 
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(4, 4, data);
   List result = List_Construct();
-
-  result = FindMinutiae(&BinarizedThinnedImage, result);
+  FindMinutiae(&BinarizedThinnedImage, &result);
 
   TEST_ASSERT_EQUAL_INT(2, List_GetCount(&result));
 
@@ -65,6 +64,9 @@ TEST(MinutiaeDetection, CanDetectARidgeEnding)
   TEST_ASSERT_EQUAL_INT(RidgeEnd, firstMinutia->minutiaType);
   TEST_ASSERT_EQUAL_INT(2, secondMinutia->position.x);
   TEST_ASSERT_EQUAL_INT(1, secondMinutia->position.y);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&result);
 }
 
 TEST(MinutiaeDetection, CanDetectABifurcation)
@@ -79,7 +81,7 @@ TEST(MinutiaeDetection, CanDetectABifurcation)
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(4, 4, data);
   List result = List_Construct();
 
-  result = FindMinutiae(&BinarizedThinnedImage, result);
+  FindMinutiae(&BinarizedThinnedImage, &result);
 
   Minutia * minutia;
   for ( ListElement * p = result.head; p != NULL; p = p->next ) {
@@ -91,6 +93,9 @@ TEST(MinutiaeDetection, CanDetectABifurcation)
   TEST_ASSERT_EQUAL_INT(Bifurcation, minutia->minutiaType);
   TEST_ASSERT_EQUAL_INT(2, minutia->position.x);
   TEST_ASSERT_EQUAL_INT(2, minutia->position.y);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&result);
 }
 
 TEST(MinutiaeDetection, CanCountMinutiaeRidges)
@@ -106,7 +111,7 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(5, 5, data);
   List minutiae = List_Construct();
 
-  minutiae = FindMinutiae(&BinarizedThinnedImage, minutiae);
+  FindMinutiae(&BinarizedThinnedImage, &minutiae);
 
   TEST_ASSERT_EQUAL_INT(2, List_GetCount(&minutiae));
 
@@ -117,6 +122,9 @@ TEST(MinutiaeDetection, CanCountMinutiaeRidges)
 
   TEST_ASSERT_EQUAL_INT(1, firstMinutiaRidgeCount);
   TEST_ASSERT_EQUAL_INT(1, secondMinutiaRidgeCount);
+
+  BinaryMap_Destruct(&BinarizedThinnedImage);
+  List_Destruct(&minutiae);
 }
 
 TEST(MinutiaeDetection, CanCountBifurcationRidges)
@@ -133,7 +141,7 @@ TEST(MinutiaeDetection, CanCountBifurcationRidges)
   BinaryMap BinarizedThinnedImage = MakeBinaryMap(5, 6, data);
   List minutiae = List_Construct();
 
-  minutiae = FindMinutiae(&BinarizedThinnedImage, minutiae);
+  FindMinutiae(&BinarizedThinnedImage, &minutiae);
 
   TEST_ASSERT_EQUAL_INT(4, List_GetCount(&minutiae));
 
@@ -156,4 +164,7 @@ TEST(MinutiaeDetection, CanCountBifurcationRidges)
 
   TEST_ASSERT_EQUAL_INT(RidgeEnd, minutia31->minutiaType);
   TEST_ASSERT_EQUAL_INT(1, List_GetCount(&minutia31->ridges));
+
+  List_Destruct(&minutiae);
+  BinaryMap_Destruct(&BinarizedThinnedImage);
 }
