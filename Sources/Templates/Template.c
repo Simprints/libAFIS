@@ -26,10 +26,5 @@ Template Template_Construct()
 
 void Template_Free(Template *template)
 {
-    while (List_GetCount(&(template->minutiae)) > 0)
-    {
-        void *dataFound;
-        List_Remove(&(template->minutiae), (template->minutiae.head), &dataFound);
-        free(dataFound);
-    }
+    List_Destroy(&(template->minutiae), &(free));
 }
