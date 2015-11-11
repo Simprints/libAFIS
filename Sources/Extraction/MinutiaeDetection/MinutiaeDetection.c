@@ -40,23 +40,24 @@ static MinutiaType GetMinutiaType(int numberOfNeighbors) {
   }
 }
 
-static List GetPointsWithNNeighbors(int n, BinaryMap * image, List minutiae)
+static void GetPointsWithNNeighbors(int n, BinaryMap* image, List* minutiae)
 {
   for ( int i=0; i < image->width; ++i ) {
     for ( int j=0; j < image->height; ++j ) {
       if ( CountNeighbors(i, j, image) == n && BinaryMap_GetBit(image, i, j) == 1) {
-        Minutia * minutia = calloc(1, sizeof(*minutia));
+        Minutia * minutia = malloc(sizeof(Minutia));
         minutia->minutiaType = GetMinutiaType(n);
         minutia->position = (Point) { .x = i, .y = j };
-        List_AddData(&minutiae, minutia);
+        minutia->ridges = List_Construct();
+        
+        List_AddData(minutiae, minutia);
         minutiaeLocations.data[i][j] = minutia->minutiaType;
       }
     }
   }
-  return minutiae;
 }
 
-static List GetActiveNeighburs(Point position, BinaryMap * image)
+static List GetActiveNeighbours(Point position, BinaryMap* image)
 {
   List neighbors = List_Construct();
 
@@ -70,7 +71,7 @@ static List GetActiveNeighburs(Point position, BinaryMap * image)
       {
         if(BinaryMap_GetBit(image, position.x + i, position.y + j))
         {
-          Point * location = calloc(1, sizeof(*location));
+          Point * location = malloc(sizeof(Point));
           location->x = position.x + i;
           location->y = position.y + j;
 
@@ -83,44 +84,36 @@ static List GetActiveNeighburs(Point position, BinaryMap * image)
   return neighbors;
 }
 
-static void FreeActiveNeighbours(List *activeNeighbors) 
-{
-    // Free up the active neighburs list to stop leaking memory...
-    for(ListElement *element = activeNeighbors->head; element != NULL; element = element->next)
-    {
-        List_Remove(activeNeighbors, element, NULL);
-    }
-}
-
 static Point * CopyPoint(Point p) {
-  Point * pointCopy = calloc(1, sizeof(*pointCopy));
+  Point * pointCopy = malloc(sizeof(Point));
   *pointCopy = p;
   return pointCopy;
 }
 
 static Ridge * CopyRidge(Ridge r) {
-  Ridge * ridgeCopy = calloc(1, sizeof(*ridgeCopy));
+  Ridge * ridgeCopy = malloc(sizeof(Ridge));
   *ridgeCopy = r;
   return ridgeCopy;
 }
 
-static List TraceRidge(Point point, Point prev, BinaryMap * image, List outputPoints) {
-  List_AddData(&outputPoints, CopyPoint(prev));
+static void TraceRidge(Point point, Point prev, BinaryMap* image, List* outputPoints) {
+  List_AddData(outputPoints, CopyPoint(prev));
+
   while ( minutiaeLocations.data[point.x][point.y] == None ) {
-    List_AddData(&outputPoints, CopyPoint(point));
-    List neighbors = GetActiveNeighburs(point, image);
+    List_AddData(outputPoints, CopyPoint(point));
+    List neighbors = GetActiveNeighbours(point, image);
     assert(List_GetCount(&neighbors) == 2);
     point = ArePointsEqual(*(Point *)neighbors.head->data, prev) ?
       *(Point *)neighbors.head->next->data : *(Point *)neighbors.head->data;
     prev = point;
+    List_Destroy(&neighbors,&free);
   }
-  List_AddData(&outputPoints, CopyPoint(point));
-  return outputPoints;
+  List_AddData(outputPoints, CopyPoint(point));
 }
 
-static Minutia * GetMinutiaAtPosition(Point position, List minutiae)
+static Minutia * GetMinutiaAtPosition(Point position, List* minutiae)
 {
-  for ( ListElement * p = minutiae.head; p != NULL; p = p->next )
+  for ( ListElement * p = minutiae->head; p != NULL; p = p->next )
   {
     Minutia * minutia = (Minutia *)p->data;
     if(minutia->position.x == position.x && minutia->position.y == position.y)
@@ -129,18 +122,18 @@ static Minutia * GetMinutiaAtPosition(Point position, List minutiae)
   return NULL;
 }
 
-static void TraceRidges(List minutiae, BinaryMap * image)
+static void TraceRidges(List* minutiae, BinaryMap* image)
 {
-  for ( ListElement * p = minutiae.head; p != NULL; p = p->next )
+  for ( ListElement * p = minutiae->head; p != NULL; p = p->next )
   {
     Minutia * minutia = (Minutia *)p->data;
-    List activeNeighbors = GetActiveNeighburs(minutia->position, image);
+    List activeNeighbors = GetActiveNeighbours(minutia->position, image);
     minutia->ridges = List_Construct();
 
     for ( ListElement * p2 = activeNeighbors.head; p2 != NULL; p2 = p2->next )
     {
       List points = List_Construct();
-      points = TraceRidge(*(Point *)p2->data, minutia->position, image, points);
+      TraceRidge(*(Point *)p2->data, minutia->position, image, &points);
 
       Ridge ridge = Ridge_Construct();
       ridge.startMinutia = minutia;
@@ -148,21 +141,21 @@ static void TraceRidges(List minutiae, BinaryMap * image)
       ridge.endMinutia = GetMinutiaAtPosition(*(Point *)(points.tail->data), minutiae);
 
       List_AddData(&minutia->ridges, CopyRidge(ridge));
+      List_Destroy(&points,&free);
     }
     
-    FreeActiveNeighbours(&activeNeighbors);
+    List_Destroy(&activeNeighbors,&free);
   }
 }
 
-List FindMinutiae(BinaryMap* image, List minutiae)
+void FindMinutiae(BinaryMap* image, List* minutiae)
 {
   minutiaeLocations = UInt8Array2D_Construct(image->width, image->height);
 
-  minutiae = GetPointsWithNNeighbors(1, image, minutiae);
-  minutiae = GetPointsWithNNeighbors(3, image, minutiae);
+  GetPointsWithNNeighbors(1, image, minutiae);
+  GetPointsWithNNeighbors(3, image, minutiae);
 
   TraceRidges(minutiae, image);
 
   UInt8Array2D_Destruct(&minutiaeLocations);
-  return minutiae;
 }
