@@ -75,4 +75,4 @@ This will generate a html report for you after building libAFIS and open a web b
 
 #### Template Tests
 
-There is a 'MinutiaeTestApp' inside TestData to test the expoted templates with SourceAFIS
+There is a 'MinutiaeTestApp' inside TestData to test the exported templates with SourceAFIS.
