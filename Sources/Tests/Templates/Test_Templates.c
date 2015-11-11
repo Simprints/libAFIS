@@ -5,26 +5,34 @@
 #include "unity_fixture.h"
 
 #include <stdint.h>
+#include <stdlib.h>
 
 TEST_GROUP(Templates);
 
-Template template;
-TemplateMinutia minutias[5];
+TEST_SETUP(Templates)
+{
+}
+
+TEST_TEAR_DOWN(Templates)
+{
+}
+
+static const char *testFile = "test-output.bin";
 
 static void TemplatesAreEqual(Template *expected, Template *actual)
 {
     TEST_ASSERT_EQUAL_INT32_MESSAGE(expected->originalDpi, actual->originalDpi, "originalDpi's are different");
     TEST_ASSERT_EQUAL_INT32_MESSAGE(expected->originalWidth, actual->originalWidth, "originalWidth's are different");
     TEST_ASSERT_EQUAL_INT32_MESSAGE(expected->originalHeight, actual->originalHeight, "originalHeight's are different");
-    
+
     int32_t expectedMinutiaeCount = List_GetCount(&expected->minutiae);
     TEST_ASSERT_EQUAL_INT32_MESSAGE(expectedMinutiaeCount, List_GetCount(&actual->minutiae), "minutia list lengths are different");
-    
+
     do {
         TemplateMinutia *expectedMinutia, *actualMinutia;
         List_Remove(&expected->minutiae, expected->minutiae.head, (void**)&expectedMinutia);
         List_Remove(&actual->minutiae, actual->minutiae.head, (void**)&actualMinutia);
-        
+
         TEST_ASSERT_EQUAL_INT32_MESSAGE(expectedMinutia->position.x, actualMinutia->position.x, "minutia position.x's are different");
         TEST_ASSERT_EQUAL_INT32_MESSAGE(expectedMinutia->position.y, actualMinutia->position.y, "minutia position.x's are different");
         TEST_ASSERT_EQUAL_INT32_MESSAGE(expectedMinutia->direction, actualMinutia->direction, "minutia direction's are different");
@@ -33,45 +41,38 @@ static void TemplatesAreEqual(Template *expected, Template *actual)
     while(expected->minutiae.head != NULL);
 }
 
-TEST_SETUP(Templates)
+static void PopulateTemplateToTestWith(Template *template)
 {
-    template = Template_Construct();
-    template.originalDpi = 500;
-    template.originalWidth = 100;
-    template.originalHeight = 100;
-    
-    // ::TODO:: Figure out wht this causes a core dump when position.x is accessed...
-   for(int ii = 2; ii < 7; ii++)
-   {
-       minutias[ii] = (TemplateMinutia)
-       {
-           .position = (Point) { .x = ii, .y = ii },
-           .direction = (uint8_t) ii*ii,
-           .type = BIFURCATION
-       };
-       Template_AddMinutia(&template, &minutias[ii]);
-   }
-}
+    template->originalDpi = 500;
+    template->originalWidth = 100;
+    template->originalHeight = 100;
 
-static void UnityFreeTemplate(Template *template)
-{
-    while (List_GetCount(&template->minutiae) > 0)
+    for(int ii = 2; ii < 7; ii++)
     {
-        List_Remove(&template->minutiae, template->minutiae.tail, NULL);
+        TemplateMinutia *minutia = malloc(sizeof(TemplateMinutia));
+        minutia->position = (Point) { .x = ii, .y = ii };
+        minutia->direction = (uint8_t) ii*ii;
+        minutia->type = BIFURCATION;
+        Template_AddMinutia(template, minutia);
     }
-}
-
-TEST_TEAR_DOWN(Templates)
-{
-    UnityFreeTemplate(&template);
 }
 
 TEST(Templates, TemplateIO_ISO19794_2_2005)
 {
+    // Create a template and export it to disk...
+    Template template = Template_Construct();
+    PopulateTemplateToTestWith(&template);
+    TemplateIO_ISO19794_2_2005_Export(&template, testFile);
+
+    // Create a template and read the previously exported template from disk...
     Template fromDisk = Template_Construct();
+    TemplateIO_ISO19794_2_2005_Import(testFile, &fromDisk);
     
-    TemplateIO_ISO19794_2_2005_Export(&template, "output.bin");
-    TemplateIO_ISO19794_2_2005_Import("output.bin", &fromDisk);
-    
+    // They ahould be equal...
     TemplatesAreEqual(&template, &fromDisk);
+
+    // Clean up...
+    List_Destroy(&(template.minutiae), &free);
+    List_Destroy(&(fromDisk.minutiae), &free);
+    remove(testFile);
 }
