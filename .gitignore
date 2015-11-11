@@ -4,6 +4,7 @@ Sources/Debug/
 Sources/Build/
 /TestImages
 .vs/LibAFIS/v14/.suo
+.vs/LibAFIS/v12/.suo
 *.opensdf
 *.[oa]
 *~
