@@ -273,6 +273,78 @@
     <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_Thinner.c">
       <Filter>Source Files\Tests\Extraction\Filters\runners</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\Templates\Test_Templates.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Templates\TestRunner_Templates.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Matcher\runners\TestRunner_BestMatchSkipper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Matcher\Test_BestMatchSkipper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_MinutiaeDetection.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\General\Test_List.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_HillOrientation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_LinesByOrientation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\runners\TestRunner_OrientedSmoother.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_HillOrientation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_LinesByOrientation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Filters\Test_OrientedSmoother.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Model\runners\TestRunner_DotRemover.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Extraction\Model\Test_DotRemover.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\EndToEnd\Test_EndToEnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\EndToEnd\TestRunner_EndToEnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Templates\Template.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Templates\TemplateIO.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matcher\Minutia\PairInfo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matcher\BestMatchSkipper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="General\Angle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\MinutiaeDetection\MinutiaeDetection.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Model\Minutia.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Extraction\Model\Ridge.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extraction\Model\DotRemover.h">
@@ -404,5 +476,50 @@
     <ClInclude Include="Utils\IO\SimpleDataTypesIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Templates\Minutia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Templates\Template.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Templates\TemplateIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\EdgeLocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\EdgeShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\IndexedEdge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\MinutiaPair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\NeighbourEdge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\Minutia\PairInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matcher\BestMatchSkipper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="General\Angle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\MinutiaeDetection\MinutiaeDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Model\Minutia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Extraction\Model\Ridge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Matcher\readme.md" />
   </ItemGroup>
 </Project>
