@@ -9,10 +9,11 @@
 #include "Extraction/Filters/OrientedSmoother.h"
 #include "Extraction/Filters/ThresholdBinarizer.h"
 #include "Extraction/Filters/Thinner.h"
+#include "Templates/Template.h"
 
 const int blockSize = 16;
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBinarized, UInt8Array2D *outThinned)
+void Extract(UInt8Array2D *image, Template *template, struct perfdata *perfdata, UInt8Array2D *outBinarized, UInt8Array2D *outThinned)
 {
     if (perfdata) gettimeofday(&perfdata->start, 0);
     Size size = Size_Construct(image->sizeX, image->sizeY);
@@ -74,6 +75,11 @@ void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *outBi
 
     // Minutiae filtering
     if (perfdata) gettimeofday(&perfdata->start_filtering, 0);
+
+    // Generate Template
+    if (perfdata) gettimeofday(&perfdata->start_template, 0);
+    
+    if (perfdata) gettimeofday(&perfdata->end, 0);
 
     // Cleanup
     BlockMap_Destruct(&blocks);

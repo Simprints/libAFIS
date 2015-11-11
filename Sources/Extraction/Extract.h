@@ -1,6 +1,7 @@
 #include <sys/time.h>
 #include "General/Array.h"
 #include "General/BinaryMap.h"
+#include "Templates/Template.h"
 
 struct perfdata {
     struct timeval start;
@@ -12,7 +13,8 @@ struct perfdata {
     struct timeval start_thinning;
     struct timeval start_detection;
     struct timeval start_filtering;
+    struct timeval start_template;
     struct timeval end;
-};
+} perfdata;
 
-void Extract(UInt8Array2D *image, struct perfdata *perfdata, UInt8Array2D *binarized, UInt8Array2D *thinned);
+void Extract(UInt8Array2D *image, Template *template, struct perfdata *perfdata, UInt8Array2D *binarized, UInt8Array2D *thinned);
