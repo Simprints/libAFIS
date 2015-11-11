@@ -40,7 +40,7 @@ static MinutiaType GetMinutiaType(int numberOfNeighbors) {
   }
 }
 
-static void GetPointsWithNNeighbors(int n, BinaryMap * image, List* minutiae)
+static void GetPointsWithNNeighbors(int n, BinaryMap* image, List* minutiae)
 {
   for ( int i=0; i < image->width; ++i ) {
     for ( int j=0; j < image->height; ++j ) {
@@ -57,7 +57,7 @@ static void GetPointsWithNNeighbors(int n, BinaryMap * image, List* minutiae)
   }
 }
 
-static List GetActiveNeighbours(Point position, BinaryMap * image)
+static List GetActiveNeighbours(Point position, BinaryMap* image)
 {
   List neighbors = List_Construct();
 
@@ -71,7 +71,7 @@ static List GetActiveNeighbours(Point position, BinaryMap * image)
       {
         if(BinaryMap_GetBit(image, position.x + i, position.y + j))
         {
-          Point * location = calloc(1, sizeof(*location));
+          Point * location = malloc(sizeof(Point));
           location->x = position.x + i;
           location->y = position.y + j;
 
@@ -85,19 +85,20 @@ static List GetActiveNeighbours(Point position, BinaryMap * image)
 }
 
 static Point * CopyPoint(Point p) {
-  Point * pointCopy = calloc(1, sizeof(*pointCopy));
+  Point * pointCopy = malloc(sizeof(Point));
   *pointCopy = p;
   return pointCopy;
 }
 
 static Ridge * CopyRidge(Ridge r) {
-  Ridge * ridgeCopy = calloc(1, sizeof(*ridgeCopy));
+  Ridge * ridgeCopy = malloc(sizeof(Ridge));
   *ridgeCopy = r;
   return ridgeCopy;
 }
 
-static void TraceRidge(Point point, Point prev, BinaryMap * image, List* outputPoints) {
+static void TraceRidge(Point point, Point prev, BinaryMap* image, List* outputPoints) {
   List_AddData(outputPoints, CopyPoint(prev));
+
   while ( minutiaeLocations.data[point.x][point.y] == None ) {
     List_AddData(outputPoints, CopyPoint(point));
     List neighbors = GetActiveNeighbours(point, image);
@@ -121,7 +122,7 @@ static Minutia * GetMinutiaAtPosition(Point position, List* minutiae)
   return NULL;
 }
 
-static void TraceRidges(List* minutiae, BinaryMap * image)
+static void TraceRidges(List* minutiae, BinaryMap* image)
 {
   for ( ListElement * p = minutiae->head; p != NULL; p = p->next )
   {
