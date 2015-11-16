@@ -22,6 +22,19 @@ Making a contribution to libAFIS should be managed through pull requests.
 
 - For truly small fixes you can use the, `small-fixes` branch. Please still create a Pull Request once you're done, and do not delete the branch after it is merged.
 
+## Pull Request Template
+
+When writing your pull request, please consider using the following sections:
+~~~
+#### What does this PR do?
+#### Where should the reviewer start?
+#### How should this be manually tested?
+#### What is out of Scope?
+#### Remaining ToDo's:
+- [x] A completed ToDo item
+- [ ] A ToDo item
+~~~
+
 ## General contribution notes
 
 Before making a contribution, ensure you run **all of the tests**. Any pull request that causes a test to fail should be fixed before it can be considered for merging.
