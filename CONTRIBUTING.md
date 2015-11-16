@@ -20,7 +20,7 @@ Making a contribution to libAFIS should be managed through pull requests.
   - This will include providing feedback on the pull request, which may include suggestions on how to change the code
 - If the libAFIS team are happy with the pull request, it will be merged
 
-- For truly small fixes you can use the, `small-fixes` branch. Please still create a one you're done, and the branch will not be deleted after it is merged.
+- For truly small fixes you can use the, `small-fixes` branch. Please still create a Pull Request once you're done, and do not delete the branch after it is merged.
 
 ## General contribution notes
 
