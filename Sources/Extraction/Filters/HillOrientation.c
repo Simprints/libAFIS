@@ -11,8 +11,6 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define NUM_VECTORS (28)
 
-static const double PI = 3.14159265358979323846;
-
 static const Point neighbors[NUM_VECTORS] = {
     { -1, 1, }, { -1, 2 }, { -1, 3 },
     { -2, 1  }, { -2, 2 }, { -2, 3 },
