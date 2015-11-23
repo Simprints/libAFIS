@@ -72,13 +72,16 @@ void Extract(UInt8Array2D *image, Template *template, struct perfdata *perfdata,
 
     // Minutiae detection
     if (perfdata) gettimeofday(&perfdata->start_detection, 0);
+    //TODO: wire-up minutiae detection.
 
     // Minutiae filtering
     if (perfdata) gettimeofday(&perfdata->start_filtering, 0);
+    //TODO: wire-up minutiae filtering.
 
     // Generate Template
     if (perfdata) gettimeofday(&perfdata->start_template, 0);
-    
+    //TODO: Generate Template from minutiae.
+
     if (perfdata) gettimeofday(&perfdata->end, 0);
 
     // Cleanup
