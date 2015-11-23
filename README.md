@@ -31,8 +31,6 @@ To get `make` and `gcc` installed run: `xcode-select --install` in a terminal wi
 #### Windows
 
 - Works out of the box using Cygwin.
-- You will have to add additional include directories to `\Sources` & `\Sources\Utils\Unity`
-- You may have to comment out the contents of file: `\Sources\Utils\Misc\binarise.c`
 
 ### Tests
 #### Unit Tests
