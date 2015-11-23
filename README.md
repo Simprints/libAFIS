@@ -25,6 +25,9 @@ $ make libafis
 
 Object files are created in the `Build/` directory. The library sources are compiled only but not linked.
 
+#### Mac
+To get `make` and `gcc` installed run: `xcode-select --install` in a terminal window. Then the linux instructions apply.
+
 #### Windows
 
 - Works out of the box using Cygwin.
