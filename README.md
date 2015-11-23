@@ -32,6 +32,12 @@ To get `make` and `gcc` installed run: `xcode-select --install` in a terminal wi
 
 - Works out of the box using Cygwin.
 
+### Editing
+
+The easiest way to get up and running is with [Sublime](http://sublimetext.com/)
+- You can then use [Package Control](https://packagecontrol.io/installation)
+- Which will help you get [C Improved](https://packagecontrol.io/packages/C%20Improved)
+
 ### Tests
 #### Unit Tests
 
