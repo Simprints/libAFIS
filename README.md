@@ -86,4 +86,4 @@ There is a 'MinutiaeTestApp' inside TestData to test the exported templates with
 
 #### Project Focus
 
-Currently our focus is the branch `image-to-template-test`, pull request: #32.
+Our current focus is the branch `image-to-template-test`, pull request: #32.
