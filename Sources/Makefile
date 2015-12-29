@@ -58,6 +58,7 @@ UTEST_SRCS =  General/*.c  General/runners/*.c \
               Extraction/Filters/*.c Extraction/Filters/runners/*.c Extraction/Model/*.c Extraction/Model/runners/*.c \
               DataStructures/*.c \
               EndToEnd/*.c \
+              Templates/*.c \
               Matcher/*.c Matcher/runners/*.c
 
 UTEST_SRCS_EXCLUDE =

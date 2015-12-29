@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-void Template_AddMinuitia(Template *template, TemplateMinutia *minutia)
+void Template_AddMinutia(Template *template, TemplateMinutia *minutia)
 {
     List_AddData(&(template->minutiae), minutia);
 }
@@ -14,7 +14,7 @@ List *Template_GetMinutiae(Template *template)
     return &template->minutiae;
 }
 
-Template Template_Constuct()
+Template Template_Construct()
 {
     Template template;
     template.originalDpi = 0;
@@ -26,10 +26,5 @@ Template Template_Constuct()
 
 void Template_Free(Template *template)
 {
-    while (List_GetCount(&(template->minutiae)) > 0)
-    {
-        void *dataFound;
-        List_Remove(&(template->minutiae), (template->minutiae.tail), &dataFound);
-        free(dataFound);
-    }
+    List_Destroy(&(template->minutiae), &(free));
 }

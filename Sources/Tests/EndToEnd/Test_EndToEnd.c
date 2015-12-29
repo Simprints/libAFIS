@@ -59,7 +59,7 @@ static void ReadTemplate(const char *expectedFileName, Template *expectedTemplat
         ret = fread(&(minutia->type), sizeof(int32_t), 1, f);
         TEST_ASSERT_TRUE_MESSAGE(ret == 1, "ReadTemplate: failed on minutia->type");
         
-        Template_AddMinuitia(expectedTemplate, minutia); 
+        Template_AddMinutia(expectedTemplate, minutia);
     }
     
     /* Check end of file */
@@ -71,7 +71,6 @@ static void ReadTemplate(const char *expectedFileName, Template *expectedTemplat
     ret = fclose(f);
     assert(ret != EOF);
 }
-
 
 static void UnityFreeTemplate(Template *template)
 {
@@ -92,8 +91,8 @@ static void ImageToTemplate(const char *inputFileName, const char *expectedFileN
 
     struct perfdata perfdata;
 
-    Template template = Template_Constuct();    
-    Template expectedTemplate = Template_Constuct();
+    Template template = Template_Construct();
+    Template expectedTemplate = Template_Construct();
 
     printf("%s %s\r\n", inputFileName, expectedFileName);
 
@@ -134,7 +133,6 @@ static void ImageToTemplate(const char *inputFileName, const char *expectedFileN
         printf("Missing from expected = %d%%\n", missingFromExpected.count * 100 / expectedTemplate.minutiae.count);
     }
 
-    
     UnityFreeTemplate(&template);
     UnityFreeTemplate(&expectedTemplate);
 }

@@ -1,7 +1,7 @@
 #ifdef _MSC_VER
-	#include <io.h>
+    #include <io.h>
 #else
-	#include <unistd.h>
+    #include <unistd.h>
 #endif
 #include "unity_fixture.h"
 
@@ -60,6 +60,9 @@ static void RunAllTests(void)
 
     printf("\nBestMatchSkipper tests\n");
     RUN_TEST_GROUP(BestMatchSkipper);
+
+    printf("\nTemplate tests\n");
+    RUN_TEST_GROUP(Templates);
 }
 
 int main(int argc, const char * argv[])
