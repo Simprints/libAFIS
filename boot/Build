@@ -1,0 +1,98 @@
+#!/usr/bin/make -f
+#
+# Cc-for-build environment generator script
+#
+# $Id$
+#
+# Blame: Jordan Hrycaj <jordan@teddy-net.com>
+
+BUILD    = $(MAKE) -f Build
+SHELL    = /bin/sh
+COPY     = cp
+RCPY     = cp -r
+SED      = sed
+
+NOTROOT  = test x0 != "x`id|$(SED) 's/^[a-z]*=0(.*/0/'`"
+USEROK   = $(NOTROOT) || (echo Cannot be run as root; exit 1)
+
+AUTODIR  = tools
+AUTOFILE = acinclude.m4 amcompat.m4 NEWS README AUTHORS ChangeLog COPYING
+
+CLOBBER  = compile depcomp install-sh missing ltmain.sh autoscan.log
+CLOBBER += libtool amcompat.m4 ar-lib configure aclocal.m4 config.* VERSION
+CLOBBER += INSTALL stamp-h1
+
+CONF4BLD =
+
+# ---------------------------------------------------------------------------
+# Start Makefile
+# ---------------------------------------------------------------------------
+
+help::
+	@echo
+	@echo "Usage: ./Build <target>"
+	@echo
+	@echo "with <target>: config"
+	@echo "             | update"
+	@echo "             | clean | distclean | clobber"
+	@echo
+
+# ---------------------------------------------------------------------------
+# Configuration bootstrap
+# ---------------------------------------------------------------------------
+
+Makefile: configure
+	@echo "Target => $@"
+	@$(USEROK)
+	-test \! -f Makefile || $(MAKE) distclean
+	@mkdir -p m4lib
+	$(SHELL) ./configure $(CONF4BLD)
+
+$(AUTODIR):
+	@$(USEROK)
+	$(RCPY) ../$@ $@
+
+$(AUTOFILE):
+	@$(USEROK)
+	$(COPY) ../$@ $@
+
+VERSION: ../VERSION
+	@echo "Target => $@"
+	@$(USEROK)
+	@rm -rf $(AUTODIR)
+	@rm -f $(AUTOFILE)
+	@$(BUILD) $(AUTOFILE) $(AUTODIR)
+	$(COPY) ../$@ $@
+
+.PHONY: conf config
+conf config: update configure
+
+configure config.h.in: configure.ac VERSION $(AUTOFILE) $(AUTODIR)
+	@echo "Target => $@"
+	@$(USEROK)
+	mkdir -p m4lib
+	aclocal
+	autoheader
+	libtoolize --automake --copy
+	autoconf
+	automake --add-missing --copy
+
+update: VERSION
+
+.PHONY: clean distclean
+clean distclean:
+	 @$(USEROK)
+	-test \! -f Makefile || $(MAKE) $@
+	rm -rf autom4te.cache
+
+.PHONY: clobber
+clobber:
+	 @$(USEROK)
+	-test \! -f config.status || $(SHELL) config.status
+	-test \! -f Makefile      || $(MAKE) distclean
+	rm -rf m4lib autom4te.cache $(AUTODIR)
+	rm -f $(AUTOFILE) $(CLOBBER)
+
+# ---------------------------------------------------------------------------
+# End
+# ---------------------------------------------------------------------------

@@ -129,5 +129,9 @@ runall: clean libafis tests runUnitTest archive
 
 clean:
 	rm -rf $(BUILD_DIR)
+	-$(MAKE) -f Makefile $@
 
-.PHONY: all libafis utest clean archive runUnitTest
+distclean clobber:
+	-$(MAKE) -f Makefile $@
+
+.PHONY: all libafis utest clean archive runUnitTest distclean clobber

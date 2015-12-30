@@ -1,0 +1,271 @@
+#!/usr/bin/make -f
+#
+# Configuration bootstrap, handy generator script
+#
+# $Id$
+#
+# Blame: Jordan Hrycaj <jordan@teddy-net.com>
+
+# ---------------------------------------------------------------------------
+# Configure options for compiler targets
+# ---------------------------------------------------------------------------
+
+NATIVE_DIST  =
+NATIVE_DEBUG =
+WIN32_DIST   =
+WIN32_DEBUG  =
+WIN64_DIST   =
+WIN64_DEBUG  =
+
+PROFILE      =
+VALGRIND     =
+
+# ---------------------------------------------------------------------------
+# Handy settings
+# ---------------------------------------------------------------------------
+
+# Dependencies - must be set for non- wrapping/include mode
+CONFIGURE = configure
+
+# Dependencies - can be set for wrapping/include mode
+# CUSTOM = .custom
+
+BUILD    = $(MAKE) -f Build$(CUSTOM)
+SHELL    = /bin/sh
+MKDIR_P  = mkdir -p
+SED      = sed
+AWK      = awk
+
+NOTROOT  = test x0 != "x`id|$(SED) 's/^[a-z]*=0(.*/0/'`"
+USEROK   = $(NOTROOT) || (echo Cannot be run as root; exit 1)
+
+AUTOVS   = .git/hooks/post-checkout
+AUTOVS  += .git/hooks/post-update
+AUTOVS  += .git/hooks/post-commit
+VERSION  = echo \\\#`(git describe --long 2>/dev/null||echo 0)`
+
+# Check for debian installation
+CHKDEB  = dpkg-architecture
+VFYDEB  = $(CHKDEB)>/dev/null||(echo "*** Notice: not a Debian system";false)
+
+# Check whether we can try cross compiling
+MGW32OK  = ( $(CHKDEB) && dpkg -s gcc-mingw-w64-i686|$(AWK)		\
+	     '$$1=="Status:"&&$$2=="install"{rc=1}END{exit rc!=1}'	\
+	   ) >/dev/null 2>&1
+
+MGW64OK  = ( $(CHKDEB) && dpkg -s gcc-mingw-w64-x86-64|$(AWK)		\
+	     '$$1=="Status:"&&$$2=="install"{rc=1}END{exit rc!=1}'	\
+	   ) >/dev/null 2>&1
+
+# Applies to target tag "win##"
+MGW32HO  = --host=i686-w64-mingw32
+MGW64HO  = --host=x86_64-w64-mingw32
+
+# Support automake compatibility for older versions
+AMKVERS  = `automake --version|sed -e 's/.* \([0-9]*\.[0-9]*\).*/\1/' -eq`
+
+# Build will generate a stub file
+AUTOADD  = NEWS README AUTHORS ChangeLog
+
+# Extra delete with clobber target
+CLOBBER  = NEWS README AUTHORS ChangeLog INSTALL VERSION
+CLOBBER += compile depcomp install-sh missing ltmain.sh autoscan.log
+CLOBBER += libtool amcompat.m4 ar-lib configure aclocal.m4 config.*
+
+# ---------------------------------------------------------------------------
+# Start Makefile
+# ---------------------------------------------------------------------------
+
+help::
+	@echo
+	@echo "Usage: ./Build <target>"
+	@echo
+	@echo "with <target>: <admin> | <debugging> | <release>"
+	@echo
+	@echo "      <admin>: conf[ig]"
+	@echo "             | update"
+	@echo "             | clean | distclean | clobber"
+	@echo
+	@echo "  <debugging>: prof[ile] | valg[rind]"
+	@echo
+	@echo "    <release>: <opsys>"
+	@echo "             | <linkage>"
+	@echo "             | <opsys>-<linkage>"
+	@echo
+	@echo "      <opsys>: native | win32 | win64"
+	@echo
+	@echo "    <linkage>: dist | debug"
+	@echo
+	@echo "Note: win## targets are unsupported"
+	@echo
+
+# ---------------------------------------------------------------------------
+# General helper targets
+# ---------------------------------------------------------------------------
+
+.PHONY: package-configure
+package-configure: $(CONFIGURE)
+	@echo "Target => $@"
+	@$(USEROK)
+	-test \! -f Makefile || $(MAKE) distclean
+	@$(MKDIR_P) m4lib
+	./configure $(ARGV)
+
+# ---------------------------------------------------------------------------
+# Cross compiling helper targets
+# ---------------------------------------------------------------------------
+
+.PHONY: native-configure win32-configure win64-configure
+
+native-configure: $(CONFIGURE)
+	@echo "Target => $@"
+	@$(BUILD) package-configure ARGV="$(ARGV)"
+
+win32-configure: $(CONFIGURE)
+	@echo "Target => $@"
+	@$(MGW32OK) && $(BUILD) package-configure ARGV="$(ARGV) $(MGW32HO)"
+
+win64-configure: $(CONFIGURE)
+	@echo "Target => $@"
+	@$(MGW64OK) && $(BUILD) package-configure ARGV="$(ARGV) $(MGW64HO)"
+
+# add more cross compiling recipies here
+# ...
+
+# ---------------------------------------------------------------------------
+# Cross compiling targets
+# ---------------------------------------------------------------------------
+
+.PHONY: native-dist native-debug
+.PHONY: win32-dist win32-debug win64-dist win64-debug
+
+native-dist:
+	@echo "Target => $@"
+	@$(BUILD) native-configure ARGV="$(NATIVE_DIST)"
+
+native-debug:
+	@echo "Target => $@"
+	@$(BUILD) native-configure ARGV="$(NATIVE_DEBUG)"
+
+win32-dist:
+	@echo "Target => $@"
+	@$(BUILD) win32-configure ARGV="$(WIN32_DIST)"
+
+win32-debug:
+	@echo "Target => $@"
+	@$(BUILD) win32-configure ARGV="$(WIN32_DEBUG)"
+
+win64-dist:
+	@echo "Target => $@"
+	@$(BUILD) win64-configure ARGV="$(WIN64_DIST)"
+
+win64-debug:
+	@echo "Target => $@"
+	@$(BUILD) win64-configure ARGV="$(WIN64_DEBUG)"
+
+# add cross compiling recipies here
+# ...
+
+# ---------------------------------------------------------------------------
+# Shortcuts, debugging
+# ---------------------------------------------------------------------------
+
+.PHONY: native win32 win64 debug dist profile prof valgrind valg
+
+native: native-dist
+win32:  win32-dist
+win64:  win64-dist
+
+debug:  native-debug
+dist:   native-dist
+
+prof profile:
+	@echo "Target => $@"
+	@$(BUILD) package-configure ARGV="$(PROFILE)"
+
+valg valgrind:
+	@echo "Target => $@"
+	@$(BUILD) package-configure ARGV="$(VALGRIND)"
+
+# ---------------------------------------------------------------------------
+# Configuration bootstrap
+# ---------------------------------------------------------------------------
+
+.PHONY: conf config update
+
+conf config: update configure
+
+$(AUTOADD):
+	@echo Creating $@
+	@echo "# Placeholder file" >> $@
+	@echo "# $$""Id""$$"       >> $@
+
+amcompat.m4:
+	@f="tools/am/compat-$(AMKVERS)"; rm -f $@; \
+		if test -f "$$f"; then \
+			echo "Automake $(AMKVERS) compatibility mode" >&2; \
+			echo "m4_include([$$f])";\
+		else echo "# $$f"; fi >> $@
+
+configure conf/config.h.in: $(AUTOADD) \
+		configure.ac VERSION amcompat.m4
+	@$(USEROK)
+	$(MKDIR_P) conf m4lib
+	aclocal
+	autoheader
+	libtoolize --automake --copy
+	autoconf
+	automake --add-missing --copy
+	$(MAKE) -C boot -f Build Makefile
+
+VERSION:
+	@$(USEROK)
+	@for f in . $(AUTOVS); do \
+		test $$f = . -o -f $$f && continue; \
+		test -d `dirname $$f`  || continue; \
+		echo Creating $$f; { \
+			echo "#! /bin/sh"; \
+			echo 'rm -f $@'; \
+			echo '$(VERSION)>$@'; \
+		} >>$$f; \
+		chmod +x $$f; \
+	done
+	@rm -f $@
+	@$(VERSION) > $@
+	@echo "Current VERSION: `$(SED) s/\#// $@`"
+
+update:
+	@$(USEROK)
+	@rm -f VERSION~
+	@$(VERSION) > VERSION~
+	@cmp -s VERSION~ VERSION||(rm -f VERSION;set -x;$(BUILD) VERSION)
+	@rm -f VERSION~
+
+# ---------------------------------------------------------------------------
+# Clean up
+# ---------------------------------------------------------------------------
+
+.PHONY: clean distclean clobber
+
+clean distclean:
+	-test \! -f Makefile || $(MAKE) $@
+	rm -rf autom4te.cache
+
+clobber:
+	$(MAKE) -C boot -f Build clobber
+	-test \! -f config.status || $(SHELL) config.status
+	-test \! -f Makefile      || $(MAKE) clobber
+	@find . -type f -name Makefile.am -print | while read f; do \
+	      d=`dirname $$f`; \
+	      (set -x;rm -f $$d/Makefile $$d/Makefile.in); \
+	done
+	@find . -type f -name \*~ -print | while read f; do \
+	      (set -x;rm -f $$f); \
+	done
+	rm -rf m4lib autom4te.cache
+	rm -f conf/* $(CLOBBER)
+	rmdir conf 2>/dev/null || :
+
+# ---------------------------------------------------------------------------
+# End
+# ---------------------------------------------------------------------------
