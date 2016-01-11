@@ -1,14 +1,44 @@
-/Debug/
-/Build/
-Sources/Debug/
-Sources/Build/
-/TestImages
-.vs/LibAFIS/v14/.suo
-.vs/LibAFIS/v12/.suo
-*.opensdf
-*.[oa]
+# *.[oa]
+# *.kdev4
+# *.opensdf
+# *.sdf
+# *.user
+# .idea
+# .vs/LibAFIS/v1?/.suo
+# /Sources/Build/
+# /Sources/Debug/
 *~
-*.sdf
-*.kdev4
-*.user
-.idea
+/AUTHORS
+/Build/
+/ChangeLog
+/Debug/
+/INSTALL
+/Makefile
+/Makefile.in
+/NEWS
+/README
+/TestImages
+/VERSION
+/aclocal.m4
+/amcompat.m4
+/ar-lib
+/autom4te.cache
+/autoscan.log
+/compile
+/conf/config.h
+/conf/config.h.in
+/conf/stamp-h1
+/config.*
+/configure
+/configure-stamp-*
+/cscope.files
+/cscope.log
+/depcomp
+/install-sh
+/install-stamp-*
+/libXpin.ncb
+/libXpin.suo
+/libtool
+/ltmain.sh
+/m4lib
+/missing
