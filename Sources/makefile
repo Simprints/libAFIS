@@ -61,7 +61,7 @@ UTEST_SRCS =  General/*.c  General/runners/*.c \
               Extraction/Filters/*.c Extraction/Filters/runners/*.c \
               Extraction/Model/*.c Extraction/Model/runners/*.c \
               DataStructures/*.c Matcher/*.c Matcher/runners/*.c
-							
+
 UTEST_SRCS_EXCLUDE =
 UTEST_SRCS += $(UTEST_EXE).c
 
@@ -91,6 +91,16 @@ all: runall
 libafis: $(LIBAFIS_OBJS)
 tests: $(UTEST_EXE) $(BUILD_DIR)/Tests/extract
 utest: runUnitTest
+
+show:
+	@echo LIBAFIS_OBJS: $(LIBAFIS_OBJS)
+	@echo
+	@echo UTILS_OBJS: $(UTILS_OBJS)
+	@echo
+	@echo UTEST_OBJS: $(UTEST_OBJS)
+	@echo
+	@echo UNITY_OBJS: $(UNITY_OBJS)
+	@echo
 
 ##
 ## Rules

@@ -59,9 +59,30 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gettimeofday memset strstr])
 
+# Makefile path support
+AC_SUBST_BASEDIR(boot)
+AC_SUBST_BASEDIR(Sources)
+
 AC_CONFIG_FILES([Makefile
 		 Sources/Makefile
-                 Sources/Extraction/Filters/Makefile])
+		 Sources/General/Makefile
+		 Sources/Matcher/Makefile
+		 Sources/Matcher/Minutia/Makefile
+		 Sources/Extraction/Makefile
+		 Sources/Extraction/MinutiaeDetection/Makefile
+		 Sources/Extraction/Model/Makefile
+                 Sources/Extraction/Filters/Makefile
+		 Sources/Utils/Makefile
+		 Sources/Utils/Misc/Makefile
+		 Sources/Utils/Unity/Makefile
+		 Sources/Utils/IO/Makefile
+		 Sources/Tests/DataStructures/Makefile
+		 Sources/Tests/Extraction/Makefile
+		 Sources/Tests/Extraction/Filters/runners/Makefile
+		 Sources/Tests/Extraction/Filters/Makefile
+		 Sources/Tests/Extraction/Model/runners/Makefile
+		 Sources/Tests/Extraction/Model/Makefile
+		 ])
 
 # Output, write configs
 AC_OUTPUT
