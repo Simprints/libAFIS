@@ -11,25 +11,18 @@
 # ---------------------------------------------------------------------------
 
 lib_LTLIBRARIES = libmisc.la
-lib_LIBRARIES   = libmisc.a
 
 # ---------------------------------------------------------------------------
 # Config/settings
 # ---------------------------------------------------------------------------
 
-local_cflags = -I$(SOURCES_DIR)
-
-libmisc_la_CFLAGS = $(local_cflags)
-libmisc_a_CFLAGS  = $(local_cflags)
+libmisc_la_CFLAGS = -I$(SOURCES_DIR)
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources = binarise.c
-
-libmisc_la_SOURCES = $(local_sources)
-libmisc_a_SOURCES  = $(local_sources)
+libmisc_la_SOURCES = binarise.c
 
 # ---------------------------------------------------------------------------
 # End

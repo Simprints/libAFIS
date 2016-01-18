@@ -11,7 +11,7 @@ static struct option long_options[] = {
     {0, 0, 0, 0}
 };
 
-int main(int argc, char* argv[])
+int binarise_main(int argc, char* argv[])
 {
     while (1)
     {

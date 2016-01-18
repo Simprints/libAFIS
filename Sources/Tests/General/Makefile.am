@@ -10,28 +10,29 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = librunners.la
-lib_LIBRARIES   = librunners.a
+lib_LTLIBRARIES = libgeneral.la
 
 # ---------------------------------------------------------------------------
 # Config/settings
 # ---------------------------------------------------------------------------
 
-local_cflags = -I$(SOURCES_DIR)/Utils -I$(SOURCES_DIR)/Utils/Unity
-
-librunners_la_CFLAGS = $(local_cflags)
-librunners_a_CFLAGS  = $(local_cflags)
+libgeneral_la_CFLAGS = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = TestRunner_HillOrientation.c TestRunner_LocalHistogram.c
-local_sources += TestRunner_Thinner.c TestRunner_LinesByOrientation.c
-local_sources += TestRunner_OrientedSmoother.c TestRunner_VotingFilter.c
+libgeneral_la_SOURCES  = runners/TestRunner_Array.c
+libgeneral_la_SOURCES += runners/TestRunner_Calc.c
+libgeneral_la_SOURCES += runners/TestRunner_MinutiaeDetection.c
+libgeneral_la_SOURCES += runners/TestRunner_Point.c
+libgeneral_la_SOURCES += runners/TestRunner_BinaryMap.c
+libgeneral_la_SOURCES += runners/TestRunner_Equalizer.c
+libgeneral_la_SOURCES += runners/TestRunner_Pgm.c
 
-librunners_la_SOURCES = $(local_sources)
-librunners_a_SOURCES  = $(local_sources)
+libgeneral_la_SOURCES += Test_BinaryMap.c Test_Equalizer.c Test_Pgm.c
+libgeneral_la_SOURCES += Test_Array.c Test_Calc.c Test_MinutiaeDetection.c
+libgeneral_la_SOURCES += Test_Point.c
 
 # ---------------------------------------------------------------------------
 # End

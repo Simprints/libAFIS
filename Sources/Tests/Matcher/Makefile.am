@@ -10,26 +10,20 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = librunners.la
-lib_LIBRARIES   = librunners.a
+lib_LTLIBRARIES = libmatcher.la
 
 # ---------------------------------------------------------------------------
 # Config/settings
 # ---------------------------------------------------------------------------
 
-local_cflags = -I$(SOURCES_DIR)/Utils -I$(SOURCES_DIR)/Utils/Unity
-
-librunners_la_CFLAGS = $(local_cflags)
-librunners_a_CFLAGS  = $(local_cflags)
+libmatcher_la_CFLAGS = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = TestRunner_DotRemover.c
-
-librunners_la_SOURCES = $(local_sources)
-librunners_a_SOURCES  = $(local_sources)
+libmatcher_la_SOURCES  = runners/TestRunner_BestMatchSkipper.c
+libmatcher_la_SOURCES += Test_BestMatchSkipper.c
 
 # ---------------------------------------------------------------------------
 # End

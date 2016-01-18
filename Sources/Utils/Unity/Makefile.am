@@ -11,25 +11,18 @@
 # ---------------------------------------------------------------------------
 
 lib_LTLIBRARIES = libunity.la
-lib_LIBRARIES   = libunity.a
 
 # ---------------------------------------------------------------------------
 # Config/settings
 # ---------------------------------------------------------------------------
 
-local_cflags = -I../..
-
-libunity_la_CFLAGS = $(local_cflags)
-libunity_a_CFLAGS  = $(local_cflags)
+libunity_la_CFLAGS = -I$(SOURCES_DIR)
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources = unity.c unity_fixture.c
-
-libunity_la_SOURCES  = $(local_sources)
-libunity_a_SOURCES  = $(local_sources)
+libunity_la_SOURCES = unity.c unity_fixture.c
 
 # ---------------------------------------------------------------------------
 # End

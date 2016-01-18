@@ -11,26 +11,19 @@
 # ---------------------------------------------------------------------------
 
 lib_LTLIBRARIES = libio.la
-lib_LIBRARIES   = libio.a
 
 # ---------------------------------------------------------------------------
 # Config/settings
 # ---------------------------------------------------------------------------
 
-local_cflags = -I$(SOURCES_DIR)
-
-libio_la_CFLAGS = $(local_cflags)
-libio_a_CFLAGS  = $(local_cflags)
+libio_la_CFLAGS = -I$(SOURCES_DIR)
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = ArrayIO.c BinaryMapIO.c BlockMapIO.c HistogramIO.c
-local_sources += ImageIO.c SimpleDataTypesIO.c
-
-libio_la_SOURCES = $(local_sources)
-libio_a_SOURCES  = $(local_sources)
+libio_la_SOURCES  = ArrayIO.c BinaryMapIO.c BlockMapIO.c HistogramIO.c
+libio_la_SOURCES += ImageIO.c SimpleDataTypesIO.c
 
 # ---------------------------------------------------------------------------
 # End
