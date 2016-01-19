@@ -27,6 +27,7 @@ Object files are created in the `Build/` directory. The library sources are comp
 
 #### Mac
 To get `make` and `gcc` installed run: `xcode-select --install` in a terminal window. Then the linux instructions apply.
+You will need to install, `Autoconf`, `Automake` & `Libtool`. You can use this [script](https://gist.github.com/jellybeansoup/4192307). 
 
 #### Windows
 
