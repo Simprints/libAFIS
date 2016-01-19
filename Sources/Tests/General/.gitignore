@@ -1,7 +1,7 @@
 /.deps
+/.dirstamp
 /lib*.la
 /lib*.lo
-/.dirstamp
 /.libs
 /Makefile
 /Makefile.in

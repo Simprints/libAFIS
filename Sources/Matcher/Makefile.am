@@ -6,8 +6,6 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = Minutia
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
@@ -19,13 +17,14 @@ lib_LTLIBRARIES = libmatcher.la
 # ---------------------------------------------------------------------------
 
 libmatcher_la_CFLAGS = -I$(SOURCES_DIR)
-libmatcher_la_LIBADD = Minutia/libminutia.la
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libmatcher_la_SOURCES  = BestMatchSkipper.c
+libmatcher_la_SOURCES  = Minutia/PairInfo.c
+
+libmatcher_la_SOURCES += BestMatchSkipper.c
 
 # ---------------------------------------------------------------------------
 # End

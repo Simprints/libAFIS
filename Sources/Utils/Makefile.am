@@ -6,8 +6,6 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS= IO Misc Unity
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
@@ -19,13 +17,17 @@ lib_LTLIBRARIES = libutils.la
 # ---------------------------------------------------------------------------
 
 libutils_la_CFLAGS = -I$(SOURCES_DIR)
-libutils_la_LIBADD = IO/libio.la Misc/libmisc.la Unity/libunity.la
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libutils_la_SOURCES =
+libutils_la_SOURCES  = IO/ArrayIO.c IO/BinaryMapIO.c IO/BlockMapIO.c
+libutils_la_SOURCES += IO/HistogramIO.c IO/ImageIO.c IO/SimpleDataTypesIO.c
+
+libutils_la_SOURCES += Misc/binarise.c
+
+libutils_la_SOURCES += Unity/unity.c Unity/unity_fixture.c
 
 # ---------------------------------------------------------------------------
 # End

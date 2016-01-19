@@ -65,17 +65,10 @@ AC_SUBST_BASEDIR(Sources)
 
 AC_CONFIG_FILES([Makefile
 		 Sources/Extraction/Makefile
-		 Sources/Extraction/MinutiaeDetection/Makefile
-		 Sources/Extraction/Model/Makefile
 		 Sources/General/Makefile
-		 Sources/Makefile
 		 Sources/Matcher/Makefile
-		 Sources/Matcher/Minutia/Makefile
-		 Sources/Utils/IO/Makefile
 		 Sources/Utils/Makefile
-		 Sources/Utils/Misc/Makefile
-		 Sources/Utils/Unity/Makefile
-                 Sources/Extraction/Filters/Makefile
+		 Sources/Makefile
 
 		 Sources/Tests/DataStructures/Makefile
 		 Sources/Tests/Extraction/Makefile

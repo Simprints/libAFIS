@@ -4,6 +4,8 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
+SUBDIRS = General Matcher Utils Extraction Tests
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
