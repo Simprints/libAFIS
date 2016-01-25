@@ -10,19 +10,22 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libmodel.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libmodel_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libmodel_la_SOURCES  = DotRemover.c Minutia.c Ridge.c SkeletonBuilder.c
+srcs = DotRemover.c Minutia.c Ridge.c SkeletonBuilder.c
 
 # ---------------------------------------------------------------------------
 # End

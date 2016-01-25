@@ -1,0 +1,8 @@
+# Generated from Sources/Utils/IO/Makefile.am
+usrc += IO/ArrayIO.c
+usrc += IO/BinaryMapIO.c
+usrc += IO/BlockMapIO.c
+usrc += IO/HistogramIO.c
+usrc += IO/ImageIO.c
+usrc += IO/SimpleDataTypesIO.c
+# End

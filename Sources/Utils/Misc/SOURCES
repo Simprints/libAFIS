@@ -1,0 +1,3 @@
+# Generated from Sources/Utils/Misc/Makefile.am
+usrc += Misc/binarise.c
+# End

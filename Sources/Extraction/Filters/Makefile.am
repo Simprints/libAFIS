@@ -6,15 +6,13 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = Filters Model MinutiaeDetection
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
 all-local:: SOURCES
 
-SOURCES: Makefile Filters/SOURCES Model/SOURCES MinutiaeDetection/SOURCES
+SOURCES: Makefile
 	@rm -f $@
 	@echo ">>> Generating $@"
 	@echo "# Generated from $(subdir)/Makefile.am" >> $@
@@ -27,11 +25,10 @@ SOURCES: Makefile Filters/SOURCES Model/SOURCES MinutiaeDetection/SOURCES
 # Sources
 # ---------------------------------------------------------------------------
 
-srcs = Extract.c
-
-include           Filters/SOURCES
-include             Model/SOURCES
-include MinutiaeDetection/SOURCES
+srcs  = AbsoluteContrast.c Equalizer.c InnerMask.c OrientedSmoother.c
+srcs += Thinner.c ClippedContrast.c HillOrientation.c LinesByOrientation.c
+srcs += RelativeContrast.c ThresholdBinarizer.c CrossRemover.c
+srcs += ImageInverter.c LocalHistogram.c SegmentationMask.c VotingFilter.c
 
 # ---------------------------------------------------------------------------
 # End

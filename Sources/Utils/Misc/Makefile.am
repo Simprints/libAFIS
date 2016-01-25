@@ -6,32 +6,26 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = Filters Model MinutiaeDetection
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
 all-local:: SOURCES
 
-SOURCES: Makefile Filters/SOURCES Model/SOURCES MinutiaeDetection/SOURCES
+SOURCES: Makefile
 	@rm -f $@
 	@echo ">>> Generating $@"
 	@echo "# Generated from $(subdir)/Makefile.am" >> $@
 	@d=`basename $(subdir)`;\
-	 for s in $(srcs); do \
-		echo "srcs += $$d/$$s"; done           >> $@
+	 for s in $(usrc); do \
+		echo "usrc += $$d/$$s"; done           >> $@
 	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-srcs = Extract.c
-
-include           Filters/SOURCES
-include             Model/SOURCES
-include MinutiaeDetection/SOURCES
+usrc = binarise.c
 
 # ---------------------------------------------------------------------------
 # End

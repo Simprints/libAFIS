@@ -4,27 +4,44 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = General Matcher Utils Extraction Tests
+# SUBDIRS = General Matcher Utils Tests
+
+SUBDIRS = Extraction General Matcher Utils
 
 # ---------------------------------------------------------------------------
-# Main
+# Target
 # ---------------------------------------------------------------------------
 
-all-local::
+lib_LTLIBRARIES = libafis.la libutils.la
 
 # ---------------------------------------------------------------------------
-# Admin stuff
+# Config/settings
 # ---------------------------------------------------------------------------
 
-.PHONY: clean-local
-clean-local::
+libafis_la_CFLAGS  = -I$(SOURCES_DIR)
+libutils_la_CFLAGS  = -I$(SOURCES_DIR)
 
-.PHONY: distclean-local
-distclean-local::
+# ---------------------------------------------------------------------------
+# Sources for libafis
+# ---------------------------------------------------------------------------
 
-.PHONY: clobber
-clobber:
-	rm -f Makefile.in Makefile
+srcs =
+
+include    General/SOURCES
+include Extraction/SOURCES
+include    Matcher/SOURCES
+
+libafis_la_SOURCES = $(srcs)
+
+# ---------------------------------------------------------------------------
+# Sources for libutils
+# ---------------------------------------------------------------------------
+
+usrc =
+
+include Utils/SOURCES
+
+libutils_la_SOURCES = $(usrc)
 
 # ---------------------------------------------------------------------------
 # End

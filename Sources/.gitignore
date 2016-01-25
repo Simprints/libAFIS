@@ -1,3 +1,7 @@
-/Build
+/.deps
+/lib*.la
+/lib*.lo
+/.libs
 /Makefile
 /Makefile.in
+/*.o

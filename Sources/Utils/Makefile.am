@@ -6,28 +6,32 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
+SUBDIRS = IO Misc Unity
+
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libutils.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libutils_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile IO/SOURCES Misc/SOURCES Unity/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(usrc); do \
+		echo "usrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libutils_la_SOURCES  = IO/ArrayIO.c IO/BinaryMapIO.c IO/BlockMapIO.c
-libutils_la_SOURCES += IO/HistogramIO.c IO/ImageIO.c IO/SimpleDataTypesIO.c
+usrc =
 
-libutils_la_SOURCES += Misc/binarise.c
-
-libutils_la_SOURCES += Unity/unity.c Unity/unity_fixture.c
+include    IO/SOURCES
+include  Misc/SOURCES
+include Unity/SOURCES
 
 # ---------------------------------------------------------------------------
 # End

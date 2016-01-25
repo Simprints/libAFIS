@@ -1,0 +1,3 @@
+# Generated from Sources/Extraction/MinutiaeDetection/Makefile.am
+srcs += MinutiaeDetection/MinutiaeDetection.c
+# End

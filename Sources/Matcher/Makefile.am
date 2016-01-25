@@ -6,25 +6,32 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
+SUBDIRS = Minutia
+
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libmatcher.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libmatcher_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile Minutia/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libmatcher_la_SOURCES  = Minutia/PairInfo.c
+srcs =
 
-libmatcher_la_SOURCES += BestMatchSkipper.c
+include Minutia/SOURCES
+
+srcs += BestMatchSkipper.c
 
 # ---------------------------------------------------------------------------
 # End

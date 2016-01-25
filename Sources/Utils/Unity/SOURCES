@@ -1,0 +1,4 @@
+# Generated from Sources/Utils/Unity/Makefile.am
+usrc += Unity/unity.c
+usrc += Unity/unity_fixture.c
+# End

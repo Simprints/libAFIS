@@ -10,21 +10,24 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libgeneral.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libgeneral_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libgeneral_la_SOURCES  = Angle.c BinaryMap.c Calc.c pgm.c PointF.c
-libgeneral_la_SOURCES += Range.c Size.c Array.c BlockMap.c List.c
-libgeneral_la_SOURCES += Point.c PolarPoint.c RectangleC.c SizeF.c
+srcs  = Angle.c BinaryMap.c Calc.c pgm.c PointF.c
+srcs += Range.c Size.c Array.c BlockMap.c List.c
+srcs += Point.c PolarPoint.c RectangleC.c SizeF.c
 
 # ---------------------------------------------------------------------------
 # End
