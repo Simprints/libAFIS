@@ -6,7 +6,7 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = DataStructures Extraction General Matcher
+SUBDIRS = runners
 
 # ---------------------------------------------------------------------------
 # Target
@@ -14,8 +14,7 @@ SUBDIRS = DataStructures Extraction General Matcher
 
 all-local:: SOURCES
 
-SOURCES: Makefile DataStructures/SOURCES Extraction/SOURCES \
-		General/SOURCES Matcher/SOURCES
+SOURCES: Makefile runners/SOURCES
 	@rm -f $@
 	@echo ">>> Generating $@"
 	@echo "# Generated from $(subdir)/Makefile.am" >> $@
@@ -28,12 +27,9 @@ SOURCES: Makefile DataStructures/SOURCES Extraction/SOURCES \
 # Sources
 # ---------------------------------------------------------------------------
 
-tsrc =
+tsrc = Test_DotRemover.c
 
-include DataStructures/SOURCES
-include     Extraction/SOURCES
-include        General/SOURCES
-include        Matcher/SOURCES
+include runners/SOURCES
 
 # ---------------------------------------------------------------------------
 # End

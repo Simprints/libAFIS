@@ -78,6 +78,10 @@ AC_CONFIG_FILES([Makefile
 		 Sources/Makefile
 
 		 Sources/Tests/DataStructures/Makefile
+		 Sources/Tests/Extraction/Filters/runners/Makefile
+		 Sources/Tests/Extraction/Filters/Makefile
+		 Sources/Tests/Extraction/Model/runners/Makefile
+		 Sources/Tests/Extraction/Model/Makefile
 		 Sources/Tests/Extraction/Makefile
 		 Sources/Tests/General/Makefile
 		 Sources/Tests/Matcher/Makefile

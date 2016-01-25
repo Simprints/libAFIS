@@ -1,0 +1,4 @@
+# Generated from Sources/Tests/Extraction/Model/Makefile.am
+tsrc += Model/Test_DotRemover.c
+tsrc += Model/runners/TestRunner_DotRemover.c
+# End

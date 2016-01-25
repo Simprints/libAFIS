@@ -10,21 +10,22 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libdatastructures.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libdatastructures_la_CFLAGS  = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
-libdatastructures_la_CFLAGS += -I$(SOURCES_DIR)/Utils/Unity
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libdatastructures_la_SOURCES  = Test_DataStructures.c
-libdatastructures_la_SOURCES += TestRunner_DataStructures.c
+tsrc = Test_DataStructures.c TestRunner_DataStructures.c
 
 # ---------------------------------------------------------------------------
 # End

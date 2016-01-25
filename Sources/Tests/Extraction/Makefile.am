@@ -6,40 +6,33 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
+SUBDIRS = Filters Model
+
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libextraction.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libextraction_la_CFLAGS = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
+SOURCES: Makefile Filters/SOURCES Model/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libextraction_la_SOURCES  = Filters/runners/TestRunner_HillOrientation.c
-libextraction_la_SOURCES += Filters/runners/TestRunner_OrientedSmoother.c
-libextraction_la_SOURCES += Filters/runners/TestRunner_LinesByOrientation.c
-libextraction_la_SOURCES += Filters/runners/TestRunner_Thinner.c
-libextraction_la_SOURCES += Filters/runners/TestRunner_LocalHistogram.c
-libextraction_la_SOURCES += Filters/runners/TestRunner_VotingFilter.c
+tsrc =
 
-libextraction_la_SOURCES += Filters/Test_HillOrientation.c
-libextraction_la_SOURCES += Filters/Test_LocalHistogram.c
-libextraction_la_SOURCES += Filters/Test_Thinner.c
-libextraction_la_SOURCES += Filters/Test_LinesByOrientation.c
-libextraction_la_SOURCES += Filters/Test_OrientedSmoother.c
-libextraction_la_SOURCES += Filters/Test_VotingFilter.c
-
-libextraction_la_SOURCES += Model/runners/TestRunner_DotRemover.c
-
-libextraction_la_SOURCES += Model/Test_DotRemover.c
+include Filters/SOURCES
+include   Model/SOURCES
 
 # ---------------------------------------------------------------------------
 # End
 # ---------------------------------------------------------------------------
+

@@ -1,0 +1,18 @@
+# Generated from Sources/Tests/Makefile.am
+tsrc += Tests/DataStructures/Test_DataStructures.c
+tsrc += Tests/DataStructures/TestRunner_DataStructures.c
+tsrc += Tests/Extraction/Filters/Test_HillOrientation.c
+tsrc += Tests/Extraction/Filters/Test_LocalHistogram.c
+tsrc += Tests/Extraction/Filters/Test_Thinner.c
+tsrc += Tests/Extraction/Filters/Test_LinesByOrientation.c
+tsrc += Tests/Extraction/Filters/Test_OrientedSmoother.c
+tsrc += Tests/Extraction/Filters/Test_VotingFilter.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_HillOrientation.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_OrientedSmoother.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_LinesByOrientation.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_Thinner.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_LocalHistogram.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_VotingFilter.c
+tsrc += Tests/Extraction/Model/Test_DotRemover.c
+tsrc += Tests/Extraction/Model/runners/TestRunner_DotRemover.c
+# End

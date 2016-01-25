@@ -6,16 +6,13 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = DataStructures Extraction General Matcher
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
 all-local:: SOURCES
 
-SOURCES: Makefile DataStructures/SOURCES Extraction/SOURCES \
-		General/SOURCES Matcher/SOURCES
+SOURCES: Makefile
 	@rm -f $@
 	@echo ">>> Generating $@"
 	@echo "# Generated from $(subdir)/Makefile.am" >> $@
@@ -28,12 +25,9 @@ SOURCES: Makefile DataStructures/SOURCES Extraction/SOURCES \
 # Sources
 # ---------------------------------------------------------------------------
 
-tsrc =
-
-include DataStructures/SOURCES
-include     Extraction/SOURCES
-include        General/SOURCES
-include        Matcher/SOURCES
+tsrc  = TestRunner_HillOrientation.c TestRunner_OrientedSmoother.c
+tsrc += TestRunner_LinesByOrientation.c TestRunner_Thinner.c
+tsrc += TestRunner_LocalHistogram.c TestRunner_VotingFilter.c
 
 # ---------------------------------------------------------------------------
 # End
