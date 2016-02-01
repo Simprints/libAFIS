@@ -1,4 +1,5 @@
 /.deps
+/.dirstamp
 /lib*.la
 /lib*.lo
 /.libs

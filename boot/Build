@@ -87,7 +87,7 @@ clean distclean:
 
 .PHONY: clobber
 clobber:
-	 @$(USEROK)
+	@$(USEROK)
 	-test \! -f config.status || $(SHELL) config.status
 	-test \! -f Makefile      || $(MAKE) distclean
 	rm -rf m4lib autom4te.cache $(AUTODIR)

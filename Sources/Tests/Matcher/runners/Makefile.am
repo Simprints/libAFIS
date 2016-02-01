@@ -6,15 +6,13 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = runners
-
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
 all-local:: SOURCES
 
-SOURCES: Makefile runners/SOURCES
+SOURCES: Makefile
 	@rm -f $@
 	@echo ">>> Generating $@"
 	@echo "# Generated from $(subdir)/Makefile.am" >> $@
@@ -27,11 +25,8 @@ SOURCES: Makefile runners/SOURCES
 # Sources
 # ---------------------------------------------------------------------------
 
-tsrc  = Test_BestMatchSkipper.c
-
-include runners/SOURCES
+tsrc  = TestRunner_BestMatchSkipper.c
 
 # ---------------------------------------------------------------------------
 # End
 # ---------------------------------------------------------------------------
-

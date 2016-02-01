@@ -5,7 +5,5 @@ usrc += Utils/IO/BlockMapIO.c
 usrc += Utils/IO/HistogramIO.c
 usrc += Utils/IO/ImageIO.c
 usrc += Utils/IO/SimpleDataTypesIO.c
-usrc += Utils/Misc/binarise.c
-usrc += Utils/Unity/unity.c
 usrc += Utils/Unity/unity_fixture.c
 # End

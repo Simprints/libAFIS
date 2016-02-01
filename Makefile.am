@@ -17,11 +17,27 @@ BUILT_SOURCES = boot/Makefile
 # Auto-for-build configuration
 # ---------------------------------------------------------------------------
 
+help:
+	@echo
+	@echo "$(MAKE) [target]"
+	@echo
+	@echo "target: all [dist]clean -- standard targets"
+	@echo "      | test            -- run legacy tests"
+	@echo
+
+# Build environment (unused yet)
 .PHONY: prepare
 prepare: $(BUILT_SOURCES)
 
 boot/Makefile:
 	$(MAKE) -C boot -f Build Makefile
+
+# ---------------------------------------------------------------------------
+# Legacy tests
+# ---------------------------------------------------------------------------
+
+test:
+	$(MAKE) -C Sources test
 
 # ---------------------------------------------------------------------------
 # Auto configuration helper

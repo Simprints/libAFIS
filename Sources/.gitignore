@@ -1,4 +1,6 @@
+/all_tests
 /.deps
+/extract
 /lib*.la
 /lib*.lo
 /.libs

@@ -1,0 +1,4 @@
+# Generated from Sources/Tests/Matcher/Makefile.am
+tsrc += Matcher/Test_BestMatchSkipper.c
+tsrc += Matcher/runners/TestRunner_BestMatchSkipper.c
+# End

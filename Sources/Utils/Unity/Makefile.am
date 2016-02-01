@@ -21,7 +21,9 @@ SOURCES: Makefile
 # Sources
 # ---------------------------------------------------------------------------
 
-usrc = unity.c unity_fixture.c
+# unity.c compiled directly - compiler flag dependent
+
+usrc = unity_fixture.c
 
 # ---------------------------------------------------------------------------
 # End

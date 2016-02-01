@@ -252,12 +252,13 @@ clean distclean:
 	rm -rf autom4te.cache
 
 clobber:
-	$(MAKE) -C boot -f Build clobber
+	@$(USEROK)
+	-test \! -f Makefile      || $(MAKE) distclean
 	-test \! -f config.status || $(SHELL) config.status
-	-test \! -f Makefile      || $(MAKE) clobber
+	$(MAKE) -C boot -f Build clobber
 	@find . -type f -name Makefile.am -print | while read f; do \
-	      d=`dirname $$f`; \
-	      (set -x;rm -f $$d/Makefile $$d/Makefile.in); \
+		d=`dirname $$f`; \
+		(set -x;rm -f $$d/Makefile $$d/Makefile.in); \
 	done
 	@find . -type f -name \*~ -print | while read f; do \
 	      (set -x;rm -f $$f); \

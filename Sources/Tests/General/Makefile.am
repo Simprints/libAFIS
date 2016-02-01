@@ -6,34 +6,33 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
+SUBDIRS = runners
+
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libgeneral.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libgeneral_la_CFLAGS = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
+SOURCES: Makefile runners/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libgeneral_la_SOURCES  = runners/TestRunner_Array.c
-libgeneral_la_SOURCES += runners/TestRunner_Calc.c
-libgeneral_la_SOURCES += runners/TestRunner_MinutiaeDetection.c
-libgeneral_la_SOURCES += runners/TestRunner_Point.c
-libgeneral_la_SOURCES += runners/TestRunner_BinaryMap.c
-libgeneral_la_SOURCES += runners/TestRunner_Equalizer.c
-libgeneral_la_SOURCES += runners/TestRunner_Pgm.c
+tsrc  = Test_BinaryMap.c Test_Equalizer.c Test_Pgm.c Test_Array.c
+tsrc += Test_Calc.c Test_MinutiaeDetection.c Test_Point.c
 
-libgeneral_la_SOURCES += Test_BinaryMap.c Test_Equalizer.c Test_Pgm.c
-libgeneral_la_SOURCES += Test_Array.c Test_Calc.c Test_MinutiaeDetection.c
-libgeneral_la_SOURCES += Test_Point.c
+include runners/SOURCES
 
 # ---------------------------------------------------------------------------
 # End
 # ---------------------------------------------------------------------------
+
