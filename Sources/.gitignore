@@ -1,3 +1,9 @@
-/Build
+/all_tests
+/.deps
+/extract
+/lib*.la
+/lib*.lo
+/.libs
 /Makefile
 /Makefile.in
+/*.o

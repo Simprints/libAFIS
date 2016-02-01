@@ -64,24 +64,30 @@ AC_SUBST_BASEDIR(boot)
 AC_SUBST_BASEDIR(Sources)
 
 AC_CONFIG_FILES([Makefile
-		 Sources/Makefile
-		 Sources/General/Makefile
-		 Sources/Matcher/Makefile
-		 Sources/Matcher/Minutia/Makefile
-		 Sources/Extraction/Makefile
+		 Sources/Extraction/Filters/Makefile
 		 Sources/Extraction/MinutiaeDetection/Makefile
 		 Sources/Extraction/Model/Makefile
-                 Sources/Extraction/Filters/Makefile
-		 Sources/Utils/Makefile
+		 Sources/Extraction/Makefile
+		 Sources/General/Makefile
+		 Sources/Matcher/Minutia/Makefile
+		 Sources/Matcher/Makefile
+		 Sources/Utils/IO/Makefile
 		 Sources/Utils/Misc/Makefile
 		 Sources/Utils/Unity/Makefile
-		 Sources/Utils/IO/Makefile
+		 Sources/Utils/Makefile
+		 Sources/Makefile
+
 		 Sources/Tests/DataStructures/Makefile
-		 Sources/Tests/Extraction/Makefile
 		 Sources/Tests/Extraction/Filters/runners/Makefile
 		 Sources/Tests/Extraction/Filters/Makefile
 		 Sources/Tests/Extraction/Model/runners/Makefile
 		 Sources/Tests/Extraction/Model/Makefile
+		 Sources/Tests/Extraction/Makefile
+		 Sources/Tests/General/runners/Makefile
+		 Sources/Tests/General/Makefile
+		 Sources/Tests/Matcher/runners/Makefile
+		 Sources/Tests/Matcher/Makefile
+		 Sources/Tests/Makefile
 		 ])
 
 # Output, write configs

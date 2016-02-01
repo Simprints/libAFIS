@@ -6,29 +6,32 @@
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
 
-SUBDIRS = Filters MinutiaeDetection Model
+SUBDIRS = Filters Model MinutiaeDetection
 
 # ---------------------------------------------------------------------------
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libextraction.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libextraction_la_CFLAGS  = -I$(SOURCES_DIR)
-
-libextraction_la_LIBADD  = Filters/libfilters.la
-libextraction_la_LIBADD += MinutiaeDetection/libminutiaedetection.la
-libextraction_la_LIBADD += Model/libmodel.la
+SOURCES: Makefile Filters/SOURCES Model/SOURCES MinutiaeDetection/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libextraction_la_SOURCES  = Extract.c
+srcs = Extract.c
+
+include           Filters/SOURCES
+include             Model/SOURCES
+include MinutiaeDetection/SOURCES
 
 # ---------------------------------------------------------------------------
 # End

@@ -10,24 +10,25 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libfilters.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libfilters_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libfilters_la_SOURCES  = AbsoluteContrast.c Equalizer.c InnerMask.c
-libfilters_la_SOURCES += OrientedSmoother.c Thinner.c ClippedContrast.c
-libfilters_la_SOURCES += HillOrientation.c LinesByOrientation.c
-libfilters_la_SOURCES += RelativeContrast.c ThresholdBinarizer.c
-libfilters_la_SOURCES += CrossRemover.c ImageInverter.c LocalHistogram.c
-libfilters_la_SOURCES += SegmentationMask.c VotingFilter.c
+srcs  = AbsoluteContrast.c Equalizer.c InnerMask.c OrientedSmoother.c
+srcs += Thinner.c ClippedContrast.c HillOrientation.c LinesByOrientation.c
+srcs += RelativeContrast.c ThresholdBinarizer.c CrossRemover.c
+srcs += ImageInverter.c LocalHistogram.c SegmentationMask.c VotingFilter.c
 
 # ---------------------------------------------------------------------------
 # End

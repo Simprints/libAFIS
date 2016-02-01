@@ -10,26 +10,22 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = librunners.la
-lib_LIBRARIES   = librunners.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags = -I$(SOURCES_DIR)/Utils -I$(SOURCES_DIR)/Utils/Unity
-
-librunners_la_CFLAGS = $(local_cflags)
-librunners_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = TestRunner_DotRemover.c
-
-librunners_la_SOURCES = $(local_sources)
-librunners_a_SOURCES  = $(local_sources)
+tsrc  = TestRunner_DotRemover.c
 
 # ---------------------------------------------------------------------------
 # End

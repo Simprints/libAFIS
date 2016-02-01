@@ -1,7 +1,3 @@
-# -*- makefile-automake -*-
-#
-# Build library
-#
 # $Id$
 #
 # Blame: Jordan Hrycaj <jordan@teddy-net.com>
@@ -10,26 +6,24 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libunity.la
-lib_LIBRARIES   = libunity.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags = -I../..
-
-libunity_la_CFLAGS = $(local_cflags)
-libunity_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(usrc); do \
+		echo "usrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources = unity.c unity_fixture.c
+# unity.c compiled directly - compiler flag dependent
 
-libunity_la_SOURCES  = $(local_sources)
-libunity_a_SOURCES  = $(local_sources)
+usrc = unity_fixture.c
 
 # ---------------------------------------------------------------------------
 # End

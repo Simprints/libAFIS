@@ -12,28 +12,25 @@ SUBDIRS = runners
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libfilters.la
-lib_LIBRARIES   = libfilters.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags  = -I$(SOURCES_DIR) -I$(SOURCES_DIR)/Utils/Unity
-
-libfilters_la_CFLAGS = $(local_cflags)
-libfilters_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile runners/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = Test_HillOrientation.c Test_LocalHistogram.c
-local_sources += Test_Thinner.c Test_LinesByOrientation.c
-local_sources += Test_OrientedSmoother.c Test_VotingFilter.c
+tsrc  = Test_HillOrientation.c Test_LocalHistogram.c Test_Thinner.c
+tsrc += Test_LinesByOrientation.c Test_OrientedSmoother.c Test_VotingFilter.c
 
-libfilters_la_SOURCES = $(local_sources)
-libfilters_a_SOURCES  = $(local_sources)
+include runners/SOURCES
 
 # ---------------------------------------------------------------------------
 # End

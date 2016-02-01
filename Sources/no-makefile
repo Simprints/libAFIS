@@ -101,6 +101,8 @@ show:
 	@echo
 	@echo UNITY_OBJS: $(UNITY_OBJS)
 	@echo
+	@echo UTEST_EXE: $(UTEST_EXE)
+	@echo
 
 ##
 ## Rules

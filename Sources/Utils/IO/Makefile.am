@@ -10,27 +10,23 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libio.la
-lib_LIBRARIES   = libio.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags = -I$(SOURCES_DIR)
-
-libio_la_CFLAGS = $(local_cflags)
-libio_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(usrc); do \
+		echo "usrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  = ArrayIO.c BinaryMapIO.c BlockMapIO.c HistogramIO.c
-local_sources += ImageIO.c SimpleDataTypesIO.c
-
-libio_la_SOURCES = $(local_sources)
-libio_a_SOURCES  = $(local_sources)
+usrc = ArrayIO.c BinaryMapIO.c BlockMapIO.c
+usrc+= HistogramIO.c ImageIO.c SimpleDataTypesIO.c
 
 # ---------------------------------------------------------------------------
 # End

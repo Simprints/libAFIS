@@ -1,0 +1,17 @@
+# Generated from Sources/Extraction/Filters/Makefile.am
+srcs += Filters/AbsoluteContrast.c
+srcs += Filters/Equalizer.c
+srcs += Filters/InnerMask.c
+srcs += Filters/OrientedSmoother.c
+srcs += Filters/Thinner.c
+srcs += Filters/ClippedContrast.c
+srcs += Filters/HillOrientation.c
+srcs += Filters/LinesByOrientation.c
+srcs += Filters/RelativeContrast.c
+srcs += Filters/ThresholdBinarizer.c
+srcs += Filters/CrossRemover.c
+srcs += Filters/ImageInverter.c
+srcs += Filters/LocalHistogram.c
+srcs += Filters/SegmentationMask.c
+srcs += Filters/VotingFilter.c
+# End

@@ -10,26 +10,24 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libmisc.la
-lib_LIBRARIES   = libmisc.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags = -I$(SOURCES_DIR)
-
-libmisc_la_CFLAGS = $(local_cflags)
-libmisc_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(usrc); do \
+		echo "usrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources = binarise.c
+# binarise.c ignored
 
-libmisc_la_SOURCES = $(local_sources)
-libmisc_a_SOURCES  = $(local_sources)
+usrc =
 
 # ---------------------------------------------------------------------------
 # End

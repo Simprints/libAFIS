@@ -12,27 +12,27 @@ SUBDIRS = Filters Model
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libextraction.la
-lib_LIBRARIES   = libextraction.a
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-local_cflags  =
-
-libextraction_la_CFLAGS = $(local_cflags)
-libextraction_a_CFLAGS  = $(local_cflags)
+SOURCES: Makefile Filters/SOURCES Model/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(tsrc); do \
+		echo "tsrc += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-local_sources  =
+tsrc =
 
-libextraction_la_SOURCES = $(local_sources)
-libextraction_a_SOURCES  = $(local_sources)
+include Filters/SOURCES
+include   Model/SOURCES
 
 # ---------------------------------------------------------------------------
 # End
 # ---------------------------------------------------------------------------
+

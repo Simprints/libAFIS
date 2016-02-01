@@ -1,0 +1,23 @@
+# Generated from Sources/Extraction/Makefile.am
+srcs += Extraction/Extract.c
+srcs += Extraction/Filters/AbsoluteContrast.c
+srcs += Extraction/Filters/Equalizer.c
+srcs += Extraction/Filters/InnerMask.c
+srcs += Extraction/Filters/OrientedSmoother.c
+srcs += Extraction/Filters/Thinner.c
+srcs += Extraction/Filters/ClippedContrast.c
+srcs += Extraction/Filters/HillOrientation.c
+srcs += Extraction/Filters/LinesByOrientation.c
+srcs += Extraction/Filters/RelativeContrast.c
+srcs += Extraction/Filters/ThresholdBinarizer.c
+srcs += Extraction/Filters/CrossRemover.c
+srcs += Extraction/Filters/ImageInverter.c
+srcs += Extraction/Filters/LocalHistogram.c
+srcs += Extraction/Filters/SegmentationMask.c
+srcs += Extraction/Filters/VotingFilter.c
+srcs += Extraction/Model/DotRemover.c
+srcs += Extraction/Model/Minutia.c
+srcs += Extraction/Model/Ridge.c
+srcs += Extraction/Model/SkeletonBuilder.c
+srcs += Extraction/MinutiaeDetection/MinutiaeDetection.c
+# End

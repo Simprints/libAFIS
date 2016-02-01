@@ -12,20 +12,26 @@ SUBDIRS = Minutia
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libmatcher.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libmatcher_la_CFLAGS = -I$(SOURCES_DIR)
-libmatcher_la_LIBADD = Minutia/libminutia.la
+SOURCES: Makefile Minutia/SOURCES
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libmatcher_la_SOURCES  = BestMatchSkipper.c
+srcs =
+
+include Minutia/SOURCES
+
+srcs += BestMatchSkipper.c
 
 # ---------------------------------------------------------------------------
 # End

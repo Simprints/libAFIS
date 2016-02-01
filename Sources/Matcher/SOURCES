@@ -1,0 +1,4 @@
+# Generated from Sources/Matcher/Makefile.am
+srcs += Matcher/Minutia/PairInfo.c
+srcs += Matcher/BestMatchSkipper.c
+# End

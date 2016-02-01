@@ -10,19 +10,22 @@
 # Target
 # ---------------------------------------------------------------------------
 
-lib_LTLIBRARIES = libminutiaedetection.la
+all-local:: SOURCES
 
-# ---------------------------------------------------------------------------
-# Config/settings
-# ---------------------------------------------------------------------------
-
-libminutiaedetection_la_CFLAGS = -I$(SOURCES_DIR)
+SOURCES: Makefile
+	@rm -f $@
+	@echo ">>> Generating $@"
+	@echo "# Generated from $(subdir)/Makefile.am" >> $@
+	@d=`basename $(subdir)`;\
+	 for s in $(srcs); do \
+		echo "srcs += $$d/$$s"; done           >> $@
+	@echo "# End"                                  >> $@
 
 # ---------------------------------------------------------------------------
 # Sources
 # ---------------------------------------------------------------------------
 
-libminutiaedetection_la_SOURCES  = MinutiaeDetection.c
+srcs = MinutiaeDetection.c
 
 # ---------------------------------------------------------------------------
 # End
