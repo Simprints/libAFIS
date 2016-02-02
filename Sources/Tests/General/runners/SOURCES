@@ -1,0 +1,9 @@
+# Generated from Sources/Tests/General/runners/Makefile.am
+tsrc += runners/TestRunner_Array.c
+tsrc += runners/TestRunner_Calc.c
+tsrc += runners/TestRunner_MinutiaeDetection.c
+tsrc += runners/TestRunner_Point.c
+tsrc += runners/TestRunner_BinaryMap.c
+tsrc += runners/TestRunner_Equalizer.c
+tsrc += runners/TestRunner_Pgm.c
+# End

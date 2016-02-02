@@ -1,0 +1,34 @@
+# Generated from Sources/Tests/Makefile.am
+tsrc += Tests/DataStructures/Test_DataStructures.c
+tsrc += Tests/DataStructures/TestRunner_DataStructures.c
+tsrc += Tests/Extraction/Filters/Test_HillOrientation.c
+tsrc += Tests/Extraction/Filters/Test_LocalHistogram.c
+tsrc += Tests/Extraction/Filters/Test_Thinner.c
+tsrc += Tests/Extraction/Filters/Test_LinesByOrientation.c
+tsrc += Tests/Extraction/Filters/Test_OrientedSmoother.c
+tsrc += Tests/Extraction/Filters/Test_VotingFilter.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_HillOrientation.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_OrientedSmoother.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_LinesByOrientation.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_Thinner.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_LocalHistogram.c
+tsrc += Tests/Extraction/Filters/runners/TestRunner_VotingFilter.c
+tsrc += Tests/Extraction/Model/Test_DotRemover.c
+tsrc += Tests/Extraction/Model/runners/TestRunner_DotRemover.c
+tsrc += Tests/General/Test_BinaryMap.c
+tsrc += Tests/General/Test_Equalizer.c
+tsrc += Tests/General/Test_Pgm.c
+tsrc += Tests/General/Test_Array.c
+tsrc += Tests/General/Test_Calc.c
+tsrc += Tests/General/Test_MinutiaeDetection.c
+tsrc += Tests/General/Test_Point.c
+tsrc += Tests/General/runners/TestRunner_Array.c
+tsrc += Tests/General/runners/TestRunner_Calc.c
+tsrc += Tests/General/runners/TestRunner_MinutiaeDetection.c
+tsrc += Tests/General/runners/TestRunner_Point.c
+tsrc += Tests/General/runners/TestRunner_BinaryMap.c
+tsrc += Tests/General/runners/TestRunner_Equalizer.c
+tsrc += Tests/General/runners/TestRunner_Pgm.c
+tsrc += Tests/Matcher/Test_BestMatchSkipper.c
+tsrc += Tests/Matcher/runners/TestRunner_BestMatchSkipper.c
+# End

@@ -1,0 +1,16 @@
+# Generated from Sources/Tests/General/Makefile.am
+tsrc += General/Test_BinaryMap.c
+tsrc += General/Test_Equalizer.c
+tsrc += General/Test_Pgm.c
+tsrc += General/Test_Array.c
+tsrc += General/Test_Calc.c
+tsrc += General/Test_MinutiaeDetection.c
+tsrc += General/Test_Point.c
+tsrc += General/runners/TestRunner_Array.c
+tsrc += General/runners/TestRunner_Calc.c
+tsrc += General/runners/TestRunner_MinutiaeDetection.c
+tsrc += General/runners/TestRunner_Point.c
+tsrc += General/runners/TestRunner_BinaryMap.c
+tsrc += General/runners/TestRunner_Equalizer.c
+tsrc += General/runners/TestRunner_Pgm.c
+# End

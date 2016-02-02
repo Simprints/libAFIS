@@ -1,0 +1,6 @@
+# Generated from Sources/Extraction/Model/Makefile.am
+srcs += Model/DotRemover.c
+srcs += Model/Minutia.c
+srcs += Model/Ridge.c
+srcs += Model/SkeletonBuilder.c
+# End

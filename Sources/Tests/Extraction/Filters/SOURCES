@@ -1,0 +1,14 @@
+# Generated from Sources/Tests/Extraction/Filters/Makefile.am
+tsrc += Filters/Test_HillOrientation.c
+tsrc += Filters/Test_LocalHistogram.c
+tsrc += Filters/Test_Thinner.c
+tsrc += Filters/Test_LinesByOrientation.c
+tsrc += Filters/Test_OrientedSmoother.c
+tsrc += Filters/Test_VotingFilter.c
+tsrc += Filters/runners/TestRunner_HillOrientation.c
+tsrc += Filters/runners/TestRunner_OrientedSmoother.c
+tsrc += Filters/runners/TestRunner_LinesByOrientation.c
+tsrc += Filters/runners/TestRunner_Thinner.c
+tsrc += Filters/runners/TestRunner_LocalHistogram.c
+tsrc += Filters/runners/TestRunner_VotingFilter.c
+# End

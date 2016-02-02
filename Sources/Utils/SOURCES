@@ -1,0 +1,9 @@
+# Generated from Sources/Utils/Makefile.am
+usrc += Utils/IO/ArrayIO.c
+usrc += Utils/IO/BinaryMapIO.c
+usrc += Utils/IO/BlockMapIO.c
+usrc += Utils/IO/HistogramIO.c
+usrc += Utils/IO/ImageIO.c
+usrc += Utils/IO/SimpleDataTypesIO.c
+usrc += Utils/Unity/unity_fixture.c
+# End

@@ -1,0 +1,16 @@
+# Generated from Sources/General/Makefile.am
+srcs += General/Angle.c
+srcs += General/BinaryMap.c
+srcs += General/Calc.c
+srcs += General/pgm.c
+srcs += General/PointF.c
+srcs += General/Range.c
+srcs += General/Size.c
+srcs += General/Array.c
+srcs += General/BlockMap.c
+srcs += General/List.c
+srcs += General/Point.c
+srcs += General/PolarPoint.c
+srcs += General/RectangleC.c
+srcs += General/SizeF.c
+# End

@@ -1,0 +1,4 @@
+# Generated from Sources/Tests/DataStructures/Makefile.am
+tsrc += DataStructures/Test_DataStructures.c
+tsrc += DataStructures/TestRunner_DataStructures.c
+# End
