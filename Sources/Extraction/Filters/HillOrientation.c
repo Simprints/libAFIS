@@ -76,25 +76,27 @@ static PointFArray2D HillOrientation_AccumulateDirections(FloatArray2D input, in
 static PointFArray2D HillOrientation_SumBlocks(const PointFArray2D * pixelOrientations, const BinaryMap * blockMask, const BlockMap * blocks)
 {
     const PointFArray2D blockOrientations = PointFArray2D_Construct(blocks->blockCount.width, blocks->blockCount.height);
-    const int blockHeight = blocks->maxBlockSize; 
-    const int blockWidth = blocks->maxBlockSize;
 
-    for (int blockX = 0; blockX < blocks->blockCount.width; blockX++)
+    Point block; 
+    for (block.y = RectangleC_GetBottom(&blocks->allBlocks); block.y < RectangleC_GetTop(&blocks->allBlocks); block.y++) 
     {
-        for (int blockY = 0; blockY < blocks->blockCount.height; blockY++)
+        for (block.x = RectangleC_GetLeft(&blocks->allBlocks); block.x < RectangleC_GetRight(&blocks->allBlocks); block.x++) 
         {
-            if (!BinaryMap_GetBit(blockMask, blockX, blockY))
+            if (!BinaryMap_GetBit(blockMask, block.x, block.y))
                 continue;
 
-            int bottomLeftX = blocks->blockAreas.corners.allX.data[blockX];
-            int bottomLeftY = blocks->blockAreas.corners.allY.data[blockY];
-            for (int x = bottomLeftX; x < bottomLeftX + blockWidth; ++x) {
-                for ( int y = bottomLeftY; y < bottomLeftY + blockHeight; ++y ) {
-                    blockOrientations.data[blockX][blockY] = Calc_Add2PointsF(&blockOrientations.data[blockX][blockY], &pixelOrientations->data[x][y]);
+            RectangleC blockArea = RectangleGrid_GetRectangleCFromPoint(&blocks->blockAreas, &block);
+              
+            for (int x = RectangleC_GetLeft(&blockArea); x < RectangleC_GetRight(&blockArea); x++) 
+            {
+                for (int y = RectangleC_GetBottom(&blockArea); y < RectangleC_GetTop(&blockArea); y++) 
+                { 
+                    blockOrientations.data[block.x][block.y] = Calc_Add2PointsF(&blockOrientations.data[block.x][block.y], &pixelOrientations->data[x][y]);
                 }
             }
         }
     }
+
     return blockOrientations;
 }
 
